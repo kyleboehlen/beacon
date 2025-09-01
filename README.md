@@ -6,7 +6,7 @@ this project hopes to relieve that problem.
 ## Tech Stack
 
 ### Frontend
-The frontend is an offline first PWA web app that leverages local storage.
+The frontend is an offline first PWA web app that leverages local storage. It utilizes Feature Sliced Design.<br>
 
 - Typescript
 - pnpm as a package manager
@@ -39,6 +39,14 @@ development docker-compose file for the frontend and TODO: determine MongoDB or 
 After cloning the repo, the following steps should get you started (as long as you have the relevant pre-requisites<br>
 for example, Docker Desktop or Docker in WSL).
 
-`TODO: Add the docker compose command here`
+Bringing up the frontend development environment:
+
+`docker compose -f infra/docker-compose-develop.yml up --build`
+
+The app will then be available at `http://localhost:5173`
+
+Storybook will then be available at `http://localhost:6006`
+
+You will be able to view the console of the `frontend-test` container to see the results of hot reloaded unit tests.
 
 `TODO: Add the debug configuration for the backend here, be sure to save it to source control in Rider`

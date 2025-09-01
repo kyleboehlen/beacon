@@ -30,6 +30,8 @@ services:
     command: pnpm storybook --host 0.0.0.0
     environment:
       - NODE_ENV=development
+#      - STORYBOOK_DISABLE_TELEMETRY=1
+#      - CI=false
     networks:
       - beacon-network
 
@@ -41,9 +43,11 @@ services:
     volumes:
       - ../frontend:/app
       - /app/node_modules
-    command: pnpm test --watch
+    command: pnpm run test:unit
     environment:
       - NODE_ENV=test
+    tty: true
+    stdin_open: true
     networks:
       - beacon-network
 
