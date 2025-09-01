@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  frontend-dev:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    container_name: beacon-frontend-dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - ../frontend:/app
+      - /app/node_modules
+    command: pnpm dev --host 0.0.0.0
+    environment:
+      - NODE_ENV=development
+    networks:
+      - beacon-network
+
+  frontend-storybook:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    container_name: beacon-storybook
+    ports:
+      - "6006:6006"
+    volumes:
+      - ../frontend:/app
+      - /app/node_modules
+    command: pnpm storybook --host 0.0.0.0
+    environment:
+      - NODE_ENV=development
+    networks:
+      - beacon-network
+
+  frontend-test:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    container_name: beacon-vitest
+    volumes:
+      - ../frontend:/app
+      - /app/node_modules
+    command: pnpm test --watch
+    environment:
+      - NODE_ENV=test
+    networks:
+      - beacon-network
+
+networks:
+  beacon-network:
+    driver: bridge
