@@ -3,11 +3,5 @@ import StarryBackground from '@/widgets/starry-background/ui/StarryBackground.vu
 </script>
 
 <template>
-<StarryBackground class="w-full h-screen">
-  <p class="text-xl">Hi</p>
-</StarryBackground>
+<StarryBackground class="w-full h-screen" />
 </template>
-
-<style>
-
-</style>

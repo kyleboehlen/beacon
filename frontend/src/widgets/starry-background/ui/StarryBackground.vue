@@ -1,17 +1,42 @@
 <template>
-  <div class="starry-background">
+  <div class="stars stars1 stars2">
     <slot />
   </div>
 </template>
 
 <style scoped>
-.starry-background {
+.stars {
   background: linear-gradient(to bottom, #000000, #0a0a0f, #050510);
   position: relative;
   overflow: hidden;
 }
 
-.starry-background::before {
+.stars1:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 2px;
+  background: white;
+  box-shadow:
+    20vw 20vh 0 #fff,
+    30vw 5vh 0 #fff,
+    50vw 15vh 0 #fff,
+    60vw 35vh 0 #fff,
+    80vw 28vh 0 #fff,
+    90vw 18vh 0 #fff,
+    15vw 40vh 0 #fff,
+    35vw 60vh 0 #fff,
+    45vw 70vh 0 #fff,
+    65vw 55vh 0 #fff,
+    75vw 65vh 0 #fff,
+    95vw 85vh 0 #fff,
+    5vw 80vh 0 #fff;
+  animation: twinkle1 3.5s infinite alternate, twinkle3 5s infinite alternate;
+}
+
+.stars2::before {
   content: '';
   position: absolute;
   top: 0;
@@ -21,29 +46,16 @@
   background: white;
   box-shadow:
     10vw 10vh 0 #fff,
-    20vw 20vh 0 #fff,
-    30vw 5vh 0 #fff,
     40vw 25vh 0 #fff,
-    50vw 15vh 0 #fff,
-    60vw 35vh 0 #fff,
     70vw 8vh 0 #fff,
-    80vw 28vh 0 #fff,
-    90vw 18vh 0 #fff,
-    15vw 40vh 0 #fff,
     25vw 50vh 0 #fff,
-    35vw 60vh 0 #fff,
-    45vw 70vh 0 #fff,
     55vw 45vh 0 #fff,
-    65vw 55vh 0 #fff,
-    75vw 65vh 0 #fff,
     85vw 75vh 0 #fff,
-    95vw 85vh 0 #fff,
-    5vw 80vh 0 #fff,
     25vw 90vh 0 #fff;
-  animation: twinkle1 1.5s infinite alternate, twinkle2 0.7s infinite alternate-reverse, twinkle3 2.3s infinite alternate;
+  animation: twinkle2 2.9s infinite alternate-reverse;
 }
 
-.starry-background::after {
+.stars::after {
   content: '';
   position: absolute;
   top: 0;
@@ -91,6 +103,7 @@
     78vw 11vh 0 1px #fff,
     32vw 92vh 0 1px #fff,
     65vw 5vh 0 1px #fff;
+  animation: twinkle4 2.9s infinite alternate;
 }
 
 @keyframes twinkle1 {
@@ -111,15 +124,5 @@
 @keyframes twinkle4 {
   0% { opacity: 0.7; }
   100% { opacity: 1; }
-}
-
-@keyframes twinkle5 {
-  0% { opacity: 0.9; }
-  100% { opacity: 0.95; }
-}
-
-@keyframes twinkle6 {
-  0% { opacity: 0.55; }
-  100% { opacity: 0.85; }
 }
 </style>
