@@ -5,6 +5,7 @@ services:
     build:
       context: ../frontend
       dockerfile: Dockerfile
+      target: development
     container_name: beacon-frontend-dev
     ports:
       - "5173:5173"
@@ -21,6 +22,7 @@ services:
     build:
       context: ../frontend
       dockerfile: Dockerfile
+      target: development
     container_name: beacon-storybook
     ports:
       - "6006:6006"
@@ -30,8 +32,6 @@ services:
     command: pnpm storybook --host 0.0.0.0
     environment:
       - NODE_ENV=development
-#      - STORYBOOK_DISABLE_TELEMETRY=1
-#      - CI=false
     networks:
       - beacon-network
 
@@ -39,6 +39,7 @@ services:
     build:
       context: ../frontend
       dockerfile: Dockerfile
+      target: development
     container_name: beacon-vitest
     volumes:
       - ../frontend:/app

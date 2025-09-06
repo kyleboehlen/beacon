@@ -23,6 +23,9 @@ importers:
       vue-router:
         specifier: ^4.5.1
         version: 4.5.1(vue@3.5.20(typescript@5.8.3))
+      wrangler:
+        specifier: ^4.34.0
+        version: 4.34.0
     devDependencies:
       '@playwright/test':
         specifier: ^1.54.1
@@ -105,9 +108,6 @@ importers:
       vue-tsc:
         specifier: ^3.0.4
         version: 3.0.6(typescript@5.8.3)
-      wrangler:
-        specifier: ^4.34.0
-        version: 4.34.0
 
 packages:
 

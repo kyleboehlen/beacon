@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  frontend-deploy:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+      target: deploy
+    container_name: beacon-frontend-deploy
+    ports:
+      - "8976:8976"
+    env_file:
+      - ../frontend/.env
+    environment:
+      - NODE_ENV=deploy
+      - CLOUDFLARE_API_TOKEN=${CLOUDFLARE_API_TOKEN}
+    networks:
+      - beacon-network
+
+networks:
+  beacon-network:
+    driver: bridge

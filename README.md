@@ -24,8 +24,14 @@ The frontend is an offline first PWA web app that leverages local storage. It ut
 - TODO: Determine a unit testing solution
 
 ### Infra
+The easiest way to handle development, preview, and production deployment is using the saved jetbrains run configurations<br>
+for the different docker compose configurations.
+
+The frontend is currently running on Clourdflare Pages.
 
 ### Deploy
+Make sure you copy the .env.example file in the front-end, add your Cloudflare API key, and just run the deploy compose.
+`docker compose -f infra/docker-compose-deploy.yml up --build`
 
 ## Development
 

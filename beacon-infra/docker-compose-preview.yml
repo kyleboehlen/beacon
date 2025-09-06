@@ -1,20 +1,35 @@
 version: '3.8'
 
 services:
-  frontend-preview:
+  frontend-build:
     build:
       context: ../frontend
-      dockerfile: DockerfilePreview
-    container_name: beacon-frontend-preview
-    ports:
-      - "4173:4173"
-    volumes:
-      - ../frontend:/app
-      - /app/node_modules
+      dockerfile: Dockerfile
+      target: build
+    container_name: beacon-frontend-build
     environment:
       - NODE_ENV=preview
     networks:
       - beacon-network
+    volumes:
+      - ../frontend:/app
+      - ../frontend/dist:/app/dist
+      - /app/node_modules
+    
+  frontend-preview:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+      target: preview
+    container_name: beacon-frontend-preview
+    ports:
+      - "4173:4173"
+    environment:
+      - NODE_ENV=preview
+    networks:
+      - beacon-network
+    depends_on:
+      - frontend-build
 
 networks:
   beacon-network:

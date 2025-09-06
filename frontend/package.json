@@ -18,14 +18,15 @@
     "format": "prettier --write src/",
     "storybook": "VITE_STORYBOOK_MODE=1 storybook dev -p 6006 --no-open",
     "build-storybook": "storybook build",
-    "deploy": "wrangler deploy"
+    "deploy": "pnpm run build && pnpm wrangler deploy"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.12",
     "pinia": "^3.0.3",
     "tailwindcss": "^4.1.12",
     "vue": "^3.5.18",
-    "vue-router": "^4.5.1"
+    "vue-router": "^4.5.1",
+    "wrangler": "^4.34.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.54.1",
@@ -54,7 +55,6 @@
     "vite": "^7.0.6",
     "vite-plugin-vue-devtools": "^8.0.0",
     "vitest": "^3.2.4",
-    "vue-tsc": "^3.0.4",
-    "wrangler": "^4.34.0"
+    "vue-tsc": "^3.0.4"
   }
 }
