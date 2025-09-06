@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
-    "preview": "vite preview",
+    "preview": "VITE_PREVIEW_MODE=1 vite preview",
     "test:unit": "vitest",
     "test:e2e": "playwright test",
     "build-only": "vite build",
@@ -17,7 +17,8 @@
     "lint": "eslint . --fix",
     "format": "prettier --write src/",
     "storybook": "VITE_STORYBOOK_MODE=1 storybook dev -p 6006 --no-open",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "deploy": "wrangler deploy"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.12",
@@ -53,6 +54,7 @@
     "vite": "^7.0.6",
     "vite-plugin-vue-devtools": "^8.0.0",
     "vitest": "^3.2.4",
-    "vue-tsc": "^3.0.4"
+    "vue-tsc": "^3.0.4",
+    "wrangler": "^4.34.0"
   }
 }

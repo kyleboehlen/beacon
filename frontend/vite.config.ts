@@ -11,8 +11,13 @@ export default defineConfig(({ mode }) => {
 
   // the vueDevTools plugin will crash storybook
   const isStorybook = mode === 'storybook' || process.env.VITE_STORYBOOK_MODE === '1'
+  const isDeploy = mode === 'deploy' || process.env.VITE_DEPLOY_MODE === '1'
+  const isPreview = mode === 'preview' || process.env.VITE_PREVIEW_MODE === '1'
+
   if (isStorybook) {
     plugins = [vue(), tailwindcss()]
+  } else if (isDeploy || isPreview) {
+    plugins =[vue(), tailwindcss()]
   } else {
     plugins = [vue(), tailwindcss(), vueDevTools()]
   }

@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  frontend-preview:
+    build:
+      context: ../frontend
+      dockerfile: DockerfilePreview
+    container_name: beacon-frontend-preview
+    ports:
+      - "4173:4173"
+    volumes:
+      - ../frontend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=preview
+    networks:
+      - beacon-network
+
+networks:
+  beacon-network:
+    driver: bridge
