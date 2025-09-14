@@ -1,3 +1,4 @@
+<script lang="ts" setup></script>
 <template>
   <div class="stars stars1 stars2">
     <slot />

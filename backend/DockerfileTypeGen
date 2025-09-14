@@ -1,0 +1,17 @@
+﻿FROM mcr.microsoft.com/dotnet/sdk:9.0
+
+RUN dotnet tool install --global dotnet-typegen
+
+# Set working directory
+WORKDIR /app
+
+# Copy backend project files
+COPY backend/ ./backend/
+
+# Restore and build
+WORKDIR /app/backend
+RUN dotnet restore
+RUN dotnet build
+
+# Run TypeGen
+ENTRYPOINT ["/root/.dotnet/tools/dotnet-typegen", "generate", "--config-path", "typegen-docker.config.json"]

@@ -1,22 +1,55 @@
+using Email;
+using Features.HealthCheck.Services;
+using MongoDB.Driver;
+using Scalar.AspNetCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddOpenApi();
+
+// Configure CORS
+var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>() ?? [];
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins(allowedOrigins)
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials();
+    });
+});
+
+// DI
+builder.Services.AddScoped<HealthCheckService>();
+builder.Services.AddScoped<EmailService>();
+
+builder.Services.AddSingleton<IMongoClient>(serviceProvider =>
+{
+    var connectionString = builder.Configuration.GetConnectionString("NoSQL");
+    return new MongoClient(connectionString);
+});
+
+builder.Services.AddScoped<IMongoDatabase>(serviceProvider =>
+{
+    var client = serviceProvider.GetService<IMongoClient>();
+    return client.GetDatabase("beacon-db");
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Scalar API Reference
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.MapOpenApi();
+    app.MapScalarApiReference();
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors();
 
 app.UseAuthorization();
 

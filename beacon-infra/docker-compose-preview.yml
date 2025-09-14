@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   frontend-build:
     build:
@@ -30,6 +28,23 @@ services:
       - beacon-network
     depends_on:
       - frontend-build
+        
+  backend-dev:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+      target: final
+    container_name: beacon-backend-preview
+    ports:
+      - "5002:80"
+    volumes:
+      - ../backend:/src/backend
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Preview
+    depends_on:
+      - mongodb
+    networks:
+      - beacon-network
 
 networks:
   beacon-network:

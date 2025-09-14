@@ -3,7 +3,11 @@
     <deployment type="docker-compose.yml">
       <settings>
         <option name="envFilePath" value="" />
-        <option name="commandLineOptions" value="--build" />
+        <option name="envFilePaths">
+          <list>
+            <option value="" />
+          </list>
+        </option>
         <option name="sourceFilePath" value="beacon-infra/docker-compose-develop.yml" />
       </settings>
     </deployment>
