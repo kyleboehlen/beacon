@@ -24,7 +24,7 @@ public class HealthCheckService
         {
             // Simple ping command
             var result = await _database.RunCommandAsync((Command<BsonDocument>)"{ping:1}");
-            return result.ToString() == "{ \"ok\" : 1.0 }";
+            return result.ToString() == "{ \"ok\" : 1.0 }" || result.ToString() == "{ \"ok\" : 1 }";
         }
         catch (Exception ex)
         {

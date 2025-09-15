@@ -26,28 +26,46 @@ builder.Services.AddCors(options =>
 builder.Services.AddScoped<HealthCheckService>();
 builder.Services.AddScoped<EmailService>();
 
-builder.Services.AddSingleton<IMongoClient>(serviceProvider =>
+var connectionString = builder.Configuration.GetConnectionString("MongoDB");
+
+if (string.IsNullOrEmpty(connectionString))
 {
-    var connectionString = builder.Configuration.GetConnectionString("NoSQL");
-    return new MongoClient(connectionString);
-});
+    connectionString = Environment.GetEnvironmentVariable("MONGODB_CONNECTION_STRING");
+}
+
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddSingleton<IMongoClient>(serviceProvider =>
+    {
+        var clientSettings = MongoClientSettings.FromConnectionString(connectionString);
+        clientSettings.ApplicationName = "beacon";
+        return new MongoClient(clientSettings);
+    });
+}
+else
+{
+    builder.Services.AddSingleton<IMongoClient>(serviceProvider =>
+    {
+        return new MongoClient(connectionString);
+    });
+}
 
 builder.Services.AddScoped<IMongoDatabase>(serviceProvider =>
 {
     var client = serviceProvider.GetService<IMongoClient>();
-    return client.GetDatabase("beacon-db");
+    return client.GetDatabase("beacon");
 });
 
 var app = builder.Build();
 
 // Scalar API Reference
-if (app.Environment.IsDevelopment())
-{
+// if (app.Environment.IsDevelopment())
+// {
     app.MapOpenApi();
     app.MapScalarApiReference();
-}
+// }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 app.UseCors();
 

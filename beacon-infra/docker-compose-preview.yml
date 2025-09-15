@@ -29,22 +29,22 @@ services:
     depends_on:
       - frontend-build
         
-  backend-dev:
+  backend-preview:
     build:
       context: ../backend
       dockerfile: Dockerfile
       target: final
     container_name: beacon-backend-preview
     ports:
-      - "5002:80"
+      - "5002:8080"
     volumes:
       - ../backend:/src/backend
     environment:
       - ASPNETCORE_ENVIRONMENT=Preview
-    depends_on:
-      - mongodb
     networks:
       - beacon-network
+    env_file:
+      - ../backend/.env      
 
 networks:
   beacon-network:

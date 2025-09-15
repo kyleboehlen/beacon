@@ -36,7 +36,7 @@ Offline-first Progressive Web App (PWA) built with modern web technologies and F
 - Docker Compose for orchestration
 
 **Preview & Production:**
-- CosmosDB for data persistence
+- MongoDB Atlas for data persistence (Azure)
 - MailGun for email delivery
 - Cloudflare Pages for frontend hosting
 
@@ -83,9 +83,13 @@ Note: this will also use typegen to put the generated types in `frontend/src/sha
 The preview environment simulates production conditions for integration testing:
 
 - Uses production builds (`vite build` and `vite preview`)
-- CosmosDB emulator instead of MongoDB
-- MailGun integration for email delivery
+- MongoDB Atlas free test connection instead of local MongoDB (you need fill out the connection string in the backend<br>
+- for the MongoDB Atlas instance you want to connect to. Use .env.sample)
+- MailGun integration for email delivery (Any SMTP service *should* work. Be sure to fill out the .env file).
 - More accurate performance testing
+
+Docker compose is not good at depends_on and sometimes you may need to run the preview config twice for builds to work<br>
+properly.
 
 Start preview environment:
 
@@ -97,7 +101,8 @@ docker compose -f infra/docker-compose-preview.yml up --build
 
 ### Frontend
 
-Automatically deployed to Cloudflare Pages on main branch updates.
+Automatically deployed to Cloudflare Pages on main branch updates. Simply run the deploy config Docker compose is not<br>
+good at depends_on and sometimes you may need to run the preview config twice for builds to work properly.
 
 ### Full Stack Deployment
 
