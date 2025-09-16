@@ -35,4 +35,6 @@ playwright-report/
 *storybook.log
 storybook-static
 
-.env
+.env.develop
+.env.deploy
+.env.preview

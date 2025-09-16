@@ -59,13 +59,16 @@ builder.Services.AddScoped<IMongoDatabase>(serviceProvider =>
 var app = builder.Build();
 
 // Scalar API Reference
-// if (app.Environment.IsDevelopment())
-// {
+if (app.Environment.IsDevelopment())
+{
     app.MapOpenApi();
     app.MapScalarApiReference();
-// }
+}
 
-// app.UseHttpsRedirection();
+if (app.Environment.IsProduction())
+{
+    app.UseHttpsRedirection();   
+}
 
 app.UseCors();
 

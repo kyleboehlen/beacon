@@ -5,6 +5,8 @@ services:
       dockerfile: Dockerfile
       target: build
     container_name: beacon-frontend-build
+    env_file:
+      - ../frontend/.env.preview
     environment:
       - NODE_ENV=preview
     networks:
@@ -36,7 +38,7 @@ services:
       target: final
     container_name: beacon-backend-preview
     ports:
-      - "5002:8080"
+      - "5003:8080"
     volumes:
       - ../backend:/src/backend
     environment:

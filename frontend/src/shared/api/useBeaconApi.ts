@@ -1,9 +1,9 @@
-import { BeaconResponse } from '@/shared/models/generated'
+import { type BeaconResponse } from '@/shared/models/generated'
 export const useBeaconApi = () => {
   const baseUrl = import.meta.env.VITE_BEACON_API_URL
 
   // API call returns the payload of type R if successful, otherwise returns false
-  const beaconApiCall = async <T, R>(method: 'GET' | 'POST', endpoint: string, body?: T): Promise<R> | boolean => {
+  const beaconApiCall = async <T, R>(method: 'GET' | 'POST', endpoint: string, body?: T): Promise<R | boolean> => {
     const response = await fetch(baseUrl + endpoint, {
       method,
       headers: {

@@ -15,7 +15,7 @@ services:
     - "--mode=server"
     - "--frontend-port=57000"
     - "--backend-port=57200"
-    - "--roslyn-worker-port=57505"
+    - "--roslyn-worker-port=57569"
     - "--timeout=60"
     environment:
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
@@ -23,16 +23,16 @@ services:
       RESHARPER_LOG_CONF: "/etc/opt/JetBrains/RiderDebuggerTools/backend-log.xml"
     image: "backend:dev"
     ports:
-    - "127.0.0.1:57105:57000"
-    - "127.0.0.1:57305:57200"
-    - "127.0.0.1:57505:57505"
+    - "127.0.0.1:57169:57000"
+    - "127.0.0.1:57369:57200"
+    - "127.0.0.1:57569:57569"
     volumes:
     - "/Users/kyleboehlen/RiderProjects/beacon/backend:/app:rw"
     - "/Users/kyleboehlen/RiderProjects/beacon:/src:rw"
     - "/Users/kyleboehlen/.nuget/packages:/root/.nuget/packages"
     - "/Users/kyleboehlen/.local/share/JetBrains/RiderRemoteDebugger/2025.2.1/LinuxArm64:/opt/JetBrains/RiderDebuggerTools"
     - "/Applications/Rider.app/Contents/bin/backend-log.xml:/etc/opt/JetBrains/RiderDebuggerTools/backend-log.xml"
-    - "/Users/kyleboehlen/Library/Logs/JetBrains/Rider2025.2/DebuggerWorker/JetBrains.Debugger.Worker.2025_9_13_21_18_04:/var/opt/JetBrains/RiderDebuggerTools:rw"
+    - "/Users/kyleboehlen/Library/Logs/JetBrains/Rider2025.2/DebuggerWorker/JetBrains.Debugger.Worker.2025_9_16_11_47_59:/var/opt/JetBrains/RiderDebuggerTools:rw"
     working_dir: "/app"
   typegen:
     build:
@@ -47,16 +47,16 @@ services:
     - "--mode=server"
     - "--frontend-port=57000"
     - "--backend-port=57200"
-    - "--roslyn-worker-port=57506"
+    - "--roslyn-worker-port=57570"
     - "--timeout=60"
     environment:
       RIDER_DEBUGGER_LOG_DIR: "/var/opt/JetBrains/RiderDebuggerTools"
       RESHARPER_LOG_CONF: "/etc/opt/JetBrains/RiderDebuggerTools/backend-log.xml"
     ports:
-    - "127.0.0.1:57106:57000"
-    - "127.0.0.1:57306:57200"
-    - "127.0.0.1:57506:57506"
+    - "127.0.0.1:57170:57000"
+    - "127.0.0.1:57370:57200"
+    - "127.0.0.1:57570:57570"
     volumes:
     - "/Users/kyleboehlen/.local/share/JetBrains/RiderRemoteDebugger/2025.2.1/LinuxArm64:/opt/JetBrains/RiderDebuggerTools"
     - "/Applications/Rider.app/Contents/bin/backend-log.xml:/etc/opt/JetBrains/RiderDebuggerTools/backend-log.xml"
-    - "/Users/kyleboehlen/Library/Logs/JetBrains/Rider2025.2/DebuggerWorker/JetBrains.Debugger.Worker.2025_9_13_21_18_04:/var/opt/JetBrains/RiderDebuggerTools:rw"
+    - "/Users/kyleboehlen/Library/Logs/JetBrains/Rider2025.2/DebuggerWorker/JetBrains.Debugger.Worker.2025_9_16_11_47_59:/var/opt/JetBrains/RiderDebuggerTools:rw"

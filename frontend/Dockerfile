@@ -13,7 +13,7 @@ CMD ["pnpm", "dev"]
 FROM base as build
 COPY . .
 RUN rm -rf dist
-CMD ["pnpm", "run", "build"]
+CMD ["pnpm", "run", "build", "--mode", "preview"]
 
 FROM base as preview
 COPY . .

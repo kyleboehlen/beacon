@@ -8,12 +8,14 @@ services:
     ports:
       - "8976:8976"
     env_file:
-      - ../frontend/.env
+      - ../frontend/.env.deploy
     environment:
       - NODE_ENV=deploy
-      - CLOUDFLARE_API_TOKEN=${CLOUDFLARE_API_TOKEN}
     networks:
       - beacon-network
+    volumes:
+      - ../frontend:/app
+      - /app/node_modules
 
 networks:
   beacon-network:

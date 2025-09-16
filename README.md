@@ -52,7 +52,7 @@ Offline-first Progressive Web App (PWA) built with modern web technologies and F
 1. Clone the repository
 2. Copy frontend environment configuration:
    ```bash
-   cp frontend/.env.example frontend/.env
+   cp frontend/.env.example frontend/.env.develop
    ```
 3. Start the development environment:
    ```bash
@@ -97,6 +97,8 @@ Start preview environment:
 docker compose -f infra/docker-compose-preview.yml up --build
 ```
 
+Make sure that the `.env.preview` configuration exists for the frontend
+
 ## Production Deployment
 
 ### Frontend
@@ -112,6 +114,8 @@ good at depends_on and sometimes you may need to run the preview config twice fo
    ```bash
    docker compose -f infra/docker-compose-deploy.yml up --build
    ```
+
+Be sure that the `.env.deploy` configuration exists for the frontend, especially for the cloudflare api key.
 
 ## IDE Integration
 

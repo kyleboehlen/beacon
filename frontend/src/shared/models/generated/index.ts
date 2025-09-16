@@ -1,2 +1,2 @@
-export { BeaconResponse } from './beacon-response';
-export { HealthCheckResponse } from './health-check-response';
+export type { BeaconResponse } from './beacon-response';
+export type { HealthCheckResponse } from './health-check-response';
