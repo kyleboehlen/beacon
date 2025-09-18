@@ -35,7 +35,7 @@ public class HealthCheckService
     
     public async Task<bool> EmailServiceConnected()
     {
-        _emailService.SendHealthCheckEmail();
+        // _emailService.SendHealthCheckEmail(); // THIS IS FOR DEBUGGING PURPOSES ONLY
         
         if (_environment.IsDevelopment())
         {
