@@ -1,0 +1,14 @@
+FROM mcr.microsoft.com/azure-cli:latest
+
+# Set working directory
+WORKDIR /workspace
+
+# Copy deployment script
+COPY deploy.sh .
+COPY .env.deploy .
+
+# Make script executable
+RUN chmod +x deploy.sh
+
+# Default command runs the deployment
+CMD ["./deploy.sh"]

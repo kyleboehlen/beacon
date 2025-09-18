@@ -8,6 +8,7 @@
             <option value="" />
           </list>
         </option>
+        <option name="commandLineOptions" value="--build" />
         <option name="sourceFilePath" value="beacon-infra/docker-compose-preview.yml" />
       </settings>
     </deployment>

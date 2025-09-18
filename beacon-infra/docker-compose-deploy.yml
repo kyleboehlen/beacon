@@ -16,6 +16,30 @@ services:
     volumes:
       - ../frontend:/app
       - /app/node_modules
+         
+  backend-deploy:
+    build:
+      context: ../backend
+      dockerfile: DockerfileDeploy
+    container_name: beacon-backend-deploy
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+    env_file:
+      - ../backend/.env.deploy
+    networks:
+      - beacon-network
+      
+  typegen:
+    build:
+      context: ..
+      dockerfile: ./backend/DockerfileTypeGen
+    container_name: beacon-typegen
+    restart: "no"
+    volumes:
+      - ../frontend/src/shared/models/generated:/typegen/generated
+      - ../backend:/app/backend
+    networks:
+      - beacon-network
 
 networks:
   beacon-network:

@@ -8,10 +8,13 @@
             <option value="" />
           </list>
         </option>
+        <option name="commandLineOptions" value="--build" />
         <option name="sourceFilePath" value="beacon-infra/docker-compose-deploy.yml" />
       </settings>
     </deployment>
     <EXTENSION ID="com.jetbrains.rider.docker.debug" isFastModeEnabled="true" isSslEnabled="false" />
-    <method v="2" />
+    <method v="2">
+      <option name="ToolBeforeRunTask" enabled="true" actionId="Tool_External Tools_docker-build-and-push.sh" />
+    </method>
   </configuration>
 </component>
