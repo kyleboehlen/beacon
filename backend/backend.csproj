@@ -11,14 +11,20 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.9" />
         <PackageReference Include="MongoDB.Driver" Version="3.5.0" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
         <PackageReference Include="Scalar.AspNetCore" Version="2.8.3" />
         <PackageReference Include="TypeGen" Version="6.0.3" />
+        <PackageReference Include="xunit" Version="2.9.3" />
     </ItemGroup>
 
     <ItemGroup>
       <Content Include="..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Features\RulesConfigurationScratchDir\Models\" />
     </ItemGroup>
 
 </Project>

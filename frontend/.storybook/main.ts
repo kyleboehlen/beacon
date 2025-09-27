@@ -1,4 +1,6 @@
 import type { StorybookConfig } from '@storybook/vue3-vite';
+import { defineConfig } from 'vite'
+import path from 'path'
 
 const config: StorybookConfig = {
   "stories": [
@@ -7,11 +9,21 @@ const config: StorybookConfig = {
   ],
   "addons": [
     "@storybook/addon-docs",
-    "@storybook/addon-onboarding"
   ],
   "framework": {
     "name": "@storybook/vue3-vite",
     "options": {}
-  }
+  },
+  viteFinal: async (config) => {
+    return defineConfig({
+      ...config,
+      resolve: {
+        ...config.resolve,
+        alias: {
+          '@': path.resolve(__dirname, '../src'),
+        },
+      },
+    })
+  },
 };
 export default config;

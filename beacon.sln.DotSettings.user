@@ -1,0 +1,13 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=818499d8_002D2034_002D4a6f_002Dab31_002Dbebd6123a443/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="GetAllPlanets_VerifyEndpointReturns200 #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::F181D637-8FE2-41D6-A661-EAFCEA05891D::net9.0::backend.tests.PlanetsUnitTests.GetAllPlanets_VerifyEndpointReturns200&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::F181D637-8FE2-41D6-A661-EAFCEA05891D::net9.0::backend.tests.PlanetsUnitTests.GetFirstPlanet_VerifyAllValuesArePresent&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::F181D637-8FE2-41D6-A661-EAFCEA05891D::net9.0::backend.tests.PlanetsUnitTests.GetPlanetByTerrarn_VerifyDesertPlanents&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=b0641b13_002D43a9_002D4666_002D97c5_002Dbcf2aebbfd30/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetAllPlanets_VerifyEndpointReturns200" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::F181D637-8FE2-41D6-A661-EAFCEA05891D::net9.0::backend.tests.PlanetsUnitTests.GetAllPlanets_VerifyEndpointReturns200&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

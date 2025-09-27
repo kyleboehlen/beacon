@@ -68,8 +68,8 @@ Note: this will also use typegen to put the generated types in `frontend/src/sha
 | Frontend | http://localhost:5173 | Main application |
 | Storybook | http://localhost:6006 | Component library |
 | API | http://localhost:5002 | Backend services |
-| API Documentation | TBD | Scalar UI |
-| Email Testing | TBD | MailPit interface |
+| API Documentation | http://localhost:5002/scalar/ | Scalar UI |
+| Email Testing | http://localhost:8025 | MailPit interface |
 
 ### Development Notes
 
