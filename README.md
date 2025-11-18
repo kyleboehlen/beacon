@@ -36,7 +36,7 @@ Offline-first Progressive Web App (PWA) built with modern web technologies and F
 - Docker Compose for orchestration
 
 **Preview & Production:**
-- MongoDB Atlas for data persistence (Azure)
+- MongoDB Atlas for data persistence
 - MailGun for email delivery
 - Cloudflare Pages for frontend hosting
 
@@ -52,24 +52,35 @@ Offline-first Progressive Web App (PWA) built with modern web technologies and F
 1. Clone the repository
 2. Copy frontend environment configuration:
    ```bash
-   cp frontend/.env.example frontend/.env.develop
+   cp frontend/.env.develop.sample frontend/.env.develop
    ```
+3. Need to install dependencies for the frontend in order for intellisense to work properly:
+   ```bash
+   pnpm i
+   ``` 
 3. Start the development environment:
    ```bash
    docker compose -f infra/docker-compose-develop.yml up --build
    ```
    
-Note: this will also use typegen to put the generated types in `frontend/src/shared/models/generated/`
+Note: this will also use TypeGen to put the generated types in `frontend/src/shared/models/generated/`
+
+Or alternatively just run the `(Develop) Compose` Rider configuration, this starts the frontend and all the other<br>
+services.<br>
+The `backend/Dockerfile` Rider configuration will build the backend and run it in a debuggable mode.
 
 ### Available Services
 
-| Service | URL | Description |
-|---------|-----|-------------|
-| Frontend | http://localhost:5173 | Main application |
-| Storybook | http://localhost:6006 | Component library |
-| API | http://localhost:5002 | Backend services |
-| API Documentation | TBD | Scalar UI |
-| Email Testing | TBD | MailPit interface |
+| Service           | URL                              | Description                                  |
+|-------------------|----------------------------------|----------------------------------------------|
+| Frontend          | http://localhost:5173            | Main application                             |
+| Storybook         | http://localhost:6006            | Component library                            |
+| API               | http://localhost:5002            | Backend services                             |
+| API Documentation | http://localhost:5002/scalar/    | Scalar UI                                    |
+| Email Testing     | http://localhost:8025            | MailPit interface                            |
+| Database          | http://localhost:27017           | MongoDB (Connect via DataGrip or equivalent) |
+| Front-end Tests   | N/A, see container logs          | Vitest                                       |
+| Type Generation   | N/A, container will run and quit | TypeGen                                      |
 
 ### Development Notes
 
