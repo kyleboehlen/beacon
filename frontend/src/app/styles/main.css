@@ -1,1 +1,21 @@
 @import "tailwindcss";
+
+@font-face {
+  font-family: 'Oxanium';
+  src: url('@/shared/assets/fonts/oxanium.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BrunoAce';
+  src: url('@/shared/assets/fonts/bruno-ace-sc.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  font-family: 'Oxanium', sans-serif;
+}

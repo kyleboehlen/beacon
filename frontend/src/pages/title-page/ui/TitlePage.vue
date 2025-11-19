@@ -1,12 +1,9 @@
 <script setup lang="ts">
-import { StarryBackground } from '@/shared/ui/starry-background'
+import { SplashTitles } from '@/widgets/splash-titles'
 </script>
 
 <template>
-<StarryBackground class="w-full h-screen" />
-  <!--  <SplashTitles />-->
+  <SplashTitles />
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

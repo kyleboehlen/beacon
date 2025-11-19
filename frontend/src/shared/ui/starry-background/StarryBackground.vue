@@ -8,7 +8,6 @@
 <style scoped>
 .stars {
   background: linear-gradient(to bottom, #000000, #0a0a0f, #050510);
-  position: relative;
   overflow: hidden;
 }
 
