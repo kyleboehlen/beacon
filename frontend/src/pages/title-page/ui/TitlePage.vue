@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { StarryBackground } from '@/widgets/starry-background'
+import { StarryBackground } from '@/shared/ui/starry-background'
 </script>
 
 <template>

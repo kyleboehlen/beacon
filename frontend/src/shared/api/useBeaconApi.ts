@@ -1,4 +1,4 @@
-import { type BeaconResponse } from '@/shared/models/generated'
+import { type BeaconResponse } from '@/shared/models'
 export const useBeaconApi = () => {
   const baseUrl = import.meta.env.VITE_BEACON_API_URL
 

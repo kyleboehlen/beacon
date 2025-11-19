@@ -1,5 +1,5 @@
 import { useBeaconApi } from '@/shared/api/useBeaconApi'
-import { type HealthCheckResponse } from '@/shared/models/generated'
+import { type HealthCheckResponse } from '@/shared/models'
 
 export const useHealthCheckApi = () => {
   const { beaconApiCall } = useBeaconApi()
