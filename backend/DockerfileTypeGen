@@ -1,6 +1,6 @@
 ﻿FROM mcr.microsoft.com/dotnet/sdk:9.0
 
-RUN dotnet tool install --global dotnet-typegen
+RUN dotnet tool install --global dotnet-typegen --version 6.0.3
 
 # Set working directory
 WORKDIR /app

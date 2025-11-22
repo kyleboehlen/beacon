@@ -6,8 +6,6 @@ const config: StorybookConfig = {
     "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"
   ],
   "addons": [
-    "@storybook/addon-docs",
-    "@storybook/addon-onboarding",
     "@storybook/addon-postcss",
   ],
   "framework": {

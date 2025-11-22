@@ -21,6 +21,8 @@ Offline-first Progressive Web App (PWA) built with modern web technologies and F
 - **Playwright** - End-to-end testing
 - **Storybook** - Component development environment
 - **ESLint & Prettier** - Code linting and formatting
+- **Preline UI** - Tailwind component templates and UI plugins
+- **Iconify** - SVGs and icon sets
 
 ### Backend
 

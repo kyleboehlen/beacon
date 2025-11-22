@@ -8,6 +8,7 @@
   },
   "include": [
     "env.d.ts",
+    "global.d.ts",
     "src/**/*",
     "src/**/*.vue",
     "vite.config.*",
