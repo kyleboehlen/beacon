@@ -25,9 +25,13 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: plugins,
     resolve: {
+      extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json'],
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url))
       },
+    },
+    optimizeDeps: {
+      include: ['preline']
     },
     test: {
       environment: 'jsdom',

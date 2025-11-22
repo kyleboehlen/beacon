@@ -38,3 +38,6 @@ storybook-static
 .env.develop
 .env.deploy
 .env.preview
+
+.pnpm-store
+.pnpm-store/*
