@@ -10,9 +10,11 @@ const router = createRouter({
   ],
 })
 
-// preline ui auto init on route change
-router.afterEach(async (to, from, failure) => {
-  if (!failure) setTimeout(() => window.HSStaticMethods.autoInit(), 100);
-});
+// Preline UI auto-init on route change
+router.afterEach((to, from, failure) => {
+  if (!failure) {
+    setTimeout(() => window.HSStaticMethods?.autoInit?.(), 100)
+  }
+})
 
 export default router
