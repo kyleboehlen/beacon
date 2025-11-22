@@ -4,12 +4,6 @@ export default {
     "./index.html",
     "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
-  theme: {
-    extend: {
-      fontFamily: {
-        'bruno': ['BrunoAce', 'sans-serif'],
-      },
-    },
-  },
+  theme: {},
   plugins: [],
 }
