@@ -10,14 +10,14 @@ public class HealthCheckService
     private readonly IMongoDatabase _database;
     private readonly EmailService _emailService;
     private static readonly HttpClient HttpClient = new HttpClient();
-    
+
     public HealthCheckService(IWebHostEnvironment environment, IMongoDatabase database, EmailService emailService)
     {
         _environment = environment;
         _database = database;
         _emailService = emailService;
     }
-    
+
     public async Task<bool> DatabaseConnected()
     {
         try
@@ -32,11 +32,11 @@ public class HealthCheckService
             return false;
         }
     }
-    
+
     public async Task<bool> EmailServiceConnected()
     {
         // _emailService.SendHealthCheckEmail(); // THIS IS FOR DEBUGGING PURPOSES ONLY
-        
+
         if (_environment.IsDevelopment())
         {
             try
@@ -44,7 +44,7 @@ public class HealthCheckService
                 // Check connection
                 HttpResponseMessage response = await HttpClient.GetAsync("http://mailpit:8025"); // only works in docker
                 response.EnsureSuccessStatusCode();
-                
+
                 return true;
             }
             catch (Exception ex)
@@ -57,7 +57,7 @@ public class HealthCheckService
         // We can assume that a production SMTP service is reliable
         return true; // If sending the email doesn't throw an exception, we assume it's working
     }
-    
+
     public string GetEnvironment()
     {
         return _environment.EnvironmentName;

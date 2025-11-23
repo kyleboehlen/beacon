@@ -31,4 +31,4 @@ app.use(router)
 app.mount('#app')
 
 // Preline UI
-import("preline/dist/index.js");
+import('preline/dist/index.js')

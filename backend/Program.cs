@@ -44,10 +44,7 @@ if (builder.Environment.IsDevelopment())
 }
 else
 {
-    builder.Services.AddSingleton<IMongoClient>(serviceProvider =>
-    {
-        return new MongoClient(connectionString);
-    });
+    builder.Services.AddSingleton<IMongoClient>(serviceProvider => { return new MongoClient(connectionString); });
 }
 
 builder.Services.AddScoped<IMongoDatabase>(serviceProvider =>
@@ -67,7 +64,7 @@ if (app.Environment.IsDevelopment())
 
 if (app.Environment.IsProduction())
 {
-    app.UseHttpsRedirection();   
+    app.UseHttpsRedirection();
 }
 
 app.UseCors();

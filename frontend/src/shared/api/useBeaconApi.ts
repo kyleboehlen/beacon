@@ -3,13 +3,17 @@ export const useBeaconApi = () => {
   const baseUrl = import.meta.env.VITE_BEACON_API_URL
 
   // API call returns the payload of type R if successful, otherwise returns false
-  const beaconApiCall = async <T, R>(method: 'GET' | 'POST', endpoint: string, body?: T): Promise<R | boolean> => {
+  const beaconApiCall = async <T, R>(
+    method: 'GET' | 'POST',
+    endpoint: string,
+    body?: T,
+  ): Promise<R | boolean> => {
     const response = await fetch(baseUrl + endpoint, {
       method,
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      body: body ? JSON.stringify(body) : undefined
+      body: body ? JSON.stringify(body) : undefined,
     })
 
     if (!response.ok) {
@@ -25,6 +29,6 @@ export const useBeaconApi = () => {
   }
 
   return {
-    beaconApiCall
+    beaconApiCall,
   }
 }

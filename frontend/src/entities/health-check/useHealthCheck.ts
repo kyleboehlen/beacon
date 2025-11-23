@@ -9,19 +9,19 @@ export const useHealthCheck = () => {
   const envStyle = 'background-color: blue; color: white; padding: 2px 8px; border-radius: 3px;'
 
   const consoleLogHealthStatus = async (): Promise<void> => {
-      const response = await getHealthCheck()
+    const response = await getHealthCheck()
 
-      if (!!response) {
-        const dbStatus = response.database ? 'ONLINE' : 'OFFLINE'
-        const emailStatus = response.emailService ? 'ONLINE' : 'OFFLINE'
-        const env = response.environment.toUpperCase()
+    if (!!response) {
+      const dbStatus = response.database ? 'ONLINE' : 'OFFLINE'
+      const emailStatus = response.emailService ? 'ONLINE' : 'OFFLINE'
+      const env = response.environment.toUpperCase()
 
-        console.log(`%cDatabase: ${dbStatus}`, response.database ? onlineStyle : offlineStyle)
-        console.log(`%cEmail: ${emailStatus}`, response.emailService ? onlineStyle : offlineStyle)
-        console.log(`%cEnvironment: ${env}`, envStyle)
-      } else {
-        console.log(`%cAPI UNREACHABLE`, offlineStyle)
-      }
+      console.log(`%cDatabase: ${dbStatus}`, response.database ? onlineStyle : offlineStyle)
+      console.log(`%cEmail: ${emailStatus}`, response.emailService ? onlineStyle : offlineStyle)
+      console.log(`%cEnvironment: ${env}`, envStyle)
+    } else {
+      console.log(`%cAPI UNREACHABLE`, offlineStyle)
+    }
   }
 
   return { consoleLogHealthStatus }

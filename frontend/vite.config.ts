@@ -17,7 +17,7 @@ export default defineConfig(({ mode }) => {
   if (isStorybook) {
     plugins = [vue(), tailwindcss()]
   } else if (isDeploy || isPreview) {
-    plugins =[vue(), tailwindcss()]
+    plugins = [vue(), tailwindcss()]
   } else {
     plugins = [vue(), tailwindcss(), vueDevTools()]
   }
@@ -27,11 +27,11 @@ export default defineConfig(({ mode }) => {
     resolve: {
       extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json'],
       alias: {
-        '@': fileURLToPath(new URL('./src', import.meta.url))
+        '@': fileURLToPath(new URL('./src', import.meta.url)),
       },
     },
     optimizeDeps: {
-      include: ['preline']
+      include: ['preline'],
     },
     test: {
       environment: 'jsdom',

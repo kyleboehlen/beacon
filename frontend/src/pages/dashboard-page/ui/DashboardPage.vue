@@ -7,7 +7,7 @@ consoleLogHealthStatus()
 </script>
 
 <template>
-<StarryBackground class="w-full h-screen" />
+  <StarryBackground class="w-full h-screen" />
 
   <!--  <DashboardChrome>-->
   <!--    <GameOverview />-->

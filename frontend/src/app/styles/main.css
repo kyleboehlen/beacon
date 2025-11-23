@@ -2,6 +2,7 @@
 
 /* Preline UI */
 @import "preline/variants.css";
+
 @source "../../node_modules/preline/dist/*.js";
 
 /* Optional Preline UI Datepicker Plugin */
