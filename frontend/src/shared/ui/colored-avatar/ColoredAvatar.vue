@@ -58,7 +58,12 @@ const handleKeyboardActivation = (event: KeyboardEvent) => {
       @keydown.enter="handleKeyboardActivation"
       @keydown.space.prevent="handleKeyboardActivation"
     >
-      <Icon icon="si:rocket-duotone" class="w-full h-full" :class="avatarColor" />
+      <Icon
+        icon="si:rocket-duotone"
+        class="w-full h-full"
+        :class="avatarColor"
+        data-test-id="avatar-icon"
+      />
     </div>
 
     <div
