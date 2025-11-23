@@ -138,7 +138,7 @@ Be sure that the `.env.deploy` configuration exists for the frontend, especially
 
 ### Database
 
-Theoritcally you could host MongoDB anywhere. We're using MongoDB Atlas. There is a free cluster for preview, and a <br>
+Theoretically you could host MongoDB anywhere. We're using MongoDB Atlas. There is a free cluster for preview, and a <br>
 flex cluster for production. The users are scoped to the cluster, and you can get the connection string from the Atlas
 UI.<br>
 
@@ -176,7 +176,7 @@ static IP or NAT gateway. If this happens you will need to update the IP whiteli
 will <br>
 be listed in the json returned during the "Deploying to Azure Container Apps..." step of the deployment process in
 the <br>
-deployment container logs. You should also add this to Mailgun for extre security.
+deployment container logs. You should also add this to Mailgun for extra security.
 
 If you need to make changes to the infrastructure, it's best to make those changes in the deploy.sh script.
 
