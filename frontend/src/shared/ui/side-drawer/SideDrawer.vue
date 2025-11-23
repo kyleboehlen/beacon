@@ -32,12 +32,6 @@ const close = () => {
   triggerElement.value?.focus()
 }
 
-const handleEscape = (event: KeyboardEvent) => {
-  if (event.key === 'Escape' && isOpen.value) {
-    close()
-  }
-}
-
 watch(isOpen, (newValue) => {
   // Drawer is opening
   if (newValue && drawerRef.value) {
@@ -46,22 +40,22 @@ watch(isOpen, (newValue) => {
       // Focus the drawer for accessibility
       drawerRef.value?.focus()
       // Create a focus trap to prevent tabbing out of the drawer
+      // Let focus-trap handle Escape key to close the drawer
       focusTrap = createFocusTrap(drawerRef.value!, {
         initialFocus: drawerRef.value!,
-        escapeDeactivates: false,
+        escapeDeactivates: true,
+        onDeactivate: () => {
+          close()
+        },
       })
       focusTrap.activate()
     }, 100)
-    // Allow for closing the drawer with Escape key
-    document.addEventListener('keydown', handleEscape)
   } else {
     // Remove the focus trap when drawer is closed
     if (focusTrap) {
       focusTrap.deactivate()
       focusTrap = null
     }
-    // Remove the Escape key event listener
-    document.removeEventListener('keydown', handleEscape)
   }
 })
 
@@ -70,7 +64,7 @@ onUnmounted(() => {
   if (focusTrap) {
     focusTrap.deactivate()
   }
-  document.removeEventListener('keydown', handleEscape)
+  // Restore background scrolling
   document.body.style.overflow = ''
 })
 
