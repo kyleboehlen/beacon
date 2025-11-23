@@ -16,7 +16,7 @@ export const Default: Story = {
   render: () => ({
     components: { SideDrawer },
     setup() {
-      const drawer = ref()
+      const drawer = ref<InstanceType<typeof SideDrawer>>()
       return { drawer }
     },
     template: `
@@ -46,7 +46,7 @@ export const CommandCenterExample: Story = {
   render: () => ({
     components: { SideDrawer },
     setup() {
-      const drawer = ref()
+      const drawer = ref<InstanceType<typeof SideDrawer>>()
       return { drawer }
     },
     template: `
