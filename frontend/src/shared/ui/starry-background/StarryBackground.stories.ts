@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import StarryBackground from './StarryBackground.vue'
 
 const meta = {
-  title: 'shared/ui/StarryBackground',
+  title: 'Shared/StarryBackground',
   component: StarryBackground,
   parameters: {
     layout: 'fullscreen',
