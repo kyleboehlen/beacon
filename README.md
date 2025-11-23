@@ -159,7 +159,7 @@ up a container to run the az cli deployment commands. However, there are a coupl
 3. You need a service principal with contributor access to the resource group. You can create one with the following
    command<br>
 
-```
+```bash
 az ad sp create-for-rbac --name "beacon-prod-sp-eastus2" --role contributor --scopes "/subscriptions/3ad1253a-fbd0-49f9-a88d-0df126c2c2a3/resourceGroups/beacon-prod-rg-eastus2"
 ```
 
