@@ -46,6 +46,32 @@ Offline-first Progressive Web App (PWA) built with modern web technologies and F
 - MailGun for email delivery
 - Cloudflare Pages for frontend hosting
 
+## Accessibility
+
+BEACON is built with accessibility in mind to ensure the application is usable by all players, including those using assistive technologies.
+
+### Frontend Accessibility Features
+
+- **Semantic HTML** - Proper use of HTML elements and ARIA attributes
+- **Keyboard Navigation** - Full keyboard accessibility for all interactive elements
+- **Screen Reader Support** - Compatible with NVDA, JAWS, and VoiceOver
+- **Color Contrast** - Tailwind CSS classes ensure WCAG 2.1 AA compliance
+- **Focus Management** - Clear visual focus indicators and logical tab order
+- **Responsive Design** - Accessible across different screen sizes and zoom levels
+
+### Accessibility Testing
+
+- **Unit Tests** - Vitest tests include accessibility assertions and checks
+
+### Accessibility Guidelines
+
+When contributing to the frontend:
+- Use semantic HTML elements (`<button>`, `<nav>`, `<main>`, etc.)
+- Provide descriptive `alt` text for images and icons
+- Use ARIA labels and descriptions where appropriate
+- Maintain logical heading hierarchy (h1 → h2 → h3)
+- Include vitest accessibility tests for new components and features
+
 ## Development Setup
 
 ### Prerequisites
