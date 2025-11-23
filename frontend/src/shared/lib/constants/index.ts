@@ -4,5 +4,5 @@ export {
   getPlayerColorBorder,
   getPlayerColorText,
   getPlayerColorBackground,
-  getAccessabiltyColor,
+  getAccessibilityColor,
 } from './playerColors'

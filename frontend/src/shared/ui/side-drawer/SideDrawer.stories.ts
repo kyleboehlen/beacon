@@ -10,6 +10,8 @@ const meta: Meta<typeof SideDrawer> = {
 
 export default meta
 
+type Story = StoryObj<typeof SideDrawer>
+
 export const Default: Story = {
   render: () => ({
     components: { SideDrawer },
@@ -39,8 +41,6 @@ export const Default: Story = {
     `,
   }),
 }
-
-type Story = StoryObj<typeof SideDrawer>
 
 export const CommandCenterExample: Story = {
   render: () => ({

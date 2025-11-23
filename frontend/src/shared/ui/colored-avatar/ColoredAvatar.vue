@@ -4,7 +4,7 @@ import { computed, type PropType, ref } from 'vue'
 import {
   getPlayerColorBorder,
   getPlayerColorText,
-  getAccessabiltyColor,
+  getAccessibilityColor,
   PLAYER_COLORS,
   type PlayerColor,
 } from '@/shared/lib/constants'
@@ -60,7 +60,7 @@ const handleKeyboardActivation = (event: KeyboardEvent) => {
       :role="props.allowColorChange ? 'button' : undefined"
       :aria-label="
         props.allowColorChange
-          ? `Change color. Current color: ${getAccessabiltyColor(color)}`
+          ? `Change color. Current color: ${getAccessibilityColor(color)}`
           : undefined
       "
       :aria-haspopup="props.allowColorChange ? 'dialog' : undefined"
@@ -88,7 +88,7 @@ const handleKeyboardActivation = (event: KeyboardEvent) => {
             :key="colorOption"
             @click="changeColor(colorOption)"
             :class="[buttonBaseClasses, `bg-${colorOption}`]"
-            :aria-label="`Select ${getAccessabiltyColor(colorOption)} color`"
+            :aria-label="`Select ${getAccessibilityColor(colorOption)} color`"
             :aria-pressed="color === colorOption"
           >
             <span v-if="color === colorOption" class="sr-only">(current)</span>
