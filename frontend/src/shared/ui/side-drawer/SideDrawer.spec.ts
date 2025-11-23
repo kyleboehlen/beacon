@@ -133,23 +133,4 @@ describe('SideDrawer', () => {
 
     wrapper.unmount()
   })
-
-  it('closes with close button and proper aria-label', async () => {
-    const wrapper = mount(SideDrawer, {
-      attachTo: document.body,
-    })
-
-    wrapper.vm.open()
-    await wrapper.vm.$nextTick()
-
-    const closeButton = document.querySelector('button[aria-label="Close drawer"]') as HTMLElement
-    expect(closeButton).not.toBeNull()
-
-    closeButton?.click()
-    await wrapper.vm.$nextTick()
-
-    expect(document.querySelector('.fixed')).toBeNull()
-
-    wrapper.unmount()
-  })
 })

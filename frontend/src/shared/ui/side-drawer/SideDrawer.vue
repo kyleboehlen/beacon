@@ -95,20 +95,6 @@ defineExpose({ open, close })
             <slot name="header">
               <h3 :id="props.headerId" class="font-bold text-gray-800 dark:text-white">Title</h3>
             </slot>
-            <button
-              @click="close"
-              aria-label="Close drawer"
-              class="p-2 hover:bg-gray-100 dark:hover:bg-neutral-700 rounded"
-            >
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
           </div>
 
           <div class="flex-1 overflow-y-auto p-4">
