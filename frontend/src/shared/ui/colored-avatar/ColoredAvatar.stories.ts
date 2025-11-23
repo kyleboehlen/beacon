@@ -11,7 +11,7 @@ const meta: Meta<typeof ColoredAvatar> = {
       return { args }
     },
     template:
-      '<div class="w-full h-50 bg-black flex items-center pl-8"><ColoredAvatar v-bind="args" /></div>',
+      '<div class="w-full h-48 bg-black flex items-center pl-8"><ColoredAvatar v-bind="args" /></div>',
   }),
   argTypes: {
     initialColor: {
@@ -32,7 +32,7 @@ export const Default: Story = {
   args: {
     initialColor: 'white',
     allowColorChange: true,
-    class: 'w-25 h-25',
+    class: 'w-24 h-24',
   }
 }
 
@@ -40,6 +40,6 @@ export const DisableChangingColor: Story = {
   args: {
     initialColor: 'blue-700',
     allowColorChange: false,
-    class: 'w-25 h-25',
+    class: 'w-24 h-24',
   }
 }
