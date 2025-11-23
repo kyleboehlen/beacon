@@ -19,11 +19,6 @@ setup((app) => {
         window.HSStaticMethods.autoInit()
       }
     },
-    updated() {
-      if (typeof window !== 'undefined' && window.HSStaticMethods) {
-        window.HSStaticMethods.autoInit()
-      }
-    },
   })
 })
 
