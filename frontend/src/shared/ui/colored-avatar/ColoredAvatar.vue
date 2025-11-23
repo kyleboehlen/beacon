@@ -45,9 +45,8 @@ const handleKeyboardActivation = (event: KeyboardEvent) => {
     :class="[
       'inline-block rounded-full border-4 bg-transparent p-2',
       {
-        'hs-tooltip [--trigger:click] sm:[--placement:right]': props.allowColorChange,
+        'hs-tooltip [--trigger:click] sm:[--placement:right] hover:cursor-pointer': props.allowColorChange,
         [borderColor]: true,
-        'hover:cursor-pointer': props.allowColorChange,
       },
     ]"
   >
