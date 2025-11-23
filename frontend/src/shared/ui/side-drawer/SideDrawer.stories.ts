@@ -55,7 +55,7 @@ export const CommandCenterExample: Story = {
           @click="drawer.open()"
           class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
         >
-          ≡ Open Command Center
+          Open Command Center
         </button>
 
         <SideDrawer ref="drawer">

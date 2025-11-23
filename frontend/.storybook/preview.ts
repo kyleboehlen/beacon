@@ -30,6 +30,7 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
+    viewMode: 'story',
   },
 }
 
