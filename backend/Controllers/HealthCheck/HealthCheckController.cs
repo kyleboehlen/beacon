@@ -14,7 +14,7 @@ public class HealthCheckController : ControllerBase
     {
         _healthCheckService = healthCheckService;
     }
-    
+
     [HttpGet(Name = "HealthCheck")]
     public async Task<BeaconResponse<HealthCheckResponse>> Get()
     {
@@ -24,7 +24,7 @@ public class HealthCheckController : ControllerBase
             EmailService = await _healthCheckService.EmailServiceConnected(),
             Environment = _healthCheckService.GetEnvironment(),
         };
-        
+
         return new BeaconResponse<HealthCheckResponse>()
         {
             Success = true,

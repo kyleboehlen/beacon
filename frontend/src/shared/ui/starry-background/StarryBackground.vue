@@ -33,7 +33,9 @@
     75vw 65vh 0 #fff,
     95vw 85vh 0 #fff,
     5vw 80vh 0 #fff;
-  animation: twinkle1 3.5s infinite alternate, twinkle3 5s infinite alternate;
+  animation:
+    twinkle1 3.5s infinite alternate,
+    twinkle3 5s infinite alternate;
 }
 
 .stars2::before {
@@ -107,22 +109,38 @@
 }
 
 @keyframes twinkle1 {
-  0% { opacity: 0.4; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 @keyframes twinkle2 {
-  0% { opacity: 0.35; }
-  100% { opacity: 0.9; }
+  0% {
+    opacity: 0.35;
+  }
+  100% {
+    opacity: 0.9;
+  }
 }
 
 @keyframes twinkle3 {
-  0% { opacity: 0.25; }
-  100% { opacity: 0.8; }
+  0% {
+    opacity: 0.25;
+  }
+  100% {
+    opacity: 0.8;
+  }
 }
 
 @keyframes twinkle4 {
-  0% { opacity: 0.7; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 </style>

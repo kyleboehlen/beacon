@@ -33,7 +33,7 @@ export const Default: Story = {
     initialColor: 'white',
     allowColorChange: true,
     class: 'w-24 h-24',
-  }
+  },
 }
 
 export const DisableChangingColor: Story = {
@@ -41,5 +41,5 @@ export const DisableChangingColor: Story = {
     initialColor: 'blue-700',
     allowColorChange: false,
     class: 'w-24 h-24',
-  }
+  },
 }

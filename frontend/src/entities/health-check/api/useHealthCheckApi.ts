@@ -11,7 +11,7 @@ export const useHealthCheckApi = () => {
       return {
         environment: 'unknown',
         database: false,
-        emailService: false
+        emailService: false,
       } as HealthCheckResponse
     }
 
@@ -19,6 +19,6 @@ export const useHealthCheckApi = () => {
   }
 
   return {
-    getHealthCheck
+    getHealthCheck,
   }
 }

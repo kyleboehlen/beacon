@@ -7,17 +7,17 @@ public class EmailService
 {
     private readonly SmtpClient _smtpClient;
     private readonly IConfiguration _configuration;
-    
+
     public EmailService(IConfiguration configuration)
     {
         _configuration = configuration;
-        
+
         string? password = _configuration["SMTP:Password"];
         if (string.IsNullOrEmpty(password))
         {
             password = Environment.GetEnvironmentVariable("SMTP_PASSWORD");
         }
-        
+
         _smtpClient = new SmtpClient(_configuration["SMTP:Host"])
         {
             Port = _configuration.GetValue<int>("SMTP:Port"),
@@ -37,6 +37,6 @@ public class EmailService
         };
         mailMessage.To.Add(_configuration["SMTP:HealthCheckTo"]);
 
-        _smtpClient.Send(mailMessage);  
+        _smtpClient.Send(mailMessage);
     }
 }
