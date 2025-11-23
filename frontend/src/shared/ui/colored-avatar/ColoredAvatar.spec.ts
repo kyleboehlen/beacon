@@ -55,7 +55,8 @@ describe('ColoredAvatar', () => {
 
     // Cast to HTMLElement and spy on click method
     const clickSpy = vi.fn()
-    ;(toggle.element as HTMLElement).click = clickSpy
+    const toggleElement = toggle.element as HTMLElement
+    toggleElement.click = clickSpy
 
     await toggle.trigger('keydown.enter')
     expect(clickSpy).toHaveBeenCalled()
