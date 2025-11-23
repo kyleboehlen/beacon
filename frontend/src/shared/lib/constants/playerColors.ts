@@ -12,3 +12,7 @@ export const getPlayerColorText = (color: PlayerColor): string => getPlayerColor
 
 export const getPlayerColorBackground = (color: PlayerColor): string =>
   getPlayerColorClass(color, 'bg')
+
+export const getAccessabiltyColor = (color: PlayerColor): string => {
+  return color.split('-')[0]
+}
