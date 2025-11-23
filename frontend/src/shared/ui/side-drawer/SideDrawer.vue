@@ -119,3 +119,38 @@ defineExpose({ open, close })
     </Transition>
   </Teleport>
 </template>
+
+<style scoped>
+.drawer-enter-active,
+.drawer-leave-active {
+  transition: opacity 300ms ease;
+}
+
+.drawer-enter-active .relative,
+.drawer-leave-active .relative {
+  transition: transform 300ms ease;
+}
+
+.drawer-enter-from,
+.drawer-leave-to {
+  opacity: 0;
+}
+
+.drawer-enter-from .relative {
+  transform: translateX(100%);
+}
+
+.drawer-leave-to .relative {
+  transform: translateX(100%);
+}
+
+.drawer-enter-to,
+.drawer-leave-from {
+  opacity: 1;
+}
+
+.drawer-enter-to .relative,
+.drawer-leave-from .relative {
+  transform: translateX(0);
+}
+</style>
