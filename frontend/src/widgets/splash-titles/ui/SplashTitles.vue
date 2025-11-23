@@ -1,6 +1,36 @@
 <script setup lang="ts">
 import { StarryBackground } from '@/shared/ui/starry-background'
 import { Icon } from '@iconify/vue'
+import { onMounted, onUnmounted } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const handleKeyPress = (event: KeyboardEvent) => {
+  // Ignore modifier-only keys
+  if (
+    event.key === 'Shift' ||
+    event.key === 'Control' ||
+    event.key === 'Alt' ||
+    event.key === 'Meta'
+  ) {
+    return
+  }
+  // Navigate to the dashboard view (DashboardPage)
+  router.push({ name: 'dashboard' })
+}
+
+const handleClick = () => {
+  router.push({ name: 'dashboard' })
+}
+
+onMounted(() => {
+  window.addEventListener('keydown', handleKeyPress)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeyPress)
+})
 </script>
 
 <template>
@@ -13,7 +43,12 @@ import { Icon } from '@iconify/vue'
         aria-hidden="true"
       />
       <span class="text-white/90 font-[BrunoAce] text-9xl">B.E.A.C.O.N.</span>
-      <span class="text-white/80 mt-4 text-xl">Press any button to continue...</span>
+      <button
+        @click="handleClick"
+        class="text-white/80 mt-4 text-xl hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white/50 px-6 py-3 rounded hover:cursor-pointer"
+      >
+        Press any key or click to continue...
+      </button>
     </div>
   </div>
 </template>

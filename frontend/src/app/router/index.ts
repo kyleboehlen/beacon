@@ -1,12 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { TitlePage } from '@/pages/title-page'
-import { HomePage } from '@/pages/home-page'
+import { DashboardPage } from '@/pages/dashboard-page'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    { path: '/', component: TitlePage },
-    { path: '/dashboard', component: HomePage },
+    { path: '/', name: 'root', component: TitlePage },
+    { path: '/dashboard', name: 'dashboard', component: DashboardPage },
   ],
 })
 
