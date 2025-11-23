@@ -1,6 +1,22 @@
 <script setup lang="ts">
 import { StarryBackground } from '@/shared/ui/starry-background'
 import { Icon } from '@iconify/vue'
+import { onMounted, onUnmounted } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const handleKeyPress = () => {
+  router.push('/dashboard')
+}
+
+onMounted(() => {
+  window.addEventListener('keydown', handleKeyPress)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeyPress)
+})
 </script>
 
 <template>
