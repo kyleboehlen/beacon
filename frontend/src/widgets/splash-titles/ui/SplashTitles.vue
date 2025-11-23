@@ -16,12 +16,12 @@ const handleKeyPress = (event: KeyboardEvent) => {
   ) {
     return
   }
-  // Navigate to the dashboard view (HomePage)
-  router.push('/dashboard')
+  // Navigate to the dashboard view (DashboardPage)
+  router.push({ name: 'dashboard' })
 }
 
 const handleClick = () => {
-  router.push('/dashboard')
+  router.push({ name: 'dashboard' })
 }
 
 onMounted(() => {
