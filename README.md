@@ -156,7 +156,7 @@ good at depends_on and sometimes you may need to run the preview config twice fo
 2. Add Cloudflare API key
 3. Deploy using Docker Compose:
    ```bash
-   docker compose -f infra/docker-compose-deploy.yml up --build
+   docker compose -f beacon-infra/docker-compose-deploy.yml up --build
    ``` 
    (or just use the jetbrains run configuration)
 
