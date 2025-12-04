@@ -48,7 +48,7 @@ services:
     networks:
       - beacon-network
     env_file:
-      - ../backend/.env      
+      - ../backend/.env.preview      
     
   typegen:
     build:
