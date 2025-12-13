@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, nextTick } from 'vue'
 
 interface Tab {
   key: string
@@ -62,7 +62,7 @@ const handleKeyDown = (event: KeyboardEvent, currentIndex: number) => {
   const newTabKey = props.tabs[newIndex].key
   selectTab(newTabKey)
   // Focus the new tab after selection
-  setTimeout(() => {
+  nextTick(() => {
     tabRefs.value[newTabKey]?.focus()
   }, 0)
 }
@@ -87,7 +87,7 @@ const handleKeyDown = (event: KeyboardEvent, currentIndex: number) => {
         'disabled:opacity-50 disabled:pointer-events-none',
         tab.styles || '',
         modelValue === tab.key
-          ? 'bg-white/10 text-white border-b-1 border-b-white'
+          ? 'bg-white/10 text-white border-b-2 border-b-white'
           : 'bg-transparent text-gray-400 hover:text-gray-200 hover:bg-white/5 border-b-2 border-b-transparent',
          modelValue === tab.key
           ? tab.activeStyles || ''

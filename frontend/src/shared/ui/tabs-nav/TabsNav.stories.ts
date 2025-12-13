@@ -14,7 +14,7 @@ type Story = StoryObj<typeof TabsNav>
 
 export const Default: Story = {
   render: () => ({
-    components: { Tabs: TabsNav },
+    components: { TabsNav },
     setup() {
       const activeTab = ref('fleet')
       const tabs = [

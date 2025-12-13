@@ -9,10 +9,6 @@ describe('TabsNav', () => {
     { key: 'tab3', label: 'Tab 3' },
   ]
 
-  beforeEach(() => {
-    document.body.innerHTML = ''
-  })
-
   it('renders all tab labels', () => {
     const wrapper = mount(TabsNav, {
       props: {
