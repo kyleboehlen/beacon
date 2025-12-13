@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { StarryBackground } from '@/shared/ui/starry-background'
 import { useHealthCheck } from '@/entities/health-check'
-import DashboardChrome from '@/widgets/dashboard-chrome/DashboardChrome.vue'
+import ContainerChrome from '@/shared/ui/container-chrome/ContainerChrome.vue'
 
 const { consoleLogHealthStatus } = useHealthCheck()
 consoleLogHealthStatus()
@@ -10,7 +10,7 @@ consoleLogHealthStatus()
 <template>
   <StarryBackground class="w-full h-screen" />
 
-    <DashboardChrome>
+    <ContainerChrome>
 <!--      <GameOverview />-->
-    </DashboardChrome>
+    </ContainerChrome>
 </template>
