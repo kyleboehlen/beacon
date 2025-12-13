@@ -1,3 +1,4 @@
 .env
 .env.deploy
 .env.deploy.bak
+.env.preview
