@@ -38,12 +38,10 @@ const handleKeyDown = (event: KeyboardEvent, currentIndex: number) => {
 
   switch (event.key) {
     case 'ArrowRight':
-    case 'ArrowDown':
       event.preventDefault()
       newIndex = (currentIndex + 1) % props.tabs.length
       break
     case 'ArrowLeft':
-    case 'ArrowUp':
       event.preventDefault()
       newIndex = (currentIndex - 1 + props.tabs.length) % props.tabs.length
       break
@@ -64,7 +62,7 @@ const handleKeyDown = (event: KeyboardEvent, currentIndex: number) => {
   // Focus the new tab after selection
   nextTick(() => {
     tabRefs.value[newTabKey]?.focus()
-  }, 0)
+  })
 }
 </script>
 

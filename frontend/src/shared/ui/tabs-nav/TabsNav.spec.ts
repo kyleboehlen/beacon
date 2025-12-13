@@ -293,32 +293,4 @@ describe('TabsNav', () => {
 
     expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['tab3'])
   })
-
-  it('navigates with ArrowDown key (same as ArrowRight)', async () => {
-    const wrapper = mount(TabsNav, {
-      props: {
-        tabs: defaultTabs,
-        modelValue: 'tab1',
-      },
-    })
-
-    const buttons = wrapper.findAll('button')
-    await buttons[0].trigger('keydown', { key: 'ArrowDown' })
-
-    expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['tab2'])
-  })
-
-  it('navigates with ArrowUp key (same as ArrowLeft)', async () => {
-    const wrapper = mount(TabsNav, {
-      props: {
-        tabs: defaultTabs,
-        modelValue: 'tab2',
-      },
-    })
-
-    const buttons = wrapper.findAll('button')
-    await buttons[1].trigger('keydown', { key: 'ArrowUp' })
-
-    expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['tab1'])
-  })
 })
