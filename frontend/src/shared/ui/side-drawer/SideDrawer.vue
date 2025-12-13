@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, onUnmounted } from 'vue'
+import { ref, watch, onUnmounted, nextTick } from 'vue'
 import { createFocusTrap } from 'focus-trap'
 import type { FocusTrap } from 'focus-trap'
 
@@ -36,7 +36,7 @@ watch(isOpen, (newValue) => {
   // Drawer is opening
   if (newValue && drawerRef.value) {
     // Wait for animations to start before focusing
-    setTimeout(() => {
+    nextTick(() => {
       // Focus the drawer for accessibility
       drawerRef.value?.focus()
       // Create a focus trap to prevent tabbing out of the drawer
