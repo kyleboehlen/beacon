@@ -18,11 +18,17 @@ const props = withDefaults(
   },
 )
 
+const emit = defineEmits<{
+  opened: []
+  closed: []
+}>()
+
 const open = () => {
   triggerElement.value = document.activeElement as HTMLElement
   isOpen.value = true
   // Prevent background scrolling when drawer is open
   document.body.style.overflow = 'hidden'
+  emit('opened')
 }
 
 const close = () => {
@@ -30,6 +36,7 @@ const close = () => {
   // Restore background scrolling when drawer is closed
   document.body.style.overflow = ''
   triggerElement.value?.focus()
+  emit('closed')
 }
 
 watch(isOpen, (newValue) => {
@@ -49,7 +56,7 @@ watch(isOpen, (newValue) => {
         },
       })
       focusTrap.activate()
-    }, 100)
+    })
   } else {
     // Remove the focus trap when drawer is closed
     if (focusTrap) {
@@ -107,34 +114,41 @@ defineExpose({ open, close })
 </template>
 
 <style scoped>
+/* noinspection CssUnusedSymbol */
 .drawer-enter-active,
 .drawer-leave-active {
   transition: opacity 300ms ease;
 }
 
+/* noinspection CssUnusedSymbol */
 .drawer-enter-active .relative,
 .drawer-leave-active .relative {
   transition: transform 300ms ease;
 }
 
+/* noinspection CssUnusedSymbol */
 .drawer-enter-from,
 .drawer-leave-to {
   opacity: 0;
 }
 
+/* noinspection CssUnusedSymbol */
 .drawer-enter-from .relative {
   transform: translateX(100%);
 }
 
+/* noinspection CssUnusedSymbol */
 .drawer-leave-to .relative {
   transform: translateX(100%);
 }
 
+/* noinspection CssUnusedSymbol */
 .drawer-enter-to,
 .drawer-leave-from {
   opacity: 1;
 }
 
+/* noinspection CssUnusedSymbol */
 .drawer-enter-to .relative,
 .drawer-leave-from .relative {
   transform: translateX(0);

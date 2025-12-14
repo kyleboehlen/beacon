@@ -14,8 +14,6 @@ import { GameSettingsPanel } from '@/features/game-settings-panel'
 import { DashboardSideDrawerContent } from '@/features/dashboard-side-drawer-content'
 
 const activePanel = ref('dashboard')
-const drawerRef = ref<InstanceType<typeof SideDrawer> | null>(null)
-
 const tabs = [
   { key: 'dashboard', label: 'Dashboard' },
   { key: 'econ', label: 'Econ' },
@@ -24,8 +22,19 @@ const tabs = [
   { key: 'battle', label: 'Battle' },
 ]
 
+const drawerRef = ref<InstanceType<typeof SideDrawer> | null>(null)
+const isDrawerOpen = ref(false)
+
 const openDrawer = () => {
   drawerRef.value?.open()
+}
+
+const handleDrawerOpened = () => {
+  isDrawerOpen.value = true
+}
+
+const handleDrawerClosed = () => {
+  isDrawerOpen.value = false
 }
 </script>
 
@@ -45,21 +54,27 @@ const openDrawer = () => {
 
       <!-- Settings Icon -->
       <button
+        id="settings-button"
         class="flex-shrink-0 h-full w-12 mx-2 flex items-center justify-center text-gray-400 hover:text-white transition-colors"
         :class="[activePanel === 'settings' ? 'text-white' : '']"
+        type="button"
         aria-label="Settings"
+        :aria-pressed="activePanel === 'settings'"
+        aria-controls="settings-panel"
         @click="activePanel = 'settings'"
       >
-        <Icon icon="streamline-sharp:horizontal-toggle-button" class="h-full w-full" />
+        <Icon icon="streamline-sharp:horizontal-toggle-button" class="h-full w-full" aria-hidden="true" />
       </button>
 
       <!-- Hamburger Menu -->
       <button
         class="flex-shrink-0 h-full w-12 mx-2 mr-6 flex items-center justify-center text-gray-400 hover:text-white transition-colors"
+        type="button"
         aria-label="Menu"
+        :aria-expanded="isDrawerOpen"
         @click="openDrawer"
       >
-        <Icon icon="streamline-sharp:wrap-arch" class="h-full w-full" />
+        <Icon icon="streamline-sharp:wrap-arch" class="h-full w-full" aria-hidden="true" />
       </button>
     </header>
 
@@ -67,27 +82,74 @@ const openDrawer = () => {
     <div class="flex-1 relative">
       <ContainerChrome :showSideDecorations="true">
         <!-- Dashboard Panel -->
-        <DashboardPanel v-show="activePanel === 'dashboard'" class="w-full h-full" />
+        <DashboardPanel
+          v-show="activePanel === 'dashboard'"
+          id="tab-panel-dashboard"
+          role="tabpanel"
+          aria-labelledby="tab-dashboard"
+          :aria-hidden="activePanel !== 'dashboard'"
+          class="w-full h-full"
+        />
 
         <!-- Econ Panel -->
-        <EconPanel v-show="activePanel === 'econ'" class="w-full h-full" />
+        <EconPanel
+          v-show="activePanel === 'econ'"
+          id="tab-panel-econ"
+          role="tabpanel"
+          aria-labelledby="tab-econ"
+          :aria-hidden="activePanel !== 'econ'"
+          class="w-full h-full"
+        />
 
         <!-- Fleet Panel -->
-        <FleetPanel v-show="activePanel === 'fleet'" class="w-full h-full" />
+        <FleetPanel
+          v-show="activePanel === 'fleet'"
+          id="tab-panel-fleet"
+          role="tabpanel"
+          aria-labelledby="tab-fleet"
+          :aria-hidden="activePanel !== 'fleet'"
+          class="w-full h-full"
+        />
 
         <!-- Intel Panel -->
-        <IntelPanel v-show="activePanel === 'intel'" class="w-full h-full" />
+        <IntelPanel
+          v-show="activePanel === 'intel'"
+          id="tab-panel-intel"
+          role="tabpanel"
+          aria-labelledby="tab-intel"
+          :aria-hidden="activePanel !== 'intel'"
+          class="w-full h-full"
+        />
 
         <!-- Battle Panel -->
-        <BattlePanel v-show="activePanel === 'battle'" class="w-full h-full" />
+        <BattlePanel
+          v-show="activePanel === 'battle'"
+          id="tab-panel-battle"
+          role="tabpanel"
+          aria-labelledby="tab-battle"
+          :aria-hidden="activePanel !== 'battle'"
+          class="w-full h-full"
+        />
 
         <!-- Settings Panel -->
-        <GameSettingsPanel v-show="activePanel === 'settings'" class="w-full h-full" />
+        <GameSettingsPanel
+          v-show="activePanel === 'settings'"
+          id="settings-panel"
+          role="region"
+          aria-labelledby="settings-button"
+          :aria-hidden="activePanel !== 'settings'"
+          class="w-full h-full"
+        />
       </ContainerChrome>
     </div>
 
     <!-- Side Drawer -->
-    <SideDrawer ref="drawerRef" header-id="menu-drawer-header">
+    <SideDrawer
+      ref="drawerRef"
+      header-id="menu-drawer-header"
+      @opened="handleDrawerOpened"
+      @closed="handleDrawerClosed"
+    >
       <template #header>
         <h3 id="menu-drawer-header" class="font-bold text-gray-800 dark:text-white">Menu</h3>
       </template>
