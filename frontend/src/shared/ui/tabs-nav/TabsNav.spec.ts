@@ -293,4 +293,246 @@ describe('TabsNav', () => {
 
     expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['tab3'])
   })
+
+  describe('Disabled tabs', () => {
+    it('applies disabled attribute when tab has disabled: true', () => {
+      const tabs = [
+        { key: 'tab1', label: 'Tab 1' },
+        { key: 'tab2', label: 'Tab 2', disabled: true },
+        { key: 'tab3', label: 'Tab 3' },
+      ]
+
+      const wrapper = mount(TabsNav, {
+        props: { tabs, modelValue: 'tab1' },
+      })
+
+      const buttons = wrapper.findAll('button')
+      expect(buttons[0].attributes('disabled')).toBeUndefined()
+      expect(buttons[1].attributes('disabled')).toBe('')
+      expect(buttons[2].attributes('disabled')).toBeUndefined()
+    })
+
+    it('applies disabled attribute when tab has disabled function returning true', () => {
+      const tabs = [
+        { key: 'tab1', label: 'Tab 1' },
+        { key: 'tab2', label: 'Tab 2', disabled: () => true },
+        { key: 'tab3', label: 'Tab 3', disabled: () => false },
+      ]
+
+      const wrapper = mount(TabsNav, {
+        props: { tabs, modelValue: 'tab1' },
+      })
+
+      const buttons = wrapper.findAll('button')
+      expect(buttons[0].attributes('disabled')).toBeUndefined()
+      expect(buttons[1].attributes('disabled')).toBe('')
+      expect(buttons[2].attributes('disabled')).toBeUndefined()
+    })
+
+    it('applies aria-disabled attribute to disabled tabs', () => {
+      const tabs = [
+        { key: 'tab1', label: 'Tab 1' },
+        { key: 'tab2', label: 'Tab 2', disabled: true },
+        { key: 'tab3', label: 'Tab 3' },
+      ]
+
+      const wrapper = mount(TabsNav, {
+        props: { tabs, modelValue: 'tab1' },
+      })
+
+      const buttons = wrapper.findAll('button')
+      expect(buttons[0].attributes('aria-disabled')).toBe('false')
+      expect(buttons[1].attributes('aria-disabled')).toBe('true')
+      expect(buttons[2].attributes('aria-disabled')).toBe('false')
+    })
+
+    it('applies disabled styling classes to disabled tabs', () => {
+      const tabs = [
+        { key: 'tab1', label: 'Tab 1' },
+        { key: 'tab2', label: 'Tab 2', disabled: true },
+      ]
+
+      const wrapper = mount(TabsNav, {
+        props: { tabs, modelValue: 'tab1' },
+      })
+
+      const buttons = wrapper.findAll('button')
+      expect(buttons[1].classes()).toContain('cursor-not-allowed')
+      expect(buttons[1].classes()).toContain('text-red-400/60')
+      expect(buttons[1].classes()).toContain('opacity-60')
+    })
+
+    it('does not emit update:modelValue when clicking disabled tab', async () => {
+      const tabs = [
+        { key: 'tab1', label: 'Tab 1' },
+        { key: 'tab2', label: 'Tab 2', disabled: true },
+        { key: 'tab3', label: 'Tab 3' },
+      ]
+
+      const wrapper = mount(TabsNav, {
+        props: { tabs, modelValue: 'tab1' },
+      })
+
+      const buttons = wrapper.findAll('button')
+      await buttons[1].trigger('click')
+
+      expect(wrapper.emitted('update:modelValue')).toBeFalsy()
+    })
+
+    it('skips disabled tabs when navigating with ArrowRight', async () => {
+      const tabs = [
+        { key: 'tab1', label: 'Tab 1' },
+        { key: 'tab2', label: 'Tab 2', disabled: true },
+        { key: 'tab3', label: 'Tab 3' },
+      ]
+
+      const wrapper = mount(TabsNav, {
+        props: { tabs, modelValue: 'tab1' },
+      })
+
+      const buttons = wrapper.findAll('button')
+      await buttons[0].trigger('keydown', { key: 'ArrowRight' })
+
+      expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['tab3'])
+    })
+
+    it('skips disabled tabs when navigating with ArrowLeft', async () => {
+      const tabs = [
+        { key: 'tab1', label: 'Tab 1' },
+        { key: 'tab2', label: 'Tab 2', disabled: true },
+        { key: 'tab3', label: 'Tab 3' },
+      ]
+
+      const wrapper = mount(TabsNav, {
+        props: { tabs, modelValue: 'tab3' },
+      })
+
+      const buttons = wrapper.findAll('button')
+      await buttons[2].trigger('keydown', { key: 'ArrowLeft' })
+
+      expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['tab1'])
+    })
+
+    it('skips multiple consecutive disabled tabs with ArrowRight', async () => {
+      const tabs = [
+        { key: 'tab1', label: 'Tab 1' },
+        { key: 'tab2', label: 'Tab 2', disabled: true },
+        { key: 'tab3', label: 'Tab 3', disabled: true },
+        { key: 'tab4', label: 'Tab 4' },
+      ]
+
+      const wrapper = mount(TabsNav, {
+        props: { tabs, modelValue: 'tab1' },
+      })
+
+      const buttons = wrapper.findAll('button')
+      await buttons[0].trigger('keydown', { key: 'ArrowRight' })
+
+      expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['tab4'])
+    })
+
+    it('skips disabled tabs when navigating to Home', async () => {
+      const tabs = [
+        { key: 'tab1', label: 'Tab 1', disabled: true },
+        { key: 'tab2', label: 'Tab 2' },
+        { key: 'tab3', label: 'Tab 3' },
+      ]
+
+      const wrapper = mount(TabsNav, {
+        props: { tabs, modelValue: 'tab3' },
+      })
+
+      const buttons = wrapper.findAll('button')
+      await buttons[2].trigger('keydown', { key: 'Home' })
+
+      expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['tab2'])
+    })
+
+    it('skips disabled tabs when navigating to End', async () => {
+      const tabs = [
+        { key: 'tab1', label: 'Tab 1' },
+        { key: 'tab2', label: 'Tab 2' },
+        { key: 'tab3', label: 'Tab 3', disabled: true },
+      ]
+
+      const wrapper = mount(TabsNav, {
+        props: { tabs, modelValue: 'tab1' },
+      })
+
+      const buttons = wrapper.findAll('button')
+      await buttons[0].trigger('keydown', { key: 'End' })
+
+      expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['tab2'])
+    })
+
+    it('does not apply activeStyles to disabled tabs even when selected', () => {
+      const tabs = [
+        {
+          key: 'tab1',
+          label: 'Tab 1',
+          disabled: true,
+          activeStyles: 'bg-blue-500',
+          inactiveStyles: 'bg-gray-500'
+        },
+      ]
+
+      const wrapper = mount(TabsNav, {
+        props: { tabs, modelValue: 'tab1' },
+      })
+
+      const button = wrapper.find('button')
+      expect(button.classes()).not.toContain('bg-blue-500')
+      expect(button.classes()).not.toContain('bg-gray-500')
+    })
+
+    it('reactively updates disabled state when function value changes', async () => {
+      let isDisabled = true
+      const tabs = [
+        { key: 'tab1', label: 'Tab 1' },
+        { key: 'tab2', label: 'Tab 2', disabled: () => isDisabled },
+      ]
+
+      const wrapper = mount(TabsNav, {
+        props: { tabs, modelValue: 'tab1' },
+      })
+
+      let buttons = wrapper.findAll('button')
+      expect(buttons[1].attributes('disabled')).toBe('')
+
+      // Change the disabled function result
+      isDisabled = false
+      await wrapper.vm.$forceUpdate()
+      await wrapper.vm.$nextTick()
+
+      buttons = wrapper.findAll('button')
+      expect(buttons[1].attributes('disabled')).toBeUndefined()
+    })
+
+    it('allows clicking tab that was previously disabled after function returns false', async () => {
+      let isDisabled = true
+      const tabs = [
+        { key: 'tab1', label: 'Tab 1' },
+        { key: 'tab2', label: 'Tab 2', disabled: () => isDisabled },
+      ]
+
+      const wrapper = mount(TabsNav, {
+        props: { tabs, modelValue: 'tab1' },
+      })
+
+      const buttons = wrapper.findAll('button')
+
+      // Try clicking while disabled
+      await buttons[1].trigger('click')
+      expect(wrapper.emitted('update:modelValue')).toBeFalsy()
+
+      // Enable the tab
+      isDisabled = false
+      await wrapper.vm.$forceUpdate()
+      await wrapper.vm.$nextTick()
+
+      // Now clicking should work
+      await buttons[1].trigger('click')
+      expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['tab2'])
+    })
+  })
 })

@@ -7,6 +7,7 @@ interface Tab {
   styles?: string
   activeStyles?: string
   inactiveStyles?: string
+  disabled?: boolean | (() => boolean)
 }
 
 const props = defineProps<{
@@ -29,7 +30,14 @@ const emit = defineEmits<{
 
 const tabRefs = ref<Record<string, HTMLButtonElement>>({})
 
+const isTabDisabled = (tab: Tab): boolean => {
+  if (tab.disabled === undefined) return false
+  return typeof tab.disabled === 'function' ? tab.disabled() : tab.disabled
+}
+
 const selectTab = (key: string) => {
+  const tab = props.tabs.find(t => t.key === key)
+  if (tab && isTabDisabled(tab)) return
   emit('update:modelValue', key)
 }
 
@@ -40,18 +48,34 @@ const handleKeyDown = (event: KeyboardEvent, currentIndex: number) => {
     case 'ArrowRight':
       event.preventDefault()
       newIndex = (currentIndex + 1) % props.tabs.length
+      // Skip disabled tabs
+      while (isTabDisabled(props.tabs[newIndex]) && newIndex !== currentIndex) {
+        newIndex = (newIndex + 1) % props.tabs.length
+      }
       break
     case 'ArrowLeft':
       event.preventDefault()
       newIndex = (currentIndex - 1 + props.tabs.length) % props.tabs.length
+      // Skip disabled tabs
+      while (isTabDisabled(props.tabs[newIndex]) && newIndex !== currentIndex) {
+        newIndex = (newIndex - 1 + props.tabs.length) % props.tabs.length
+      }
       break
     case 'Home':
       event.preventDefault()
       newIndex = 0
+      // Skip disabled tabs
+      while (isTabDisabled(props.tabs[newIndex]) && newIndex < props.tabs.length - 1) {
+        newIndex++
+      }
       break
     case 'End':
       event.preventDefault()
       newIndex = props.tabs.length - 1
+      // Skip disabled tabs
+      while (isTabDisabled(props.tabs[newIndex]) && newIndex > 0) {
+        newIndex--
+      }
       break
     default:
       return
@@ -78,21 +102,26 @@ const handleKeyDown = (event: KeyboardEvent, currentIndex: number) => {
       :ref="(el) => { if (el) tabRefs[tab.key] = el as HTMLButtonElement }"
       :id="`tab-${tab.key}`"
       type="button"
+      :disabled="isTabDisabled(tab)"
       :tabindex="modelValue === tab.key ? 0 : -1"
       :class="[
         'relative flex-1 py-4 px-6 text-lg font-medium text-center transition-all duration-200',
         'focus:z-10 focus:outline-none',
-        'disabled:opacity-50 disabled:pointer-events-none',
+        isTabDisabled(tab)
+          ? 'cursor-not-allowed text-red-400/60 opacity-60'
+          : modelValue === tab.key
+            ? 'bg-white/10 text-white border-b-2 border-b-white'
+            : 'bg-transparent text-gray-400 hover:text-gray-200 hover:bg-white/5 border-b-2 border-b-transparent',
         tab.styles || '',
-        modelValue === tab.key
-          ? 'bg-white/10 text-white border-b-2 border-b-white'
-          : 'bg-transparent text-gray-400 hover:text-gray-200 hover:bg-white/5 border-b-2 border-b-transparent',
-         modelValue === tab.key
+        !isTabDisabled(tab) && modelValue === tab.key
           ? tab.activeStyles || ''
-          : tab.inactiveStyles || '',
+          : !isTabDisabled(tab)
+            ? tab.inactiveStyles || ''
+            : '',
       ]"
       :aria-selected="modelValue === tab.key"
       :aria-controls="`tab-panel-${tab.key}`"
+      :aria-disabled="isTabDisabled(tab)"
       role="tab"
       @click="selectTab(tab.key)"
       @keydown="handleKeyDown($event, index)"

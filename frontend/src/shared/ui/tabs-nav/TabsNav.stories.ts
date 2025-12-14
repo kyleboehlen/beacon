@@ -27,7 +27,7 @@ export const Default: Story = {
     template: `
       <div class="w-full h-100 bg-black p-8">
         <div class="max-w-4xl">
-          <Tabs v-model="activeTab" :tabs="tabs" />
+          <TabsNav v-model="activeTab" :tabs="tabs" />
 
           <div class="mt-6">
             <div v-if="activeTab === 'fleet'" class="text-gray-300">
@@ -121,6 +121,69 @@ export const StyledTabs: Story = {
       <div class="w-full h-50 bg-black p-8">
         <div class="max-w-4xl">
           <TabsNav v-model="activeTab" :tabs="tabs" />
+        </div>
+      </div>
+    `,
+  }),
+}
+
+export const DisabledTabs: Story = {
+  render: () => ({
+    components: { TabsNav },
+    setup() {
+      const activeTab = ref('available')
+      const hasPermission = ref(false)
+      const tabs = [
+        { key: 'available', label: 'Available' },
+        { key: 'locked', label: 'Locked (Boolean)', disabled: true },
+        {
+          key: 'restricted',
+          label: 'Restricted (Function)',
+          disabled: () => !hasPermission.value
+        },
+        { key: 'open', label: 'Open' },
+      ]
+      return { activeTab, tabs, hasPermission }
+    },
+    template: `
+      <div class="w-full h-100 bg-black p-8">
+        <div class="max-w-4xl">
+          <TabsNav v-model="activeTab" :tabs="tabs" />
+
+          <div class="mt-6 text-gray-300">
+            <h3 class="text-xl font-bold text-white mb-4">Disabled Tabs Demo</h3>
+            <div class="space-y-3">
+              <div class="border border-white/10 rounded p-3">
+                <div class="font-semibold text-white">Boolean Disabled</div>
+                <div class="text-sm text-gray-400">
+                  The "Locked" tab has <code class="text-red-400">disabled: true</code>
+                  and is always disabled (shows red tint and not-allowed cursor).
+                </div>
+              </div>
+              <div class="border border-white/10 rounded p-3">
+                <div class="font-semibold text-white">Function Disabled</div>
+                <div class="text-sm text-gray-400 mb-3">
+                  The "Restricted" tab uses <code class="text-red-400">disabled: () => !hasPermission</code>
+                  and can be toggled:
+                </div>
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    v-model="hasPermission"
+                    class="w-4 h-4 cursor-pointer"
+                  />
+                  <span class="text-white">Grant Permission</span>
+                </label>
+              </div>
+              <div class="border border-white/10 rounded p-3">
+                <div class="font-semibold text-white">Current Active Tab</div>
+                <div class="text-sm">
+                  <span class="text-gray-400">Active: </span>
+                  <span class="text-green-400">{{ activeTab }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     `,
