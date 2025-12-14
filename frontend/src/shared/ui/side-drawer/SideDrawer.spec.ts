@@ -133,4 +133,53 @@ describe('SideDrawer', () => {
 
     wrapper.unmount()
   })
+
+  it('emits opened event when drawer opens', async () => {
+    const wrapper = mount(SideDrawer, {
+      attachTo: document.body,
+    })
+
+    wrapper.vm.open()
+    await wrapper.vm.$nextTick()
+
+    expect(wrapper.emitted('opened')).toBeTruthy()
+    expect(wrapper.emitted('opened')).toHaveLength(1)
+
+    wrapper.unmount()
+  })
+
+  it('emits closed event when drawer closes', async () => {
+    const wrapper = mount(SideDrawer, {
+      attachTo: document.body,
+    })
+
+    wrapper.vm.open()
+    await wrapper.vm.$nextTick()
+
+    wrapper.vm.close()
+    await wrapper.vm.$nextTick()
+
+    expect(wrapper.emitted('closed')).toBeTruthy()
+    expect(wrapper.emitted('closed')).toHaveLength(1)
+
+    wrapper.unmount()
+  })
+
+  it('emits closed event when backdrop is clicked', async () => {
+    const wrapper = mount(SideDrawer, {
+      attachTo: document.body,
+    })
+
+    wrapper.vm.open()
+    await wrapper.vm.$nextTick()
+
+    const backdrop = document.querySelector('.absolute') as HTMLElement
+    backdrop?.click()
+    await wrapper.vm.$nextTick()
+
+    expect(wrapper.emitted('closed')).toBeTruthy()
+    expect(wrapper.emitted('closed')).toHaveLength(1)
+
+    wrapper.unmount()
+  })
 })

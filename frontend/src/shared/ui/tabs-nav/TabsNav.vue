@@ -80,7 +80,7 @@ const handleKeyDown = (event: KeyboardEvent, currentIndex: number) => {
       type="button"
       :tabindex="modelValue === tab.key ? 0 : -1"
       :class="[
-        'relative flex-1 py-4 px-6 text-sm font-medium text-center transition-all duration-200',
+        'relative flex-1 py-4 px-6 text-lg font-medium text-center transition-all duration-200',
         'focus:z-10 focus:outline-none',
         'disabled:opacity-50 disabled:pointer-events-none',
         tab.styles || '',

@@ -1,16 +1,15 @@
 <script setup lang="ts">
 import { StarryBackground } from '@/shared/ui/starry-background'
 import { useHealthCheck } from '@/entities/health-check'
-import ContainerChrome from '@/shared/ui/container-chrome/ContainerChrome.vue'
+import { FullDashboardWidget } from '@/widgets/full-dashboard-widget'
 
 const { consoleLogHealthStatus } = useHealthCheck()
 consoleLogHealthStatus()
 </script>
 
 <template>
-  <StarryBackground class="w-full h-screen" />
-
-    <ContainerChrome>
-<!--      <GameOverview />-->
-    </ContainerChrome>
+  <!-- TODO: add screen size not supported feature -->
+  <StarryBackground class="w-full h-screen">
+    <FullDashboardWidget />
+  </StarryBackground>
 </template>
