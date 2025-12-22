@@ -16,7 +16,7 @@ export const Default: Story = {
     components: { BasicButton },
     template: `
       <div class="bg-black p-8">
-        <BasicButton class="w-32 h-16">Click Me</BasicButton>
+        <BasicButton>Click Me</BasicButton>
       </div>
     `,
   }),
@@ -27,23 +27,23 @@ export const Disabled: Story = {
     components: { BasicButton },
     template: `
       <div class="bg-black p-8 space-y-4">
-        <BasicButton class="w-32 h-16" :disabled="true">Disabled</BasicButton>
-        <BasicButton class="w-32 h-16" :disabled="false">Enabled</BasicButton>
+        <BasicButton :disabled="true">Disabled</BasicButton>
+        <BasicButton :disabled="false">Enabled</BasicButton>
       </div>
     `,
   }),
 }
 
-export const ColorVariants: Story = {
+export const MultipleButtons: Story = {
   render: () => ({
     components: { BasicButton },
     template: `
-      <div class="bg-black p-8 space-y-4">
+      <div class="bg-black p-8">
         <div class="flex gap-4">
-          <BasicButton class="w-32 h-16">Default</BasicButton>
-          <BasicButton class="w-32 h-16" inner-styles="bg-red-900 hover:bg-red-800">Red</BasicButton>
-          <BasicButton class="w-32 h-16" inner-styles="bg-blue-900 hover:bg-blue-800">Blue</BasicButton>
-          <BasicButton class="w-32 h-16" inner-styles="bg-green-900 hover:bg-green-800">Green</BasicButton>
+          <BasicButton class="w-32 !bg-blue-500/10 text-blue-300 hover:!bg-blue-500/20 hover:!border-b-blue-500">Blue</BasicButton>
+          <BasicButton class="w-32 !bg-red-500/10 text-red-300 hover:!bg-red-500/20 hover:!border-b-red-500">Red</BasicButton>
+          <BasicButton class="w-32 !bg-green-500/10 text-green-300 hover:!bg-green-500/20 hover:!border-b-green-500">Green</BasicButton>
+          <BasicButton :disabled="true">Disabled</BasicButton>
         </div>
       </div>
     `,

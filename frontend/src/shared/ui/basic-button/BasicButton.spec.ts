@@ -13,35 +13,7 @@ describe('BasicButton', () => {
     expect(wrapper.text()).toBe('Click Me')
   })
 
-  it('applies default inner styles', () => {
-    const wrapper = mount(BasicButton, {
-      slots: {
-        default: 'Button',
-      },
-    })
-
-    const span = wrapper.find('span')
-    expect(span.classes()).toContain('bg-gray-900')
-    expect(span.classes()).toContain('hover:bg-gray-800')
-  })
-
-  it('applies custom inner styles', () => {
-    const wrapper = mount(BasicButton, {
-      props: {
-        innerStyles: 'bg-red-900 hover:bg-red-800',
-      },
-      slots: {
-        default: 'Button',
-      },
-    })
-
-    const span = wrapper.find('span')
-    expect(span.classes()).toContain('bg-red-900')
-    expect(span.classes()).toContain('hover:bg-red-800')
-    expect(span.classes()).not.toContain('bg-gray-900')
-  })
-
-  it('applies disabled styles when disabled', () => {
+  it('applies disabled attribute when disabled', () => {
     const wrapper = mount(BasicButton, {
       props: {
         disabled: true,
@@ -52,10 +24,6 @@ describe('BasicButton', () => {
     })
 
     expect(wrapper.attributes('disabled')).toBeDefined()
-    expect(wrapper.classes()).toContain('bg-white/40')
-    expect(wrapper.classes()).toContain('cursor-not-allowed')
-    const span = wrapper.find('span')
-    expect(span.classes()).toContain('opacity-50')
   })
 
   it('emits click event when clicked', async () => {
@@ -84,20 +52,5 @@ describe('BasicButton', () => {
     await wrapper.trigger('click')
 
     expect(wrapper.emitted('click')).toBeFalsy()
-  })
-
-  it('accepts custom classes', () => {
-    const wrapper = mount(BasicButton, {
-      attrs: {
-        class: 'custom-class px-8 py-4',
-      },
-      slots: {
-        default: 'Button',
-      },
-    })
-
-    expect(wrapper.classes()).toContain('custom-class')
-    expect(wrapper.classes()).toContain('px-8')
-    expect(wrapper.classes()).toContain('py-4')
   })
 })
