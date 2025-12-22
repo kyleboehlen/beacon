@@ -127,6 +127,51 @@ export const StyledTabs: Story = {
   }),
 }
 
+export const CustomSlotContent: Story = {
+  render: () => ({
+    components: { TabsNav },
+    setup() {
+      const activeTab = ref('messages')
+      const tabs = [
+        { key: 'messages', label: 'Messages' },
+        { key: 'alerts', label: 'Alerts' },
+        { key: 'reports', label: 'Reports' },
+      ]
+      return { activeTab, tabs }
+    },
+    template: `
+      <div class="w-full h-50 bg-black p-8">
+        <div class="max-w-4xl">
+          <TabsNav v-model="activeTab" :tabs="tabs">
+            <template #tab-messages="{ tab }">
+              <span class="flex items-center gap-2">
+                {{ tab.label }}
+                <span class="relative flex size-3 items-center justify-center w-4 h-4">
+                  <span class="animate-ping absolute inline-flex size-full rounded-full bg-green-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full size-3 bg-green-500"></span>
+                </span>
+              </span>
+            </template>
+            <template #tab-alerts="{ tab }">
+              <span class="flex items-center gap-2">
+                {{ tab.label }}
+                <span class="bg-red-500 text-white text-xs rounded-full px-2 py-0.5">3</span>
+              </span>
+            </template>
+          </TabsNav>
+
+          <div class="mt-6 text-gray-300">
+            <p class="text-sm">
+              This story demonstrates custom slot content for tabs. The Messages tab has a pulsing badge,
+              and the Alerts tab shows a count. The Reports tab uses the default label fallback.
+            </p>
+          </div>
+        </div>
+      </div>
+    `,
+  }),
+}
+
 export const DisabledTabs: Story = {
   render: () => ({
     components: { TabsNav },

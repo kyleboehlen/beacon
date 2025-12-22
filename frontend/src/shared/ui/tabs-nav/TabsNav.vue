@@ -129,7 +129,9 @@ const handleKeyDown = (event: KeyboardEvent, currentIndex: number) => {
         clipPath: 'polygon(18px 0, calc(100% - 18px) 0, 100% 12px, 100% 100%, 0 100%, 0 12px)'
       }"
     >
-      {{ tab.label }}
+      <slot :name="`tab-${tab.key}`" :tab="tab">
+        {{ tab.label }}
+      </slot>
     </button>
   </nav>
 </template>

@@ -535,4 +535,75 @@ describe('TabsNav', () => {
       expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['tab2'])
     })
   })
+
+  describe('Slot content', () => {
+    it('renders slot content when provided', () => {
+      const wrapper = mount(TabsNav, {
+        props: {
+          tabs: defaultTabs,
+          modelValue: 'tab1',
+        },
+        slots: {
+          'tab-tab1': '<span class="custom-content">Custom Tab 1</span>',
+        },
+      })
+
+      expect(wrapper.find('.custom-content').exists()).toBe(true)
+      expect(wrapper.find('.custom-content').text()).toBe('Custom Tab 1')
+    })
+
+    it('falls back to label when no slot is provided', () => {
+      const wrapper = mount(TabsNav, {
+        props: {
+          tabs: defaultTabs,
+          modelValue: 'tab1',
+        },
+      })
+
+      const buttons = wrapper.findAll('button')
+      expect(buttons[0].text()).toBe('Tab 1')
+      expect(buttons[1].text()).toBe('Tab 2')
+      expect(buttons[2].text()).toBe('Tab 3')
+    })
+
+    it('can mix slots and labels for different tabs', () => {
+      const wrapper = mount(TabsNav, {
+        props: {
+          tabs: defaultTabs,
+          modelValue: 'tab1',
+        },
+        slots: {
+          'tab-tab2': '<span class="custom-tab2">Custom 2</span>',
+        },
+      })
+
+      const buttons = wrapper.findAll('button')
+      expect(buttons[0].text()).toBe('Tab 1')
+      expect(buttons[1].find('.custom-tab2').exists()).toBe(true)
+      expect(buttons[2].text()).toBe('Tab 3')
+    })
+
+    it('provides tab data to slot via scoped slot', () => {
+      const wrapper = mount(TabsNav, {
+        props: {
+          tabs: [
+            { key: 'tab1', label: 'Tab 1' },
+            { key: 'tab2', label: 'Tab 2' },
+          ],
+          modelValue: 'tab1',
+        },
+        slots: {
+          'tab-tab1': `
+            <template #default="{ tab }">
+              <span class="tab-key">{{ tab.key }}</span>
+              <span class="tab-label">{{ tab.label }}</span>
+            </template>
+          `,
+        },
+      })
+
+      expect(wrapper.find('.tab-key').text()).toBe('tab1')
+      expect(wrapper.find('.tab-label').text()).toBe('Tab 1')
+    })
+  })
 })
