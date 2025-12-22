@@ -1,0 +1,1 @@
+export { default as AttentionBadge } from './AttentionBadge.vue'
