@@ -11,7 +11,7 @@
   overflow: hidden;
 }
 
-.stars1:before {
+.stars1::before {
   content: '';
   position: absolute;
   top: 0;

@@ -25,6 +25,7 @@ builder.Services.AddCors(options =>
 // DI
 builder.Services.AddScoped<HealthCheckService>();
 builder.Services.AddScoped<EmailService>();
+builder.Services.AddScoped<Features.Game.Services.GameService>();
 
 var connectionString = builder.Configuration.GetConnectionString("MongoDB");
 

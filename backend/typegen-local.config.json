@@ -2,5 +2,7 @@
   "assemblies": [
     "bin/Debug/net9.0/backend.dll"
   ],
-  "outputPath": "../frontend/src/shared/models/generated"
+  "outputPath": "../frontend/src/shared/models/generated",
+  "typeScriptFileExtension": "ts",
+  "useImportType": true
 }

@@ -12,14 +12,17 @@ import { IntelPanel } from '@/features/intel-panel'
 import { BattlePanel } from '@/features/battle-panel'
 import { GameSettingsPanel } from '@/features/game-settings-panel'
 import { DashboardSideDrawerContent } from '@/features/dashboard-side-drawer-content'
+import { useGameStore } from '@/entities/_game'
+import { AttentionBadge } from '@/shared/ui/attention-badge'
 
+const gameStore = useGameStore()
 const activePanel = ref('dashboard')
 const tabs = [
   { key: 'dashboard', label: 'Dashboard' },
-  { key: 'econ', label: 'Econ' },
-  { key: 'fleet', label: 'Fleet' },
-  { key: 'intel', label: 'Intel' },
-  { key: 'battle', label: 'Battle' },
+  { key: 'econ', label: 'Econ', disabled: () => !gameStore.isGameInstantiated },
+  { key: 'fleet', label: 'Fleet', disabled: () => !gameStore.isGameInstantiated },
+  { key: 'intel', label: 'Intel', disabled: () => !gameStore.isGameInstantiated },
+  { key: 'battle', label: 'Battle', disabled: () => !gameStore.isGameInstantiated },
 ]
 
 const drawerRef = ref<InstanceType<typeof SideDrawer> | null>(null)
@@ -49,21 +52,46 @@ const handleDrawerClosed = () => {
 
       <!-- Tabs -->
       <div class="flex-1 self-end">
-        <TabsNav v-model="activePanel" :tabs="tabs" />
+        <TabsNav v-model="activePanel" :tabs="tabs">
+          <template #tab-dashboard="{ tab }">
+            <div class="relative">
+              <span class="relative w-auto">
+                {{ tab.label }}
+                <AttentionBadge
+                  v-if="!gameStore.isGameInstantiated"
+                  label="Dashboard Tab"
+                  variant="green"
+                  class="right-[-14px] top-[-12px]"
+                />
+              </span>
+            </div>
+          </template>
+        </TabsNav>
       </div>
 
       <!-- Settings Icon -->
       <button
-        id="settings-button"
-        class="flex-shrink-0 h-full w-12 mx-2 flex items-center justify-center text-gray-400 hover:text-white transition-colors"
-        :class="[activePanel === 'settings' ? 'text-white' : '']"
+        id="button-game-settings"
+        class="flex-shrink-0 h-full w-12 mx-2 flex items-center justify-center transition-colors"
+        :class="[
+          activePanel === 'settings' ? 'text-white' : '',
+          !gameStore.isGameInstantiated
+            ? 'opacity-50 cursor-not-allowed text-red-950'
+            : 'text-gray-400 hover:text-white',
+        ]"
         type="button"
         aria-label="Settings"
         :aria-pressed="activePanel === 'settings'"
+        :aria-disabled="!gameStore.isGameInstantiated"
+        :disabled="!gameStore.isGameInstantiated"
         aria-controls="settings-panel"
         @click="activePanel = 'settings'"
       >
-        <Icon icon="streamline-sharp:horizontal-toggle-button" class="h-full w-full" aria-hidden="true" />
+        <Icon
+          icon="streamline-sharp:horizontal-toggle-button"
+          class="h-9/10 w-full"
+          aria-hidden="true"
+        />
       </button>
 
       <!-- Hamburger Menu -->
@@ -112,8 +140,9 @@ const handleDrawerClosed = () => {
         />
 
         <!-- Intel Panel -->
+        <!--  For some reason this panel doesn't respect v-show, using v-if for now  -->
         <IntelPanel
-          v-show="activePanel === 'intel'"
+          v-if="activePanel === 'intel'"
           id="tab-panel-intel"
           role="tabpanel"
           aria-labelledby="tab-intel"
@@ -134,7 +163,7 @@ const handleDrawerClosed = () => {
         <!-- Settings Panel -->
         <GameSettingsPanel
           v-show="activePanel === 'settings'"
-          id="settings-panel"
+          id="button-game-settings-panel"
           role="region"
           aria-labelledby="settings-button"
           :aria-hidden="activePanel !== 'settings'"

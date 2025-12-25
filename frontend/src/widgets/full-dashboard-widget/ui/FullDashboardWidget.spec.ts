@@ -1,9 +1,18 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { createPinia, setActivePinia } from 'pinia'
 import FullDashboardWidget from './FullDashboardWidget.vue'
+import { useGameStore } from '@/entities/_game'
 
 describe('FullDashboardWidget', () => {
   beforeEach(() => {
+    const pinia = createPinia()
+    setActivePinia(pinia)
+
+    // Initialize game store so tabs aren't disabled
+    const gameStore = useGameStore()
+    gameStore.setGame()
+
     document.body.innerHTML = ''
     document.body.style.overflow = ''
   })
@@ -45,11 +54,11 @@ describe('FullDashboardWidget', () => {
     })
 
     // Click settings button
-    const settingsButton = wrapper.get('#settings-button')
+    const settingsButton = wrapper.get('#button-game-settings')
     await settingsButton.trigger('click')
 
     // Settings panel should be visible
-    const settingsPanel = wrapper.get('#settings-panel')
+    const settingsPanel = wrapper.get('#button-game-settings-panel')
     expect(settingsPanel.attributes('aria-hidden')).toBe('false')
 
     // Settings button should have aria-pressed="true"
@@ -108,9 +117,48 @@ describe('FullDashboardWidget', () => {
       attachTo: document.body,
     })
 
-    const settingsPanel = wrapper.get('#settings-panel')
+    const settingsPanel = wrapper.get('#button-game-settings-panel')
     expect(settingsPanel.attributes('role')).toBe('region')
     expect(settingsPanel.attributes('aria-labelledby')).toBe('settings-button')
+
+    wrapper.unmount()
+  })
+
+  it('disables tabs when game is not instantiated', () => {
+    // Create fresh pinia without setting game as instantiated
+    const pinia = createPinia()
+    setActivePinia(pinia)
+
+    const wrapper = mount(FullDashboardWidget, {
+      attachTo: document.body,
+    })
+
+    // Check that econ, fleet, intel, battle tabs are disabled
+    const econTab = wrapper.get('#tab-econ')
+    expect(econTab.attributes('disabled')).toBeDefined()
+    expect(econTab.attributes('aria-disabled')).toBe('true')
+
+    const fleetTab = wrapper.get('#tab-fleet')
+    expect(fleetTab.attributes('disabled')).toBeDefined()
+    expect(fleetTab.attributes('aria-disabled')).toBe('true')
+
+    const intelTab = wrapper.get('#tab-intel')
+    expect(intelTab.attributes('disabled')).toBeDefined()
+    expect(intelTab.attributes('aria-disabled')).toBe('true')
+
+    const battleTab = wrapper.get('#tab-battle')
+    expect(battleTab.attributes('disabled')).toBeDefined()
+    expect(battleTab.attributes('aria-disabled')).toBe('true')
+
+    // Dashboard tab should still be enabled
+    const dashboardTab = wrapper.get('#tab-dashboard')
+    expect(dashboardTab.attributes('disabled')).toBeUndefined()
+    expect(dashboardTab.attributes('aria-disabled')).toBe('false')
+
+    // Settings button should be disabled
+    const settingsButton = wrapper.get('#button-game-settings')
+    expect(settingsButton.attributes('disabled')).toBeDefined()
+    expect(settingsButton.attributes('aria-disabled')).toBe('true')
 
     wrapper.unmount()
   })
