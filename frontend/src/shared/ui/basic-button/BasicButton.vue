@@ -1,4 +1,6 @@
 <script setup lang="ts">
+// NOTE: aria labels are not reactive, use multiple buttons with v-show or v-if if changing aria
+// labels or types is desired.
 interface Props {
   disabled?: boolean
   type?: 'button' | 'submit' | 'reset'
