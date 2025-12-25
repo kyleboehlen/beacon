@@ -39,7 +39,7 @@ export const AllSizes: Story = {
     template: `
       <div class="bg-black p-8 space-y-6">
         <div class="flex items-center gap-4">
-          <StatusLED class="!size-2" variant="green" />
+          <StatusLED class="size-2!" variant="green" />
           <span class="text-white">Small</span>
         </div>
         <div class="flex items-center gap-4">
@@ -47,7 +47,7 @@ export const AllSizes: Story = {
           <span class="text-white">Medium (default)</span>
         </div>
         <div class="flex items-center gap-4">
-          <StatusLED class="!size-4" variant="green" />
+          <StatusLED class="size-4!" variant="green" />
           <span class="text-white">Large</span>
         </div>
       </div>
