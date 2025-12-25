@@ -40,9 +40,9 @@ export const MultipleButtons: Story = {
     template: `
       <div class="bg-black p-8">
         <div class="flex gap-4">
-          <BasicButton class="w-32 !bg-blue-500/10 text-blue-300 hover:!bg-blue-500/20 hover:!border-b-blue-500">Blue</BasicButton>
-          <BasicButton class="w-32 !bg-red-500/10 text-red-300 hover:!bg-red-500/20 hover:!border-b-red-500">Red</BasicButton>
-          <BasicButton class="w-32 !bg-green-500/10 text-green-300 hover:!bg-green-500/20 hover:!border-b-green-500">Green</BasicButton>
+          <BasicButton class="w-32 bg-blue-500/10! text-blue-300 hover:bg-blue-500/20! hover:border-b-blue-500!">Blue</BasicButton>
+          <BasicButton class="w-32 bg-red-500/10! text-red-300 hover:bg-red-500/20! hover:border-b-red-500!">Red</BasicButton>
+          <BasicButton class="w-32 bg-green-500/10! text-green-300 hover:bg-green-500/20! hover:border-b-green-500!">Green</BasicButton>
           <BasicButton :disabled="true">Disabled</BasicButton>
         </div>
       </div>
