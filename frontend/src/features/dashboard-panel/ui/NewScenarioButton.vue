@@ -16,7 +16,7 @@ const emit = defineEmits(['startScenario'])
       </template>
     </SystemStatus>
     <BasicButton class="w-64 h-16" @click="emit('startScenario')">
-      <p class="">Initiate New Scenario</p>
+      <p>Initiate New Scenario</p>
     </BasicButton>
   </div>
 </template>
