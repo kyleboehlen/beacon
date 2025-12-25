@@ -4,8 +4,8 @@ import { AttentionBadge } from '@/shared/ui/attention-badge'
 import { StatusLED } from '@/shared/ui/status-led'
 
 interface Props {
-  autoStart?: boolean,
-  duration?: number,
+  autoStart?: boolean
+  duration?: number
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -35,7 +35,7 @@ const startSequence = () => {
   transitionTimeout = setTimeout(() => {
     if (dotInterval) clearInterval(dotInterval)
     status.value = 'online'
-  }, (props.duration * 1000))
+  }, props.duration * 1000)
 }
 
 onMounted(() => {
@@ -57,7 +57,7 @@ defineExpose({
 
 <template>
   <div
-    class="flex items-center gap-3"
+    class="flex flex-row flex-nowrap items-start gap-3"
     role="status"
     aria-live="polite"
     aria-atomic="true"
@@ -73,7 +73,9 @@ defineExpose({
     <!-- Status Text -->
     <span class="text-sm font-medium transition-colors duration-500 text-gray-400">
       <template v-if="status === 'initializing'">
-        <slot name="initializing">Initializing</slot><span>{{ '.'.repeat(dots) }}</span>
+        <span class="flex flex-row flex-nowrap items-start">
+          <slot name="initializing">Initializing</slot><span>{{ '.'.repeat(dots) }}</span>
+        </span>
       </template>
       <template v-else>
         <slot name="online">
