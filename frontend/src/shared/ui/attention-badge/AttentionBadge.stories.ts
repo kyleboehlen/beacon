@@ -32,3 +32,14 @@ export const Green: Story = {
     `,
   }),
 }
+
+export const Yellow: Story = {
+  render: () => ({
+    components: { AttentionBadge },
+    template: `
+      <div class="w-48 h-48 bg-black p-8 flex items-center justify-center gap-8">
+        <AttentionBadge variant="yellow" />
+      </div>
+    `,
+  }),
+}

@@ -25,6 +25,7 @@
     "@typescript-eslint/utils": "^8.47.0",
     "focus-trap": "^7.6.6",
     "pinia": "^3.0.4",
+    "pinia-plugin-persistedstate": "^4.7.1",
     "preline": "^3.2.3",
     "tailwindcss": "^4.1.17",
     "vue": "^3.5.24",

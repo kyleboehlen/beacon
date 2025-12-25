@@ -2,5 +2,7 @@
   "assemblies": [
     "bin/Debug/net9.0/backend.dll"
   ],
-  "outputPath": "./../../typegen/generated"
+  "outputPath": "./../../typegen/generated",
+  "typeScriptFileExtension": "ts",
+  "useImportType": true
 }

@@ -22,5 +22,12 @@ export default {
     'bg-yellow-300',
     'bg-blue-700',
     'bg-white',
+    // Additional badge colors
+    'bg-red-400',
+    'bg-red-500',
+    'bg-green-400',
+    'bg-green-500',
+    'bg-yellow-400',
+    'bg-yellow-500',
   ],
 }

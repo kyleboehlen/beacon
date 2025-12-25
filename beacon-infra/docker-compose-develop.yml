@@ -89,7 +89,7 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=password
       - MONGO_INITDB_DATABASE=beacon
     volumes:
-      - mongodb_data:/data/db
+      - beacon_mongodb_data:/data/db
     networks:
       - beacon-network
         
@@ -115,4 +115,4 @@ networks:
     driver: bridge
     
 volumes:
-  mongodb_data:
+  beacon_mongodb_data:

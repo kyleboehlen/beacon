@@ -116,6 +116,10 @@ The `backend/Dockerfile` Rider configuration will build the backend and run it i
 
 ### Development Notes
 
+***
+IF YOU HAVE AN ISSUE WITH THE DOCKER CONTAINERS START BY DELETING THE CONTAINER IMAGE AND VOLUME, IT WILL SOLVE MOST ISSUES.
+***
+
 - Frontend supports hot reload for rapid development
 - Unit tests run with hot reload - view results in the frontend-test Docker container console
 - API debugging available through Rider with fast rebuild capabilities
