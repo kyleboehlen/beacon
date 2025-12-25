@@ -63,7 +63,7 @@ defineExpose({
     aria-atomic="true"
   >
     <!-- Status Light -->
-    <span class="relative flex size-3 items-center justify-center w-4 h-4" aria-hidden="true">
+    <span class="relative flex items-center justify-center w-4 h-4" aria-hidden="true">
       <!-- Pulsing outer glow (only when initializing) -->
       <AttentionBadge v-if="status === 'initializing'" variant="yellow" />
       <!-- Solid light -->
