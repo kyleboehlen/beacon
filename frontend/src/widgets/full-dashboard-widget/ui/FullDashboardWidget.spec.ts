@@ -364,7 +364,8 @@ describe('FullDashboardWidget', () => {
       await wrapper.vm.$nextTick()
 
       // Wait for the drawer to emit opened event
-      await new Promise((resolve) => setTimeout(resolve, 50))
+      await wrapper.vm.$nextTick()
+      await wrapper.vm.$nextTick() // Extra tick for animation
 
       expect(hamburgerButton.attributes('aria-expanded')).toBe('true')
 
