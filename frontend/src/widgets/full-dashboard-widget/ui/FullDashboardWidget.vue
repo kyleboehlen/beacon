@@ -18,11 +18,11 @@ import { AttentionBadge } from '@/shared/ui/attention-badge'
 const gameStore = useGameStore()
 const activePanel = ref('dashboard')
 const tabs = [
-  { key: 'dashboard', label: 'Dashboard' },
-  { key: 'econ', label: 'Econ', disabled: () => !gameStore.isGameInstantiated },
-  { key: 'fleet', label: 'Fleet', disabled: () => !gameStore.isGameInstantiated },
-  { key: 'intel', label: 'Intel', disabled: () => !gameStore.isGameInstantiated },
-  { key: 'battle', label: 'Battle', disabled: () => !gameStore.isGameInstantiated },
+  { key: 'dashboard', label: 'Dashboard', disabled: () => !gameStore.hasRules && gameStore.isGameInstantiated },
+  { key: 'econ', label: 'Econ', disabled: () => !gameStore.hasRules },
+  { key: 'fleet', label: 'Fleet', disabled: () => !gameStore.hasRules },
+  { key: 'intel', label: 'Intel', disabled: () => !gameStore.hasRules },
+  { key: 'battle', label: 'Battle', disabled: () => !gameStore.hasRules },
 ]
 
 const drawerRef = ref<InstanceType<typeof SideDrawer> | null>(null)
@@ -72,7 +72,7 @@ const handleDrawerClosed = () => {
       <!-- Settings Icon -->
       <button
         id="button-game-settings"
-        class="flex-shrink-0 h-full w-12 mx-2 flex items-center justify-center transition-colors"
+        class="flex-shrink-0 h-full w-12 mx-2 flex items-center justify-center transition-colors relative"
         :class="[
           activePanel === 'settings' ? 'text-white' : '',
           !gameStore.isGameInstantiated
@@ -91,6 +91,12 @@ const handleDrawerClosed = () => {
           icon="streamline-sharp:horizontal-toggle-button"
           class="h-9/10 w-full"
           aria-hidden="true"
+        />
+        <AttentionBadge
+          v-if="gameStore.isGameInstantiated && !gameStore.hasRules"
+          label="Settings Icon"
+          variant="green"
+          class="right-[-7px] top-[0px]"
         />
       </button>
 
@@ -117,6 +123,12 @@ const handleDrawerClosed = () => {
           aria-labelledby="tab-dashboard"
           :aria-hidden="activePanel !== 'dashboard'"
           class="w-full h-full"
+          @startScenario="
+            () => {
+              gameStore.setGame()
+              activePanel = 'settings'
+            }
+          "
         />
 
         <!-- Econ Panel -->
@@ -140,9 +152,8 @@ const handleDrawerClosed = () => {
         />
 
         <!-- Intel Panel -->
-        <!--  For some reason this panel doesn't respect v-show, using v-if for now  -->
         <IntelPanel
-          v-if="activePanel === 'intel'"
+          v-show="activePanel === 'intel'"
           id="tab-panel-intel"
           role="tabpanel"
           aria-labelledby="tab-intel"
@@ -168,6 +179,7 @@ const handleDrawerClosed = () => {
           aria-labelledby="settings-button"
           :aria-hidden="activePanel !== 'settings'"
           class="w-full h-full"
+          @rulesCreated="activePanel = 'dashboard'"
         />
       </ContainerChrome>
     </div>

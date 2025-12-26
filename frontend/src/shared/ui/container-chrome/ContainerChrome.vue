@@ -127,7 +127,7 @@ const props = withDefaults(defineProps<{
     </div>
 
     <!-- Content area -->
-    <div class="absolute inset-0 pt-20 pb-16 px-16 pointer-events-auto overflow-hidden">
+    <div class="absolute inset-0 px-8 pointer-events-auto overflow-hidden">
       <div class="w-full h-full">
         <slot></slot>
       </div>
