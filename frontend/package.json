@@ -23,6 +23,7 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.1.17",
     "@typescript-eslint/utils": "^8.47.0",
+    "apexcharts": "^5.3.6",
     "focus-trap": "^7.6.6",
     "pinia": "^3.0.4",
     "pinia-plugin-persistedstate": "^4.7.1",
