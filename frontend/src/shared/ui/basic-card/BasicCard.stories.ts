@@ -220,7 +220,7 @@ export const RichContent: Story = {
               <span class="text-green-400 font-semibold">45%</span>
             </div>
             <div class="w-full bg-gray-700 rounded-full h-2">
-              <div class="bg-green-500 h-2 rounded-full" style="width: 45%"></div>
+              <div class="bg-green-500 h-2 rounded-full w-[45%]"></div>
             </div>
 
             <div class="flex items-center justify-between">
@@ -228,7 +228,7 @@ export const RichContent: Story = {
               <span class="text-yellow-400 font-semibold">72%</span>
             </div>
             <div class="w-full bg-gray-700 rounded-full h-2">
-              <div class="bg-yellow-500 h-2 rounded-full" style="width: 72%"></div>
+              <div class="bg-yellow-500 h-2 rounded-full w-[72%]"></div>
             </div>
 
             <div class="flex items-center justify-between">
@@ -236,7 +236,7 @@ export const RichContent: Story = {
               <span class="text-red-400 font-semibold">89%</span>
             </div>
             <div class="w-full bg-gray-700 rounded-full h-2">
-              <div class="bg-red-500 h-2 rounded-full" style="width: 89%"></div>
+              <div class="bg-red-500 h-2 rounded-full w-[89%]"></div>
             </div>
           </div>
         </BasicCard>
