@@ -169,7 +169,7 @@ public static class ReferenceNumberParser
             var minor2 = int.Parse(endParts[1]); // "2.3-2.i.6"
             var sub2 = int.Parse(endParts[2]); // "2.3-2.3.i"
 
-            // Prevent infinate loop. We don't support ranges like "2.3-2.4.7"
+            // Prevent infinite loop. We don't support ranges like "2.3-2.4.7"
             if (major1 == major2 && minor1 == minor2)
             {
                 // Add the start without subsection
