@@ -5,7 +5,7 @@ using MongoDB.Bson.Serialization.Attributes;
 public partial class RulesConfig
 {
     [BsonElement("msPipelines")]
-    public RuleOption<bool> MsPipelines { get; set; } = new()
+    public RuleOption<bool> MsPipelines { get; init; } = new()
     {
         Value = false,
         Description =
@@ -16,7 +16,7 @@ public partial class RulesConfig
     };
     
     [BsonElement("defenseSatelliteNetworks")]
-    public RuleOption<bool> DefenseSatelliteNetworks { get; set; } = new()
+    public RuleOption<bool> DefenseSatelliteNetworks { get; init; } = new()
     {
         Value = false,
         Description =
@@ -27,7 +27,7 @@ public partial class RulesConfig
     };
     
     [BsonElement("fighters")]
-    public RuleOption<bool> Fighters { get; set; } = new()
+    public RuleOption<bool> Fighters { get; init; } = new()
     {
         Value = false,
         Description = "Enabling fighters also enables carriers (CV) and point defense technology for scouts.",
@@ -37,7 +37,7 @@ public partial class RulesConfig
     };
 
     [BsonElement("cloaking")]
-    public RuleOption<bool> Cloaking { get; set; } = new()
+    public RuleOption<bool> Cloaking { get; init; } = new()
     {
         Value = false,
         Description =
@@ -48,7 +48,7 @@ public partial class RulesConfig
     };
     
     [BsonElement("mines")]
-    public RuleOption<bool> Mines { get; set; } = new()
+    public RuleOption<bool> Mines { get; init; } = new()
     {
         Value = false,
         Description =
@@ -59,7 +59,7 @@ public partial class RulesConfig
     };
     
     [BsonElement("nonPlayerAliens")]
-    public RuleOption<bool> NonPlayerAliens { get; set; } = new()
+    public RuleOption<bool> NonPlayerAliens { get; init; } = new()
     {
         Value = false,
         Description =
@@ -70,7 +70,7 @@ public partial class RulesConfig
     };
     
     [BsonElement("boardingShips")]
-    public RuleOption<bool> BoardingShips { get; set; } = new()
+    public RuleOption<bool> BoardingShips { get; init; } = new()
     {
         Value = false,
         Description =
@@ -81,7 +81,7 @@ public partial class RulesConfig
     };
     
     [BsonElement("securityForces")]
-    public RuleOption<bool> SecurityForces { get; set; } = new()
+    public RuleOption<bool> SecurityForces { get; init; } = new()
     {
         Value = false,
         Description =
@@ -93,7 +93,7 @@ public partial class RulesConfig
     };
     
     [BsonElement("groundCombat")]
-    public RuleOption<bool> GroundCombat { get; set; } = new()
+    public RuleOption<bool> GroundCombat { get; init; } = new()
     {
         Value = false,
         Description =
@@ -106,7 +106,7 @@ public partial class RulesConfig
     // TODO: types of supported ground troops
     
     [BsonElement("titans")]
-    public RuleOption<bool> Titans { get; set; } = new()
+    public RuleOption<bool> Titans { get; init; } = new()
     {
         Value = false,
         Description =
@@ -117,7 +117,7 @@ public partial class RulesConfig
     };
     
     [BsonElement("flagships")]
-    public RuleOption<bool> Flagships { get; set; } = new()
+    public RuleOption<bool> Flagships { get; init; } = new()
     {
         Value = false,
         Description =

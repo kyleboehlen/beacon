@@ -5,7 +5,7 @@ namespace Features.Rules.Models;
 public partial class RulesConfig
 {
     [BsonElement("instantUpgrades")]
-    public RuleOption<bool> InstantUpgrades { get; set; } = new()
+    public RuleOption<bool> InstantUpgrades { get; init; } = new()
     {
         Value = false,
         Description =
@@ -16,7 +16,7 @@ public partial class RulesConfig
     };
     
     [BsonElement("terraformingNebulae")]
-    public RuleOption<bool> TerraformingNebulae { get; set; } = new()
+    public RuleOption<bool> TerraformingNebulae { get; init; } = new()
     {
         Value = false,
         Description =

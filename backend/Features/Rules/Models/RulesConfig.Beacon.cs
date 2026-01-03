@@ -16,7 +16,7 @@ public partial class RulesConfig
     // };
     
     [BsonElement("shipGroupLimits")]
-    public RuleOption<bool> ShipGroupLimits { get; set; } = new()
+    public RuleOption<bool> ShipGroupLimits { get; init; } = new()
     {
         Value = true,
         Description =
