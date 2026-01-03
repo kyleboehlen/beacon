@@ -65,7 +65,7 @@ public class ReferenceNumberValidationTests
         var ruleProperties = typeof(RulesConfig)
             .GetProperties(BindingFlags.Public | BindingFlags.Instance)
             .Where(p => p.PropertyType.IsGenericType &&
-                       p.PropertyType.GetGenericTypeDefinition().Name.Contains("RuleOption"));
+                       p.PropertyType.GetGenericTypeDefinition() == typeof(RulesConfig.RuleOption<>));
 
         // Iterating through every RuleOption in our RulesConfig
         foreach (var property in ruleProperties)
