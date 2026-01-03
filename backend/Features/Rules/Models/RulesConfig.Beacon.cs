@@ -6,7 +6,7 @@ public partial class RulesConfig
 {
     // TODO: list the voting behaviors: standard, variable player order, hidden bids/voting
     // [BsonElement("votingBehavior")]
-    // public RuleOption<bool> votingBehavior { get; set; } = new()
+    // public RuleOption<bool> votingBehavior { get; init; } = new()
     // {
     //     Value = false,
     //     Description =
