@@ -113,7 +113,7 @@ public partial class RulesConfig
             "Unlocks the titan ship type.",
         Category = RuleCategory.Basic,
         Enabled = true,
-        ReferenceNumber = "21.0"
+        ReferenceNumber = "22.0"
     };
     
     [BsonElement("flagships")]
@@ -124,7 +124,7 @@ public partial class RulesConfig
             "Each player starts with a flagship. They pay no maintenance, can use exploration 1 and fast 1 technology, and cannot be rebuilt when they are destroyed.",
         Category = RuleCategory.Basic,
         Enabled = true,
-        ReferenceNumber = "21.0"
+        ReferenceNumber = "23.0"
     };
     
     // TODO: types of supported ground troops
