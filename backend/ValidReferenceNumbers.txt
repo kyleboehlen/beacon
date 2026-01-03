@@ -145,7 +145,7 @@
 # Deep Space Planet Attributes
 26.0-26.2
 
-# Scenario Modifer Cards
+# Scenario Modifier Cards
 27.0
 
 # Optional Deep Space Discoveries
