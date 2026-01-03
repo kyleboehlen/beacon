@@ -1,0 +1,6 @@
+### Run all HTTP tests
+
+run ./health-check.http
+
+###
+run ./rules.http

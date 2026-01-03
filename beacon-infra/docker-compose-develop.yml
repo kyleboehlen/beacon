@@ -49,7 +49,41 @@ services:
     stdin_open: true
     networks:
       - beacon-network
-      
+
+  backend-test:
+    image: mcr.microsoft.com/dotnet/sdk:9.0-alpine
+    container_name: beacon-xunit
+    working_dir: /src/backend.Tests
+    volumes:
+      - ../backend:/src/backend
+      - ../backend.Tests:/src/backend.Tests
+      # Exclude build artifacts to prevent container/host conflicts
+      - /src/backend/obj
+      - /src/backend/bin
+      - /src/backend.Tests/obj
+      - /src/backend.Tests/bin
+    command: dotnet watch test
+    environment:
+      - DOTNET_ENVIRONMENT=Test
+    tty: true
+    stdin_open: true
+    networks:
+      - beacon-network
+
+  http-test:
+    image: jetbrains/intellij-http-client:latest
+    container_name: beacon-http-test-dev
+    restart: "no"
+    volumes:
+      - ../backend/Http:/workdir
+    command: ["--env-file", "http-client.env.json", "--env", "docker-dev", "run-all.http"]
+    depends_on:
+      - backend-dev
+    networks:
+      - beacon-network
+    tty: true
+    stdin_open: true
+
   backend-dev:
     build:
       context: ../backend

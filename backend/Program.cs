@@ -26,6 +26,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddScoped<HealthCheckService>();
 builder.Services.AddScoped<EmailService>();
 builder.Services.AddScoped<Features.Game.Services.GameService>();
+builder.Services.AddScoped<Features.Rules.Services.RulesService>();
 
 var connectionString = builder.Configuration.GetConnectionString("MongoDB");
 
@@ -50,7 +51,7 @@ else
 
 builder.Services.AddScoped<IMongoDatabase>(serviceProvider =>
 {
-    var client = serviceProvider.GetService<IMongoClient>();
+    var client = serviceProvider.GetRequiredService<IMongoClient>();
     return client.GetDatabase("beacon");
 });
 

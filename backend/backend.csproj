@@ -20,5 +20,9 @@
             <Link>.dockerignore</Link>
         </Content>
     </ItemGroup>
+    
+    <ItemGroup>
+        <AdditionalFiles Include="ValidReferenceNumbers.txt" />
+    </ItemGroup>
 
 </Project>

@@ -48,7 +48,8 @@ Offline-first Progressive Web App (PWA) built with modern web technologies and F
 
 ## Accessibility
 
-BEACON is built with accessibility in mind to ensure the application is usable by all players, including those using assistive technologies.
+BEACON is built with accessibility in mind to ensure the application is usable by all players, including those using
+assistive technologies.
 
 ### Frontend Accessibility Features
 
@@ -66,6 +67,7 @@ BEACON is built with accessibility in mind to ensure the application is usable b
 ### Accessibility Guidelines
 
 When contributing to the frontend:
+
 - Use semantic HTML elements (`<button>`, `<nav>`, `<main>`, etc.)
 - Provide descriptive `alt` text for images and icons
 - Use ARIA labels and descriptions where appropriate
@@ -103,26 +105,30 @@ The `backend/Dockerfile` Rider configuration will build the backend and run it i
 
 ### Available Services
 
-| Service           | URL                              | Description                                  |
-|-------------------|----------------------------------|----------------------------------------------|
-| Frontend          | http://localhost:5173            | Main application                             |
-| Storybook         | http://localhost:6006            | Component library                            |
-| API               | http://localhost:5002            | Backend services                             |
-| API Documentation | http://localhost:5002/scalar/    | Scalar UI                                    |
-| Email Testing     | http://localhost:8025            | MailPit interface                            |
-| Database          | http://localhost:27017           | MongoDB (Connect via DataGrip or equivalent) |
-| Front-end Tests   | N/A, see container logs          | Vitest                                       |
-| Type Generation   | N/A, container will run and quit | TypeGen                                      |
+| Service           | URL                               | Description                                  |
+|-------------------|-----------------------------------|----------------------------------------------|
+| Frontend          | http://localhost:5173             | Main application                             |
+| Storybook         | http://localhost:6006             | Component library                            |
+| API               | http://localhost:5002             | Backend services                             |
+| API Documentation | http://localhost:5002/scalar/     | Scalar UI                                    |
+| Email Testing     | http://localhost:8025             | MailPit interface                            |
+| Database          | http://localhost:27017            | MongoDB (Connect via DataGrip or equivalent) |
+| Front-end Tests   | N/A, see container logs           | Vitest                                       |
+| Type Generation   | N/A, container will run and quit  | TypeGen                                      |
+| Back-end Tests    | N/A, see container logs           | xUnit                                        |
+| API HTTP Tests    | N/A, see container logs           | http runner acceptance tests                 |
 
 ### Development Notes
 
 ***
-IF YOU HAVE AN ISSUE WITH THE DOCKER CONTAINERS START BY DELETING THE CONTAINER IMAGE AND VOLUME, IT WILL SOLVE MOST ISSUES.
+IF YOU HAVE AN ISSUE WITH THE DOCKER CONTAINERS START BY DELETING THE CONTAINER IMAGE AND VOLUME, IT WILL SOLVE MOST
+ISSUES.
 ***
 
 - Frontend supports hot reload for rapid development
-- Unit tests run with hot reload - view results in the frontend-test Docker container console
+- Unit tests run with hot reload - view results in the beacon-vitest and beacon-xunit Docker container consoles
 - API debugging available through Rider with fast rebuild capabilities
+- API HTTP acceptance tests will run once in a container when running either the dev or preview compose. Re-run the container to run them again
 - MongoDB container provides local data persistence
 
 ## Preview Environment
@@ -168,7 +174,8 @@ Be sure that the `.env.deploy` configuration exists for the frontend, especially
 
 ### Database
 
-Theoretically you could host MongoDB anywhere. We're using MongoDB Atlas. There is a free cluster for preview, and a <br>
+Theoretically you could host MongoDB anywhere. We're using MongoDB Atlas. There is a free cluster for preview, and
+a <br>
 flex cluster for production. The users are scoped to the cluster, and you can get the connection string from the Atlas
 UI.<br>
 

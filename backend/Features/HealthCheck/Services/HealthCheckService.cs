@@ -4,29 +4,20 @@ using MongoDB.Driver;
 
 namespace Features.HealthCheck.Services;
 
-public class HealthCheckService
+public class HealthCheckService(IWebHostEnvironment environment, IMongoDatabase database, EmailService emailService)
 {
-    private readonly IWebHostEnvironment _environment;
-    private readonly IMongoDatabase _database;
-    private readonly EmailService _emailService;
+    private readonly EmailService _emailService = emailService;
     private static readonly HttpClient HttpClient = new HttpClient();
-
-    public HealthCheckService(IWebHostEnvironment environment, IMongoDatabase database, EmailService emailService)
-    {
-        _environment = environment;
-        _database = database;
-        _emailService = emailService;
-    }
 
     public async Task<bool> DatabaseConnected()
     {
         try
         {
             // Simple ping command
-            var result = await _database.RunCommandAsync((Command<BsonDocument>)"{ping:1}");
+            var result = await database.RunCommandAsync((Command<BsonDocument>)"{ping:1}");
             return result.ToString() == "{ \"ok\" : 1.0 }" || result.ToString() == "{ \"ok\" : 1 }";
         }
-        catch (Exception ex)
+        catch
         {
             // TODO: Logging service
             return false;
@@ -37,17 +28,17 @@ public class HealthCheckService
     {
         // _emailService.SendHealthCheckEmail(); // THIS IS FOR DEBUGGING PURPOSES ONLY
 
-        if (_environment.IsDevelopment())
+        if (environment.IsDevelopment())
         {
             try
             {
                 // Check connection
-                HttpResponseMessage response = await HttpClient.GetAsync("http://mailpit:8025"); // only works in docker
+                var response = await HttpClient.GetAsync("http://mailpit:8025"); // only works in docker
                 response.EnsureSuccessStatusCode();
 
                 return true;
             }
-            catch (Exception ex)
+            catch
             {
                 // TODO: logging service
                 return false;
@@ -60,6 +51,6 @@ public class HealthCheckService
 
     public string GetEnvironment()
     {
-        return _environment.EnvironmentName;
+        return environment.EnvironmentName;
     }
 }
