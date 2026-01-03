@@ -49,7 +49,22 @@ services:
     stdin_open: true
     networks:
       - beacon-network
-      
+
+  backend-test:
+    image: mcr.microsoft.com/dotnet/sdk:9.0-alpine
+    container_name: beacon-xunit
+    working_dir: /src/backend.Tests
+    volumes:
+      - ../backend:/src/backend
+      - ../backend.Tests:/src/backend.Tests
+    command: dotnet watch test
+    environment:
+      - DOTNET_ENVIRONMENT=Test
+    tty: true
+    stdin_open: true
+    networks:
+      - beacon-network
+
   backend-dev:
     build:
       context: ../backend

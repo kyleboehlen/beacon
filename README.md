@@ -105,16 +105,17 @@ The `backend/Dockerfile` Rider configuration will build the backend and run it i
 
 ### Available Services
 
-| Service           | URL                              | Description                                  |
-|-------------------|----------------------------------|----------------------------------------------|
-| Frontend          | http://localhost:5173            | Main application                             |
-| Storybook         | http://localhost:6006            | Component library                            |
-| API               | http://localhost:5002            | Backend services                             |
-| API Documentation | http://localhost:5002/scalar/    | Scalar UI                                    |
-| Email Testing     | http://localhost:8025            | MailPit interface                            |
-| Database          | http://localhost:27017           | MongoDB (Connect via DataGrip or equivalent) |
-| Front-end Tests   | N/A, see container logs          | Vitest                                       |
-| Type Generation   | N/A, container will run and quit | TypeGen                                      |
+| Service           | URL                               | Description                                  |
+|-------------------|-----------------------------------|----------------------------------------------|
+| Frontend          | http://localhost:5173             | Main application                             |
+| Storybook         | http://localhost:6006             | Component library                            |
+| API               | http://localhost:5002             | Backend services                             |
+| API Documentation | http://localhost:5002/scalar/     | Scalar UI                                    |
+| Email Testing     | http://localhost:8025             | MailPit interface                            |
+| Database          | http://localhost:27017            | MongoDB (Connect via DataGrip or equivalent) |
+| Front-end Tests   | N/A, see container logs           | Vitest                                       |
+| Type Generation   | N/A, container will run and quit  | TypeGen                                      |
+| Back-end Tests    | N/A, see container logs           | xUnit                                        |
 
 ### Development Notes
 
@@ -124,7 +125,7 @@ ISSUES.
 ***
 
 - Frontend supports hot reload for rapid development
-- Unit tests run with hot reload - view results in the frontend-test Docker container console
+- Unit tests run with hot reload - view results in the beacon-vitest and beacon-xunit Docker container consoles
 - API debugging available through Rider with fast rebuild capabilities
 - MongoDB container provides local data persistence
 
