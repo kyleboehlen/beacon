@@ -12,9 +12,7 @@ public class Game
     [BsonRepresentation(BsonType.ObjectId)]
     public string Id { get; set; } = string.Empty;
 
-    [TsNull]
-    [BsonElement("rules")]
-    public RulesConfig Rules { get; set; } = new();
+    [TsNull] [BsonElement("rules")] public RulesConfig Rules { get; set; } = new();
 
     [BsonElement("createdAt")]
     [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]

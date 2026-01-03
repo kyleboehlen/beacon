@@ -48,7 +48,8 @@ Offline-first Progressive Web App (PWA) built with modern web technologies and F
 
 ## Accessibility
 
-BEACON is built with accessibility in mind to ensure the application is usable by all players, including those using assistive technologies.
+BEACON is built with accessibility in mind to ensure the application is usable by all players, including those using
+assistive technologies.
 
 ### Frontend Accessibility Features
 
@@ -66,6 +67,7 @@ BEACON is built with accessibility in mind to ensure the application is usable b
 ### Accessibility Guidelines
 
 When contributing to the frontend:
+
 - Use semantic HTML elements (`<button>`, `<nav>`, `<main>`, etc.)
 - Provide descriptive `alt` text for images and icons
 - Use ARIA labels and descriptions where appropriate
@@ -117,7 +119,8 @@ The `backend/Dockerfile` Rider configuration will build the backend and run it i
 ### Development Notes
 
 ***
-IF YOU HAVE AN ISSUE WITH THE DOCKER CONTAINERS START BY DELETING THE CONTAINER IMAGE AND VOLUME, IT WILL SOLVE MOST ISSUES.
+IF YOU HAVE AN ISSUE WITH THE DOCKER CONTAINERS START BY DELETING THE CONTAINER IMAGE AND VOLUME, IT WILL SOLVE MOST
+ISSUES.
 ***
 
 - Frontend supports hot reload for rapid development
@@ -168,7 +171,8 @@ Be sure that the `.env.deploy` configuration exists for the frontend, especially
 
 ### Database
 
-Theoretically you could host MongoDB anywhere. We're using MongoDB Atlas. There is a free cluster for preview, and a <br>
+Theoretically you could host MongoDB anywhere. We're using MongoDB Atlas. There is a free cluster for preview, and
+a <br>
 flex cluster for production. The users are scoped to the cluster, and you can get the connection string from the Atlas
 UI.<br>
 
