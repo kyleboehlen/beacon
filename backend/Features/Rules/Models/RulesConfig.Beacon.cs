@@ -1,6 +1,6 @@
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Features.Game.Models;
+namespace Features.Rules.Models;
 
 public partial class RulesConfig
 {

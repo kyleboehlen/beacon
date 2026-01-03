@@ -1,6 +1,7 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using TypeGen.Core.TypeAnnotations;
+using Features.Rules.Models;
 
 namespace Features.Game.Models;
 

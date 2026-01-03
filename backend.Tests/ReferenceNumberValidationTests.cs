@@ -1,5 +1,5 @@
 using System.Reflection;
-using Features.Game.Models;
+using Features.Rules.Models;
 
 namespace backend.Tests;
 
@@ -82,7 +82,7 @@ public class ReferenceNumberValidationTests
             // if (string.IsNullOrEmpty(refNumber)) continue; // Enable this line if you want to allow empty strings as valid reference numbers
 
             // Add to list of invalid numbers if it is not in the collection of valid reference numbers
-            if (!validReferences.Contains(refNumber))
+            if (string.IsNullOrEmpty(refNumber) || !validReferences.Contains(refNumber))
             {
                 invalidReferences.Add($"{property.Name}: {refNumber}");
             }

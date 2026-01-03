@@ -1,0 +1,21 @@
+### Health Check - Get status
+GET {{baseUrl}}/api/HealthCheck/HealthCheck
+Accept: application/json
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+
+    client.test("Response has success field", function() {
+        client.assert(response.body.hasOwnProperty("success"), "Response missing 'success' field");
+        client.assert(response.body.success === true, "Success should be true");
+    });
+
+    client.test("Response has payload", function() {
+        client.assert(response.body.hasOwnProperty("payload"), "Response missing 'payload' field");
+        client.assert(response.body.payload.hasOwnProperty("database"), "Payload missing 'database' field");
+        client.assert(response.body.payload.hasOwnProperty("emailService"), "Payload missing 'emailService' field");
+        client.assert(response.body.payload.hasOwnProperty("environment"), "Payload missing 'environment' field");
+    });
+%}

@@ -6,23 +6,16 @@ namespace Controllers.HealthCheck;
 
 [ApiController]
 [Route("api/[controller]")]
-public class HealthCheckController : ControllerBase
+public class HealthCheckController(HealthCheckService healthCheckService) : ControllerBase
 {
-    private readonly HealthCheckService _healthCheckService;
-
-    public HealthCheckController(HealthCheckService healthCheckService)
-    {
-        _healthCheckService = healthCheckService;
-    }
-
-    [HttpGet(Name = "HealthCheck")]
+    [HttpGet("HealthCheck")]
     public async Task<BeaconResponse<HealthCheckResponse>> Get()
     {
         var payload = new HealthCheckResponse()
         {
-            Database = await _healthCheckService.DatabaseConnected(),
-            EmailService = await _healthCheckService.EmailServiceConnected(),
-            Environment = _healthCheckService.GetEnvironment(),
+            Database = await healthCheckService.DatabaseConnected(),
+            EmailService = await healthCheckService.EmailServiceConnected(),
+            Environment = healthCheckService.GetEnvironment(),
         };
 
         return new BeaconResponse<HealthCheckResponse>()

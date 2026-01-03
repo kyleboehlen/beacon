@@ -1,0 +1,37 @@
+### Rules - Hydrate default RulesConfig
+GET {{baseUrl}}/api/Rules/HydrateRulesConfig/
+Accept: application/json
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+
+    client.test("Response has success field", function() {
+        client.assert(response.body.hasOwnProperty("success"), "Response missing 'success' field");
+        client.assert(response.body.success === true, "Success should be true");
+    });
+
+    client.test("Response has default rules config", function() {
+        client.assert(response.body.hasOwnProperty("payload"), "Response missing 'payload' field");
+        client.assert(response.body.payload.hasOwnProperty("defaultRulesConfig"), "Payload missing 'defaultRulesConfig' field");
+    });
+
+    client.test("Default rules config has rule options", function() {
+        var rulesConfig = response.body.payload.defaultRulesConfig;
+        client.assert(rulesConfig.hasOwnProperty("msPipelines"), "Missing 'msPipelines' rule");
+        client.assert(rulesConfig.hasOwnProperty("fighters"), "Missing 'fighters' rule");
+        client.assert(rulesConfig.hasOwnProperty("cloaking"), "Missing 'cloaking' rule");
+    });
+
+    client.test("Rule options have required properties", function() {
+        var rulesConfig = response.body.payload.defaultRulesConfig;
+        var firstRule = rulesConfig.msPipelines;
+
+        client.assert(firstRule.hasOwnProperty("value"), "Rule missing 'value' property");
+        client.assert(firstRule.hasOwnProperty("description"), "Rule missing 'description' property");
+        client.assert(firstRule.hasOwnProperty("category"), "Rule missing 'category' property");
+        client.assert(firstRule.hasOwnProperty("enabled"), "Rule missing 'enabled' property");
+        client.assert(firstRule.hasOwnProperty("referenceNumber"), "Rule missing 'referenceNumber' property");
+    });
+%}

@@ -1,6 +1,6 @@
 using TypeGen.Core.TypeAnnotations;
 
-namespace Features.Game.Models;
+namespace Features.Rules.Models;
 
 public partial class RulesConfig
 {

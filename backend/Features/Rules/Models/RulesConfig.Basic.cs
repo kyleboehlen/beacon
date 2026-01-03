@@ -1,4 +1,4 @@
-namespace Features.Game.Models;
+namespace Features.Rules.Models;
 
 using MongoDB.Bson.Serialization.Attributes;
 

@@ -5,7 +5,7 @@ export const useHealthCheckApi = () => {
   const { beaconApiCall } = useBeaconApi()
 
   const getHealthCheck = async (): Promise<HealthCheckResponse> => {
-    const response = await beaconApiCall<null, HealthCheckResponse>('GET', '/HealthCheck')
+    const response = await beaconApiCall<null, HealthCheckResponse>('GET', '/HealthCheck/HealthCheck')
 
     if (response === false) {
       return {

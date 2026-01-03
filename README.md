@@ -116,6 +116,7 @@ The `backend/Dockerfile` Rider configuration will build the backend and run it i
 | Front-end Tests   | N/A, see container logs           | Vitest                                       |
 | Type Generation   | N/A, container will run and quit  | TypeGen                                      |
 | Back-end Tests    | N/A, see container logs           | xUnit                                        |
+| API HTTP Tests    | N/A, see container logs           | http runner acceptance tests                 |
 
 ### Development Notes
 
@@ -127,6 +128,7 @@ ISSUES.
 - Frontend supports hot reload for rapid development
 - Unit tests run with hot reload - view results in the beacon-vitest and beacon-xunit Docker container consoles
 - API debugging available through Rider with fast rebuild capabilities
+- API HTTP acceptance tests will run once in a container when running either the dev or preview compose. Re-run the container to run them again
 - MongoDB container provides local data persistence
 
 ## Preview Environment

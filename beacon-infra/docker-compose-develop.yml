@@ -65,6 +65,20 @@ services:
     networks:
       - beacon-network
 
+  http-test:
+    image: jetbrains/intellij-http-client:latest
+    container_name: beacon-http-test-dev
+    restart: "no"
+    volumes:
+      - ../backend/Http:/workdir
+    command: ["--env-file", "http-client.env.json", "--env", "docker-dev", "run-all.http"]
+    depends_on:
+      - backend-dev
+    networks:
+      - beacon-network
+    tty: true
+    stdin_open: true
+
   backend-dev:
     build:
       context: ../backend
