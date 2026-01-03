@@ -24,7 +24,7 @@ public partial class RulesConfig
         Category = RuleCategory.Beacon,
         Enabled = true,
         // TODO: find in rules
-        ReferenceNumber = "??"
+        ReferenceNumber = ""
     };
     
     // TODO: lost in space behavior
