@@ -57,6 +57,11 @@ services:
     volumes:
       - ../backend:/src/backend
       - ../backend.Tests:/src/backend.Tests
+      # Exclude build artifacts to prevent container/host conflicts
+      - /src/backend/obj
+      - /src/backend/bin
+      - /src/backend.Tests/obj
+      - /src/backend.Tests/bin
     command: dotnet watch test
     environment:
       - DOTNET_ENVIRONMENT=Test
