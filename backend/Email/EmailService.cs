@@ -28,14 +28,19 @@ public class EmailService
 
     public void SendHealthCheckEmail()
     {
+        var fromAddress = _configuration["SMTP:From"]
+            ?? throw new InvalidOperationException("SMTP:From configuration is missing");
+        var toAddress = _configuration["SMTP:HealthCheckTo"]
+            ?? throw new InvalidOperationException("SMTP:HealthCheckTo configuration is missing");
+
         var mailMessage = new MailMessage
         {
-            From = new MailAddress(_configuration["SMTP:From"], "B.E.A.C.O.N. App"),
+            From = new MailAddress(fromAddress, "B.E.A.C.O.N. App"),
             Subject = "Health Check",
             Body = "Health check email from Beacon backend.",
             IsBodyHtml = false,
         };
-        mailMessage.To.Add(_configuration["SMTP:HealthCheckTo"]);
+        mailMessage.To.Add(toAddress);
 
         _smtpClient.Send(mailMessage);
     }

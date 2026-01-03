@@ -23,8 +23,7 @@ public partial class RulesConfig
             "Enforce the ship group limitations imposed by the original game. When disabled you may have as many groups of the same ship type as you can afford to build.",
         Category = RuleCategory.Beacon,
         Enabled = true,
-        // TODO: find in rules
-        ReferenceNumber = ""
+        ReferenceNumber = "7.5.5"
     };
     
     // TODO: lost in space behavior

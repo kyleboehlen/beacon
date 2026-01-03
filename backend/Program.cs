@@ -50,7 +50,7 @@ else
 
 builder.Services.AddScoped<IMongoDatabase>(serviceProvider =>
 {
-    var client = serviceProvider.GetService<IMongoClient>();
+    var client = serviceProvider.GetRequiredService<IMongoClient>();
     return client.GetDatabase("beacon");
 });
 

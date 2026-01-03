@@ -17,7 +17,7 @@ public class HealthCheckService(IWebHostEnvironment environment, IMongoDatabase 
             var result = await database.RunCommandAsync((Command<BsonDocument>)"{ping:1}");
             return result.ToString() == "{ \"ok\" : 1.0 }" || result.ToString() == "{ \"ok\" : 1 }";
         }
-        catch (Exception ex)
+        catch
         {
             // TODO: Logging service
             return false;
