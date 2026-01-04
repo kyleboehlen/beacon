@@ -130,6 +130,7 @@ const getProgressLineClasses = (id: string) => {
             </span>
             <!-- Step Label -->
             <span
+              :id="`step-${step.id}-label`"
               class="ms-2 text-sm font-medium transition-colors duration-200"
               :class="getStepLabelClasses(step.id)"
             >
