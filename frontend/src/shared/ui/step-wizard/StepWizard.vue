@@ -147,7 +147,7 @@ const getProgressLineClasses = (id: string) => {
     </nav>
 
     <!-- Stepper Content -->
-    <div class="flex-1 mt-5 sm:mt-8 min-h-0" role="tabpanel" :aria-labelledby="`step-${currentStep}-label`">
+    <div class="flex-1 mt-5 sm:mt-8 min-h-0" role="tabpanel" :aria-labelledby="`step-${currentStepId}-label`">
       <div
         v-for="step in steps"
         :key="step.id"
