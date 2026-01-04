@@ -199,7 +199,12 @@ const getProgressLineClasses = (id: string) => {
 
     <!-- Screen reader styles required to keep it in the flow for screen readers without actually showing up visually -->
     <div role="status" aria-live="polite" aria-atomic="true" class="absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0">
-      {{ `Step ${currentStep + 1} of ${steps.length}: ${steps[currentStep]?.label}` }}
+      <span v-if="currentStepId !== null">
+        {{ `Step ${currentStep + 1} of ${steps.length}: ${steps[currentStep]?.label}` }}
+      </span>
+      <span v-else>
+        Finished all steps
+      </span>
     </div>
   </div>
 </template>
