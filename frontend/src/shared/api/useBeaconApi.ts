@@ -7,7 +7,7 @@ export const useBeaconApi = () => {
     method: 'GET' | 'POST',
     endpoint: string,
     body?: T,
-  ): Promise<R | boolean> => {
+  ): Promise<R | false> => {
     const response = await fetch(baseUrl + endpoint, {
       method,
       headers: {

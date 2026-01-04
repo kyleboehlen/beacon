@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import type { Game } from './types'
+import { useRules } from '@/entities/rules/models/useRules.ts'
 
 export const useGameStore = defineStore(
   'game',
@@ -23,20 +24,19 @@ export const useGameStore = defineStore(
       }
     }
 
-    const createRules = () => {
+    const createRules = async () => {
       if (!game.value) {
         throw new Error('Cannot create rules: game is not instantiated')
       }
 
-      game.value.rules = {
-        id: crypto.randomUUID(),
-        raiders: false,
-        msPipelines: false,
-        mines: false,
-        fighters: false,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+      const { getBlankRulesConfig } = useRules()
+      const rulesConfig = await getBlankRulesConfig()
+
+      if (!rulesConfig) {
+        throw new Error('Failed to fetch default rules configuration')
       }
+
+      game.value.rules = rulesConfig
     }
 
     const clearGame = () => {
