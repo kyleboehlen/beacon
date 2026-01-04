@@ -88,8 +88,8 @@ const getProgressLineClasses = (id: string) => {
 
 <template>
   <div class="w-full h-full flex flex-col">
-    <!-- Steps are displayed in the nav -->
-    <nav role="navigation" aria-label="Progress">
+    <!-- Wizard Step Navigation -->
+    <div role="tablist" aria-label="Wizard steps">
       <ul class="relative flex flex-row gap-x-2">
         <!-- Cursor pointer styles on this li are for letting the user know they can click back to completed steps -->
         <li
@@ -103,9 +103,10 @@ const getProgressLineClasses = (id: string) => {
           @keydown.enter="navigateToCompletedStep(step.id)"
           @keydown.space.prevent="navigateToCompletedStep(step.id)"
           :tabindex="stepIsCompleted(step.id) ? 0 : -1"
-          role="option"
+          role="tab"
           :aria-label="`${step.label}${stepIsCompleted(step.id) ? ' - Completed' : step.id === currentStepId ? ' - Current' : ''}`"
-          :aria-current="step.id === currentStepId ? 'step' : undefined"
+          :aria-selected="step.id === currentStepId"
+          :aria-controls="`tabpanel-${step.id}`"
         >
           <span class="min-w-7 min-h-7 group inline-flex items-center text-xs align-middle">
             <!-- Step Indicator Circle -->
@@ -145,14 +146,18 @@ const getProgressLineClasses = (id: string) => {
           />
         </li>
       </ul>
-    </nav>
+    </div>
 
     <!-- Stepper Content -->
-    <div class="flex-1 mt-5 sm:mt-8 min-h-0" role="tabpanel" :aria-labelledby="`step-${currentStepId}-label`">
+    <div class="flex-1 mt-5 sm:mt-8 min-h-0">
       <div
         v-for="step in steps"
         :key="step.id"
         v-show="step.id === currentStepId"
+        :id="`tabpanel-${step.id}`"
+        role="tabpanel"
+        :aria-labelledby="`step-${step.id}-label`"
+        :tabindex="0"
         class="w-full h-full"
       >
         <slot :name="step.id" />
