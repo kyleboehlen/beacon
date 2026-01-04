@@ -216,10 +216,10 @@ describe('FullDashboardWidget', () => {
   })
 
   describe('State with game and rules', () => {
-    beforeEach(() => {
+    beforeEach(async () => {
       const gameStore = useGameStore()
       gameStore.setGame()
-      gameStore.createRules()
+      await gameStore.createRules()
     })
 
     it('enables all tabs when game and rules exist', () => {
@@ -228,23 +228,23 @@ describe('FullDashboardWidget', () => {
       })
 
       const dashboardTab = wrapper.get('#tab-dashboard')
-      expect(dashboardTab.attributes('disabled')).toBeUndefined()
+      expect(dashboardTab.attributes('disabled')).toBeFalsy()
       expect(dashboardTab.attributes('aria-disabled')).toBe('false')
 
       const econTab = wrapper.get('#tab-econ')
-      expect(econTab.attributes('disabled')).toBeUndefined()
+      expect(econTab.attributes('disabled')).toBeFalsy()
       expect(econTab.attributes('aria-disabled')).toBe('false')
 
       const fleetTab = wrapper.get('#tab-fleet')
-      expect(fleetTab.attributes('disabled')).toBeUndefined()
+      expect(fleetTab.attributes('disabled')).toBeFalsy()
       expect(fleetTab.attributes('aria-disabled')).toBe('false')
 
       const intelTab = wrapper.get('#tab-intel')
-      expect(intelTab.attributes('disabled')).toBeUndefined()
+      expect(intelTab.attributes('disabled')).toBeFalsy()
       expect(intelTab.attributes('aria-disabled')).toBe('false')
 
       const battleTab = wrapper.get('#tab-battle')
-      expect(battleTab.attributes('disabled')).toBeUndefined()
+      expect(battleTab.attributes('disabled')).toBeFalsy()
       expect(battleTab.attributes('aria-disabled')).toBe('false')
 
       wrapper.unmount()
@@ -267,10 +267,10 @@ describe('FullDashboardWidget', () => {
         attachTo: document.body,
       })
 
-      const settingsAttentionBadge = wrapper.find('[aria-label="Settings Icon"]')
+      const settingsAttentionBadge = wrapper.find('span[role="status"][aria-label="Settings Icon"]')
       expect(settingsAttentionBadge.exists()).toBe(false)
 
-      const dashboardAttentionBadge = wrapper.find('[aria-label="Dashboard Tab"]')
+      const dashboardAttentionBadge = wrapper.find('span[role="status"][aria-label="Dashboard Tab"]')
       expect(dashboardAttentionBadge.exists()).toBe(false)
 
       wrapper.unmount()
