@@ -364,4 +364,105 @@ describe('StepWizard', () => {
       expect(wrapper.classes()).toContain('h-full')
     })
   })
+
+  describe('Custom Button Slots', () => {
+    it('uses default back button when no slot provided', () => {
+      const backButton = wrapper.findAllComponents({ name: 'BasicButton' })[0]
+      expect(backButton.text()).toContain('Back')
+    })
+
+    it('uses default next button when no slot provided', () => {
+      const nextButton = wrapper.findAllComponents({ name: 'BasicButton' })[1]
+      expect(nextButton.text()).toContain('Next')
+    })
+
+    it('uses custom back button when slot provided', () => {
+      const customWrapper = mount(StepWizard, {
+        props: { steps },
+        slots: {
+          step1: '<div>Step 1</div>',
+          step2: '<div>Step 2</div>',
+          step3: '<div>Step 3</div>',
+          'back-button': '<button data-testid="custom-back">Custom Back</button>',
+        },
+      })
+
+      const customBackButton = customWrapper.find('[data-testid="custom-back"]')
+      expect(customBackButton.exists()).toBe(true)
+      expect(customBackButton.text()).toBe('Custom Back')
+    })
+
+    it('uses custom next button when slot provided', () => {
+      const customWrapper = mount(StepWizard, {
+        props: { steps },
+        slots: {
+          step1: '<div>Step 1</div>',
+          step2: '<div>Step 2</div>',
+          step3: '<div>Step 3</div>',
+          'next-button': '<button data-testid="custom-next">Custom Next</button>',
+        },
+      })
+
+      const customNextButton = customWrapper.find('[data-testid="custom-next"]')
+      expect(customNextButton.exists()).toBe(true)
+      expect(customNextButton.text()).toBe('Custom Next')
+    })
+
+    it('passes correct props to back button slot', () => {
+      const customWrapper = mount(StepWizard, {
+        props: { steps },
+        slots: {
+          step1: '<div>Step 1</div>',
+          step2: '<div>Step 2</div>',
+          step3: '<div>Step 3</div>',
+          'back-button': `
+            <template #back-button="{ handleBack, isFirstStep, currentStep }">
+              <button
+                data-testid="custom-back"
+                :disabled="isFirstStep"
+                @click="handleBack"
+              >
+                Back (Step {{ currentStep }})
+              </button>
+            </template>
+          `,
+        },
+      })
+
+      const customBackButton = customWrapper.find('[data-testid="custom-back"]')
+      expect(customBackButton.exists()).toBe(true)
+    })
+
+    it('passes correct props to next button slot', () => {
+      const customWrapper = mount(StepWizard, {
+        props: { steps },
+        slots: {
+          step1: '<div>Step 1</div>',
+          step2: '<div>Step 2</div>',
+          step3: '<div>Step 3</div>',
+          'next-button': `
+            <template #next-button="{ handleNext, handleFinish, isLastStep }">
+              <button
+                v-if="!isLastStep"
+                data-testid="custom-next"
+                @click="handleNext"
+              >
+                Continue
+              </button>
+              <button
+                v-else
+                data-testid="custom-finish"
+                @click="handleFinish"
+              >
+                Done
+              </button>
+            </template>
+          `,
+        },
+      })
+
+      const customNextButton = customWrapper.find('[data-testid="custom-next"]')
+      expect(customNextButton.exists()).toBe(true)
+    })
+  })
 })

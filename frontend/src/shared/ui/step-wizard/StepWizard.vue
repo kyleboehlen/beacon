@@ -3,7 +3,7 @@ import { ref, computed } from 'vue'
 import { Icon } from '@iconify/vue'
 import { BasicButton } from '@/shared/ui/basic-button'
 
-interface Step {
+export interface Step {
   id: string
   label: string
 }
@@ -84,6 +84,10 @@ const getProgressLineClasses = (id: string) => {
     return 'bg-white/20'
   }
 }
+
+// Expose state and methods for custom button slots
+const isFirstStep = computed(() => currentStep.value === 0)
+const isLastStep = computed(() => currentStep.value === props.steps.length - 1)
 </script>
 
 <template>
@@ -166,41 +170,58 @@ const getProgressLineClasses = (id: string) => {
 
     <!-- Button Group -->
     <div class="mt-5 flex justify-between items-center gap-x-2">
-      <!-- Back Button -->
-      <BasicButton
-        :disabled="currentStep === 0"
-        @click="handleBack"
-        aria-label="Previous step"
+      <!-- Back Button Slot -->
+      <slot
+        name="back-button"
+        :handle-back="handleBack"
+        :is-first-step="isFirstStep"
+        :current-step="currentStep"
       >
-        <div class="flex flex-row items-center justify-center h-full">
-          <p>Back</p>
-          <Icon icon="mdi:chevron-left" class="size-6" aria-hidden="true" />
-        </div>
-      </BasicButton>
+        <!-- Default Back Button -->
+        <BasicButton
+          :disabled="isFirstStep"
+          @click="handleBack"
+          aria-label="Previous step"
+        >
+          <div class="flex flex-row items-center justify-center h-full">
+            <Icon icon="mdi:chevron-left" class="size-6" aria-hidden="true" />
+            <p>Back</p>
+          </div>
+        </BasicButton>
+      </slot>
 
-      <!-- Next Button (shown for all steps except last) -->
-      <BasicButton
-        v-if="currentStep < steps.length - 1"
-        @click="handleNext"
-        aria-label="Next step"
+      <!-- Next/Finish Button Slot -->
+      <slot
+        name="next-button"
+        :handle-next="handleNext"
+        :handle-finish="handleFinish"
+        :is-last-step="isLastStep"
+        :current-step="currentStep"
       >
-        <div class="flex flex-row items-center justify-center h-full">
-          <p>Next</p>
-          <Icon icon="mdi:chevron-right" class="size-6" aria-hidden="true" />
-        </div>
-      </BasicButton>
+        <!-- Default Next Button (shown for all steps except last) -->
+        <BasicButton
+          v-if="!isLastStep"
+          @click="handleNext"
+          aria-label="Next step"
+        >
+          <div class="flex flex-row items-center justify-center h-full">
+            <p>Next</p>
+            <Icon icon="mdi:chevron-right" class="size-6" aria-hidden="true" />
+          </div>
+        </BasicButton>
 
-      <!-- Finish Button (shown only on last step) -->
-      <BasicButton
-        v-else
-        @click="handleFinish"
-        aria-label="Complete wizard"
-      >
-        <div class="flex flex-row items-center justify-center h-full">
-          <p>Finish</p>
-          <Icon icon="mdi:check" class="size-6 ml-1" aria-hidden="true" />
-        </div>
-      </BasicButton>
+        <!-- Default Finish Button (shown only on last step) -->
+        <BasicButton
+          v-else
+          @click="handleFinish"
+          aria-label="Complete wizard"
+        >
+          <div class="flex flex-row items-center justify-center h-full">
+            <p>Finish</p>
+            <Icon icon="mdi:check" class="size-6 ml-1" aria-hidden="true" />
+          </div>
+        </BasicButton>
+      </slot>
     </div>
 
     <!-- Screen reader styles required to keep it in the flow for screen readers without actually showing up visually -->
