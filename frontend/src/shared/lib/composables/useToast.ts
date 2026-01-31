@@ -1,16 +1,6 @@
 import { defineStore } from 'pinia'
-import { type Component, ref } from 'vue'
-import type { ToastType } from '@/shared/ui/toast/types'
-
-export interface Toast {
-  id?: string
-  type?: ToastType
-  message?: string
-  duration?: number
-  dismissible?: boolean
-  component?: Component
-  props?: Record<string, unknown>
-}
+import { ref } from 'vue'
+import type { Toast } from '@/shared/ui/toast/types'
 
 export const useToast = defineStore('toast', () => {
   // State

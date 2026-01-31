@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import type { Game } from './types'
-import { useRules } from '@/entities/rules/models/useRules.ts'
+import { useRules } from '@/entities/rules'
 
 export const useGameStore = defineStore(
   'game',

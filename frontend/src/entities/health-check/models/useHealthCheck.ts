@@ -1,4 +1,4 @@
-import { useHealthCheckApi } from './api/useHealthCheckApi'
+import { useHealthCheckApi } from '../api/useHealthCheckApi'
 
 export const useHealthCheck = () => {
   const { getHealthCheck } = useHealthCheckApi()

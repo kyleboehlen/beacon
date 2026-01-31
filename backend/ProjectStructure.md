@@ -1,3 +1,6 @@
+# Backend Project Structure
+
+```
 Project/
 ├── Controllers/
 │   └── {feature}/
@@ -24,3 +27,4 @@ Project/
     ├── Models/
     ├── Services/
     └── Generators/
+```
