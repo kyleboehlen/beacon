@@ -1,3 +1,4 @@
+using Controllers.HealthCheck.Requests;
 using Controllers.HealthCheck.Responses;
 using Features.HealthCheck.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -9,12 +10,12 @@ namespace Controllers.HealthCheck;
 public class HealthCheckController(HealthCheckService healthCheckService) : ControllerBase
 {
     [HttpGet("HealthCheck")]
-    public async Task<BeaconResponse<HealthCheckResponse>> Get()
+    public async Task<BeaconResponse<HealthCheckResponse>> Get([FromQuery] GetHealthCheckRequest request)
     {
         var payload = new HealthCheckResponse()
         {
-            Database = await healthCheckService.DatabaseConnected(),
-            EmailService = await healthCheckService.EmailServiceConnected(),
+            Database = await healthCheckService.DatabaseConnected(request.Database),
+            EmailService = await healthCheckService.EmailServiceConnected(request.EmailService),
             Environment = healthCheckService.GetEnvironment(),
         };
 

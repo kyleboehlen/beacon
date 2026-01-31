@@ -6,11 +6,12 @@ namespace Features.HealthCheck.Services;
 
 public class HealthCheckService(IWebHostEnvironment environment, IMongoDatabase database, EmailService emailService)
 {
-    private readonly EmailService _emailService = emailService;
     private static readonly HttpClient HttpClient = new HttpClient();
 
-    public async Task<bool> DatabaseConnected()
+    public async Task<bool> DatabaseConnected(bool check)
     {
+        if (!check) return false;
+
         try
         {
             // Simple ping command
@@ -24,29 +25,35 @@ public class HealthCheckService(IWebHostEnvironment environment, IMongoDatabase 
         }
     }
 
-    public async Task<bool> EmailServiceConnected()
+    public async Task<bool> EmailServiceConnected(bool check)
     {
-        // _emailService.SendHealthCheckEmail(); // THIS IS FOR DEBUGGING PURPOSES ONLY
-
-        if (environment.IsDevelopment())
+        // ReSharper disable once InvertIf
+        if (check)
         {
-            try
+            if (environment.IsDevelopment())
             {
-                // Check connection
-                var response = await HttpClient.GetAsync("http://mailpit:8025"); // only works in docker
-                response.EnsureSuccessStatusCode();
+                try
+                {
+                    // Check connection
+                    var response = await HttpClient.GetAsync("http://mailpit:8025"); // only works in docker
+                    response.EnsureSuccessStatusCode();
 
-                return true;
+                    return true;
+                }
+                catch
+                {
+                    // TODO: logging service
+                    return false;
+                }
             }
-            catch
+            // ReSharper disable once RedundantIfElseBlock
+            else
             {
-                // TODO: logging service
-                return false;
+                emailService.SendHealthCheckEmail();
             }
         }
 
-        // We can assume that a production SMTP service is reliable
-        return true; // If sending the email doesn't throw an exception, we assume it's working
+        return true;
     }
 
     public string GetEnvironment()
