@@ -1,5 +1,18 @@
 # Testing Conventions
 
+## Shared Component Requirements
+
+Shared UI components (`frontend/src/shared/ui/`) are reusable building blocks used across features. Every shared component **must** have both:
+
+1. **A vitest file** (`ComponentName.spec.ts`) — co-located, testing behavior, events, accessibility
+2. **A story file** (`ComponentName.stories.ts`) — co-located, with variants exercising props and slots
+
+This is enforced by the `vitest` and `storybook` commands, which both check for coverage on shared components and offer to write missing files.
+
+Feature-level components (`features/`, `widgets/`) do **not** require stories or vitests unless they contain significant reusable logic or behavior worth testing in isolation.
+
+---
+
 ## Frontend -- Vitest + Vue Test Utils
 
 ### File Naming
