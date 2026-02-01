@@ -28,7 +28,7 @@ Offline-first Progressive Web App (PWA) built with modern web technologies and F
 
 ### Backend
 
-- **.NET Core API** with C# controllers (see ProjectStructure.txt)
+- **.NET Core API** with C# controllers (see ProjectStructure.md)
 - **Scalar UI** - OpenAPI documentation and testing interface
 - **Unit testing framework** (TBD)
 
@@ -94,7 +94,7 @@ When contributing to the frontend:
    ``` 
 3. Start the development environment:
    ```bash
-   docker compose -f infra/docker-compose-develop.yml up --build
+   docker compose -f beacon-infra/docker-compose-develop.yml up --build
    ```
 
 Note: this will also use TypeGen to put the generated types in `frontend/src/shared/models/generated/`
@@ -149,7 +149,7 @@ properly.
 Start preview environment:
 
 ```bash
-docker compose -f infra/docker-compose-preview.yml up --build
+docker compose -f beacon-infra/docker-compose-preview.yml up --build
 ```
 
 Make sure that the `.env.preview` configuration exists for the frontend
