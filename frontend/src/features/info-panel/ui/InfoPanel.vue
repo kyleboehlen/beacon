@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue'
 import { ref, watch, onBeforeUnmount } from 'vue'
+import { RuleReferenceLink } from '@/shared/ui/rule-reference-link'
 
 const model = defineModel<boolean>({ required: true })
 
@@ -67,14 +68,7 @@ onBeforeUnmount(() => {
         pieces, and is still meant to be played with friends in person.
       </p>
       <p>
-        <a
-          href="/SE_AllGoodTHings_MasterRulebook_v8.pdf"
-          target="_blank"
-          rel="noopener"
-          class="text-cyan-400/70 underline decoration-dotted hover:text-cyan-300"
-        >
-          View the Master Rulebook (PDF)
-        </a>
+        <RuleReferenceLink reference-number="Master Rulebook" />
       </p>
       <p class="text-white/40 italic">
         Coming soon: Interactive Rules Tutorial
