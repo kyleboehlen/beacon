@@ -20,5 +20,10 @@ docker logs beacon-vitest --tail 100
 ```
 Wait a few seconds after file changes for tests to re-run, then read logs again.
 
+## Frontend type re-exports
+When adding or modifying generated TypeScript types (from `shared/models/generated/`), always re-export them from the owning entity's `models/types.ts` file.
+Consumers should import from the entity barrel (`@/entities/<entity>`) rather than directly from `shared/models/generated/`.
+This includes the store within the entity the type belongs to.
+
 ## Backend specific
 Backend architecture can be verified by reading the ProjectStructure.md file in the root of the backend directory.
