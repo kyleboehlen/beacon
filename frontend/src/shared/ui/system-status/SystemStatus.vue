@@ -2,16 +2,20 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { StatusLED } from '@/shared/ui/status-led'
 
+// This function returns true on success, false on failure, that maps to the Status
 interface Props {
   fn: () => Promise<boolean>
 }
 
+// By default the Status returns true (success) after a timeout
 const props = withDefaults(defineProps<Props>(), {
   fn: () => {
-    return new Promise<boolean>(resolve => setTimeout(() => {
-      resolve(true)
-    }, 4000));
-  }
+    return new Promise<boolean>((resolve) =>
+      setTimeout(() => {
+        resolve(true)
+      }, 4000),
+    )
+  },
 })
 
 type Status = 'pending' | 'success' | 'failed'
@@ -55,10 +59,7 @@ onUnmounted(() => {
     aria-live="polite"
     aria-atomic="true"
   >
-    <StatusLED
-      :variant="statusLEDVariant"
-      aria-hidden="true"
-    />
+    <StatusLED :variant="statusLEDVariant" aria-hidden="true" />
     <span class="text-gray-400">
       <slot :dots="dots" :status="status">System Status{{ dots }}</slot>
     </span>

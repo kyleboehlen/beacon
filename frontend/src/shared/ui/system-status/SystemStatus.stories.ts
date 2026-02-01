@@ -12,15 +12,15 @@ export default meta
 type Story = StoryObj<typeof SystemStatus>
 
 const quickSuccess = (): Promise<boolean> => {
-  return new Promise(resolve => setTimeout(() => resolve(true), 3000))
+  return new Promise((resolve) => setTimeout(() => resolve(true), 3000))
 }
 
 const quickFailure = (): Promise<boolean> => {
-  return new Promise(resolve => setTimeout(() => resolve(false), 2000))
+  return new Promise((resolve) => setTimeout(() => resolve(false), 2000))
 }
 
 const longLoading = (): Promise<boolean> => {
-  return new Promise(resolve => setTimeout(() => resolve(true), 5000))
+  return new Promise((resolve) => setTimeout(() => resolve(true), 5000))
 }
 
 export const Default: Story = {
@@ -76,10 +76,10 @@ export const MultipleStatuses: Story = {
     components: { SystemStatus },
     setup() {
       const beaconCheck = (): Promise<boolean> => {
-        return new Promise(resolve => setTimeout(() => resolve(true), 2500))
+        return new Promise((resolve) => setTimeout(() => resolve(true), 2500))
       }
       const loadingCheck = (): Promise<boolean> => {
-        return new Promise(resolve => setTimeout(() => resolve(false), 4000))
+        return new Promise((resolve) => setTimeout(() => resolve(false), 4000))
       }
       return { beaconCheck, loadingCheck }
     },
