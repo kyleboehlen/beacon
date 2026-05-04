@@ -1,2 +1,2 @@
 export * from './models/types.ts'
-export { useRules } from './models/useRules'
+export { useRulesConfigStore } from './models/useRulesConfigStore'
