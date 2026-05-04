@@ -30,6 +30,11 @@ export const useGameStore = defineStore(
     const createRules = async () => {
       if (!game.value) throw new Error('Cannot create rules: game is not instantiated')
       await rulesConfigStore.hydrateDefaults()
+      // clearGame() may have run during the await — discard the hydrated config if so
+      if (!game.value) {
+        rulesConfigStore.clearRulesConfig()
+        return
+      }
     }
 
     const embedRulesConfig = (rulesConfig: RulesConfig) => {

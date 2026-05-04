@@ -40,9 +40,14 @@ onMounted(async () => {
     dots.value += '.'
   }, 750)
 
-  const result = await props.fn()
-  clearInterval(dotsInterval)
-  status.value = result ? 'success' : 'failed'
+  try {
+    const result = await props.fn()
+    status.value = result ? 'success' : 'failed'
+  } catch {
+    status.value = 'failed'
+  } finally {
+    clearInterval(dotsInterval)
+  }
 })
 
 onUnmounted(() => {

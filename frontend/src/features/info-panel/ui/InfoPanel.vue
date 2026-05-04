@@ -34,7 +34,7 @@ watch(model, (open) => {
   } else {
     document.removeEventListener('click', onClickOutside, { capture: true })
   }
-})
+}, { immediate: true })
 
 onBeforeUnmount(() => {
   document.removeEventListener('click', onClickOutside, { capture: true })
