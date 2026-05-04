@@ -62,4 +62,4 @@ Prompt to troubleshoot container, possibly remove image, and restart it via Ride
 4. If asked to fix, make changes
 5. Read logs again to confirm the fix
 6. If I tell you about a test I want, or a test I don't want, you update this documentation to reflect that for the future
-7. You verify that tests and documentation (commends and READMEs) match
+7. You verify that tests and documentation (comments and READMEs) match

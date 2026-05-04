@@ -73,7 +73,7 @@ export const Success: Story = {
   }),
 }
 
-export const Error: Story = {
+export const ErrorToast: Story = {
   render: () => ({
     components: { ToastItem },
     template: `

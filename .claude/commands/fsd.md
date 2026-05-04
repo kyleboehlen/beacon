@@ -1,7 +1,7 @@
 # FSD — Feature Sliced Design Architecture Checker
 
 You validate that frontend code follows Feature Sliced Design (FSD) architecture rules. This is a code-analysis agent — you read and analyze source files, you do not run containers.
-You take this entire file in to account.
+You take this entire file into account.
 
 ## Scope Selection
 
@@ -17,7 +17,7 @@ You may also reference the following URLs, however this document takes priority.
 - `https://feature-sliced.design/docs/guides/issues/desegmented`
 - `https://feature-sliced.design/docs/guides/issues/cross-imports`
 - `https://feature-sliced.design/docs/guides/issues/excessive-entities`
-Keep in mind that BEACON at it's core is a state engine.
+Keep in mind that BEACON at its core is a state engine.
 It may have a lot of entities, but they shouldn't be excessive.
 Tracking state should be transactional. 
 You should be slightly concerned with straight mutations where transactions could take place instead.
@@ -46,14 +46,14 @@ If a component is broken up in to several child components, and those child comp
 ## Entities
 Entities in most cases would extend or re-import the generated types from Type-gen from the backend.
 Generated interfaces come from `frontend/src/shared/models/generated`.
-Generated interfaces are not commited to version control.
-Generated interfaces must only be imported via entities, if a component uses a generated interface it must be through an entity.
+Generated interfaces are not committed to version control.
+Interfaces must only be imported via entities; if a component uses a generated interface it must be through an entity.
 Additional interfaces for an entity belong in `model/` along with a `use{Entity}` pinia store.
-API actions must utilize `useBeaconApi` and belong in `api/`
-Components must not use api actions directly. 
+API actions must utilize `useBeaconApi` and belong in `api/`.
+Components must not use api actions directly.
 The pinia store is allowed to use the api composable within its actions.
 If a pinia store is not required, then a `use{Entity}` composable must exist at the entity root.
-An entity must not expose the underlying api, and it must expose it's public api through a root level `index.ts`
+An entity must not expose the underlying api, and it must expose its public api through a root-level `index.ts`.
 IMPORTANT: only the `_game` entity must facilitate actions between other entity stores
 
 ## Rules to Consider
