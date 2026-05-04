@@ -1,3 +1,4 @@
+using Controllers.Rules.Requests;
 using Controllers.Rules.Responses;
 using Features.Rules.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -12,15 +13,81 @@ public class RulesController(RulesService rulesService) : ControllerBase
     public BeaconResponse<HydrateRulesConfigResponse> HydrateRulesConfig()
     {
         var defaultRulesConfig = rulesService.GetDefaultRulesConfig();
-        var payload = new HydrateRulesConfigResponse()
-        {
-            DefaultRulesConfig = defaultRulesConfig,
-        };
-
         return new BeaconResponse<HydrateRulesConfigResponse>()
         {
             Success = true,
-            Payload = payload
+            Payload = new HydrateRulesConfigResponse { DefaultRulesConfig = defaultRulesConfig }
+        };
+    }
+
+    // TODO: Add authentication and authorization guards
+    [HttpPost("CreateRulesConfig")]
+    public async Task<BeaconResponse<CreateRulesConfigResponse>> CreateRulesConfig(
+        [FromBody] SaveRulesConfigRequest request)
+    {
+        var created = await rulesService.CreateRulesConfig(request.RulesConfig);
+        return new BeaconResponse<CreateRulesConfigResponse>()
+        {
+            Success = true,
+            Payload = new CreateRulesConfigResponse { RulesConfig = created }
+        };
+    }
+
+    // TODO: Auth
+    [HttpGet("GetRulesConfig/{id}")]
+    public async Task<BeaconResponse<GetRulesConfigResponse>> GetRulesConfig(string id)
+    {
+        var rulesConfig = await rulesService.GetRulesConfigById(id);
+
+        if (rulesConfig == null)
+        {
+            return new BeaconResponse<GetRulesConfigResponse>()
+            {
+                Success = false,
+                Payload = new GetRulesConfigResponse { RulesConfig = null! }
+            };
+        }
+
+        return new BeaconResponse<GetRulesConfigResponse>()
+        {
+            Success = true,
+            Payload = new GetRulesConfigResponse { RulesConfig = rulesConfig }
+        };
+    }
+
+    // TODO: Add authentication and authorization guards
+    [HttpPut("UpdateRulesConfig/{id}")]
+    public async Task<BeaconResponse<UpdateRulesConfigResponse>> UpdateRulesConfig(
+        string id,
+        [FromBody] SaveRulesConfigRequest request)
+    {
+        var updated = await rulesService.UpdateRulesConfig(id, request.RulesConfig);
+
+        if (!updated)
+        {
+            return new BeaconResponse<UpdateRulesConfigResponse>()
+            {
+                Success = false,
+                Payload = new UpdateRulesConfigResponse { RulesConfig = null! }
+            };
+        }
+
+        return new BeaconResponse<UpdateRulesConfigResponse>()
+        {
+            Success = true,
+            Payload = new UpdateRulesConfigResponse { RulesConfig = request.RulesConfig }
+        };
+    }
+
+    // TODO: Add authentication and authorization guards
+    [HttpDelete("DeleteRulesConfig/{id}")]
+    public async Task<BeaconResponse<DeleteRulesConfigResponse>> DeleteRulesConfig(string id)
+    {
+        var deleted = await rulesService.DeleteRulesConfig(id);
+        return new BeaconResponse<DeleteRulesConfigResponse>()
+        {
+            Success = deleted,
+            Payload = new DeleteRulesConfigResponse { Deleted = deleted }
         };
     }
 }
