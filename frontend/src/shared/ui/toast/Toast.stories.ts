@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { ref } from 'vue'
-import { createPinia } from 'pinia'
+import { createPinia, setActivePinia } from 'pinia'
 import ToastItem from './ToastItem.vue'
 import ToastContainer from './ToastContainer.vue'
 import { useToast } from '@/shared/lib/composables/useToast'
@@ -13,12 +13,12 @@ const meta: Meta<typeof ToastItem> = {
   component: ToastItem,
   tags: ['autodocs'],
   decorators: [
-    () => ({
-      template: '<story />',
-      provide: {
-        pinia,
-      },
-    }),
+    () => {
+      setActivePinia(pinia)
+      return {
+        template: '<story />',
+      }
+    },
   ],
 }
 
@@ -190,7 +190,7 @@ export const Interactive: Story = {
   render: () => ({
     components: { ToastContainer },
     setup() {
-      const store = useToast(pinia)
+      const store = useToast()
       const addToast = (type: ToastType) => {
         const messages = {
           success: 'Operation completed successfully!',
