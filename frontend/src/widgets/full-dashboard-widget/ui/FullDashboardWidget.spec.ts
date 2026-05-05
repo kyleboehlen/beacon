@@ -1,9 +1,12 @@
-import { describe, it, expect, beforeEach } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
+import { mount, flushPromises } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
 import FullDashboardWidget from './FullDashboardWidget.vue'
 import { useGameStore } from '@/entities/_game'
 import type { RulesConfig } from '@/entities/rules'
+
+// Prevent RulesWizard's fetch-on-mount from hanging flushPromises in jsdom
+vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('fetch not available in tests')))
 
 describe('FullDashboardWidget', () => {
   beforeEach(() => {
@@ -91,11 +94,16 @@ describe('FullDashboardWidget', () => {
 
   describe('Creating a new game', () => {
     it('switches to settings tab when new scenario button is clicked', async () => {
+      vi.useFakeTimers()
+
       const wrapper = mount(FullDashboardWidget, {
         attachTo: document.body,
       })
 
-      // Click new scenario button
+      // Advance past both SystemStatus checks (longest is 4000ms)
+      await vi.advanceTimersByTimeAsync(4001)
+
+      // Click new scenario button (now enabled)
       const newScenarioButton = wrapper.get('#new-scenario-button')
       await newScenarioButton.trigger('click')
       await wrapper.vm.$nextTick()
@@ -104,6 +112,7 @@ describe('FullDashboardWidget', () => {
       const settingsPanel = wrapper.get('#button-game-settings-panel')
       expect(settingsPanel.attributes('aria-hidden')).toBe('false')
 
+      vi.useRealTimers()
       wrapper.unmount()
     })
   })

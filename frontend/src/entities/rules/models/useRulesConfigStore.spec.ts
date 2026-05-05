@@ -8,7 +8,6 @@ const makeRule = (value: boolean): RuleOption<boolean> => ({
   value,
   description: '',
   category: RuleCategory.Basic,
-  enabled: true,
   referenceNumber: '',
   rulePage: 0,
 })
@@ -31,6 +30,7 @@ const makeConfig = (overrides: Partial<RulesConfig> = {}): RulesConfig =>
     status: RulesConfigStatus.Draft,
     createdAt: new Date(),
     updatedAt: new Date(),
+    ruleRelationships: [],
     ...overrides,
   }) as RulesConfig
 

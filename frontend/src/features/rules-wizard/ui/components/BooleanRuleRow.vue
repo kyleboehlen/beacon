@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { RuleReferenceLink } from '@/shared/ui/rule-reference-link'
 import { camelCaseToProperCase } from '@/shared/lib/utils/strings'
 import type { RuleKey } from '@/entities/rules'
+import { useRulesConfigStore } from '@/entities/rules'
 
 const props = defineProps<{
   ruleKey: RuleKey
@@ -18,7 +19,24 @@ const emit = defineEmits<{
   toggle: [key: RuleKey]
 }>()
 
+const store = useRulesConfigStore()
+
 const displayName = computed(() => camelCaseToProperCase(props.ruleKey))
+const conflictInfo = computed(() => store.conflictDetails.get(props.ruleKey) ?? null)
+const willDisableNames = computed(() =>
+  conflictInfo.value?.willDisable.map(k => camelCaseToProperCase(k)) ?? []
+)
+
+const handleToggle = () => {
+  if (!props.enabled || props.locked) return
+
+  // Cascade: emit toggles for all currently-ON incompatible rules first
+  for (const key of conflictInfo.value?.willDisable ?? []) {
+    emit('toggle', key)
+  }
+
+  emit('toggle', props.ruleKey)
+}
 </script>
 
 <template>
@@ -26,12 +44,12 @@ const displayName = computed(() => camelCaseToProperCase(props.ruleKey))
     class="p-4 rounded-md transition-all border-2"
     :class="{
       'bg-white/10 hover:bg-white/15 border-green-500': props.value && !props.locked,
-      'bg-white/10 hover:bg-white/15 border-transparent': !props.value,
-      'opacity-50': !props.enabled,
+      'bg-white/10 hover:bg-white/15 border-transparent': !props.value && props.enabled,
+      'bg-white/5 border-transparent opacity-50': !props.enabled,
       'cursor-pointer': props.enabled && !props.locked,
       'cursor-not-allowed': !props.enabled || props.locked,
     }"
-    @click="props.enabled && !props.locked && emit('toggle', props.ruleKey)"
+    @click="handleToggle"
   >
     <div class="flex items-start justify-between gap-4">
       <div class="flex-1">
@@ -41,7 +59,16 @@ const displayName = computed(() => camelCaseToProperCase(props.ruleKey))
             <RuleReferenceLink :reference-number="props.referenceNumber" :page="props.rulePage" />
           </span>
         </div>
-        <p class="text-white/70 mt-1">{{ props.description }}</p>
+
+        <p v-if="conflictInfo?.message" class="text-white/50 mt-1 italic">
+          {{ conflictInfo.message }}
+        </p>
+        <p v-else class="text-white/70 mt-1">
+          {{ props.description }}
+          <span v-if="willDisableNames.length" class="text-yellow-400/80">
+            Disables: {{ willDisableNames.join(', ') }}.
+          </span>
+        </p>
       </div>
 
       <button
@@ -52,7 +79,7 @@ const displayName = computed(() => camelCaseToProperCase(props.ruleKey))
         :disabled="!props.enabled || props.locked"
         class="shrink-0 mt-1 relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-white/30 disabled:opacity-50 disabled:cursor-not-allowed"
         :class="props.value ? 'bg-green-600' : 'bg-white/20'"
-        @click.stop="emit('toggle', props.ruleKey)"
+        @click.stop="handleToggle"
       >
         <span
           class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform"

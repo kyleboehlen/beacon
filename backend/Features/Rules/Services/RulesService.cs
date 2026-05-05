@@ -84,6 +84,8 @@ public class RulesService(IMongoDatabase database)
         return config;
     }
 
+    private static readonly string[] UnsupportedRules = ["instantUpgrades"];
+
     public static string[] ValidateRuleRelationships(RulesConfig config)
     {
         var ruleValues = typeof(RulesConfig)
@@ -95,6 +97,12 @@ public class RulesService(IMongoDatabase database)
             );
 
         var violations = new List<string>();
+
+        foreach (var ruleKey in UnsupportedRules)
+        {
+            if (ruleValues.TryGetValue(ruleKey, out var value) && value)
+                violations.Add($"{ruleKey} is not supported");
+        }
 
         foreach (var relationship in config.RuleRelationships)
         {
