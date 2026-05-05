@@ -1,5 +1,6 @@
 namespace Features.Rules.Services;
 
+using System.Reflection;
 using Features.Rules.Models;
 using MongoDB.Driver;
 
@@ -14,6 +15,10 @@ public class RulesService(IMongoDatabase database)
 
     public async Task<RulesConfig> CreateRulesConfig(RulesConfig rulesConfig)
     {
+        var violations = ValidateRuleRelationships(rulesConfig);
+        if (violations.Length > 0)
+            throw new InvalidOperationException(string.Join("; ", violations));
+
         await _rulesConfigs.InsertOneAsync(rulesConfig);
         return rulesConfig;
     }
@@ -27,6 +32,10 @@ public class RulesService(IMongoDatabase database)
 
     public async Task<bool> UpdateRulesConfig(string id, RulesConfig rulesConfig)
     {
+        var violations = ValidateRuleRelationships(rulesConfig);
+        if (violations.Length > 0)
+            throw new InvalidOperationException(string.Join("; ", violations));
+
         rulesConfig.UpdatedAt = DateTime.UtcNow;
         var result = await _rulesConfigs.ReplaceOneAsync(r => r.Id == id, rulesConfig);
         return result.ModifiedCount > 0;
@@ -73,5 +82,42 @@ public class RulesService(IMongoDatabase database)
         config.Replicators.Value = fromDb.Replicators.Value;
 
         return config;
+    }
+
+    public static string[] ValidateRuleRelationships(RulesConfig config)
+    {
+        var ruleValues = typeof(RulesConfig)
+            .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+            .Where(p => p.PropertyType == typeof(RulesConfig.RuleOption<bool>))
+            .ToDictionary(
+                p => char.ToLower(p.Name[0]) + p.Name[1..],
+                p => ((RulesConfig.RuleOption<bool>)p.GetValue(config)!).Value
+            );
+
+        var violations = new List<string>();
+
+        foreach (var relationship in config.RuleRelationships)
+        {
+            if (!ruleValues.TryGetValue(relationship.Source, out var sourceValue)) continue;
+            if (!ruleValues.TryGetValue(relationship.Target, out var targetValue)) continue;
+
+            var isViolated = relationship.Type switch
+            {
+                RulesConfig.RuleRelationType.Incompatible => sourceValue && targetValue,
+                RulesConfig.RuleRelationType.Requires     => sourceValue && !targetValue,
+                _                                         => false
+            };
+
+            if (!isViolated) continue;
+
+            violations.Add(relationship.Type switch
+            {
+                RulesConfig.RuleRelationType.Incompatible => $"{relationship.Source} is incompatible with {relationship.Target}",
+                RulesConfig.RuleRelationType.Requires     => $"{relationship.Source} requires {relationship.Target} to be enabled",
+                _                                         => $"Rule relationship violation: {relationship.Source} -> {relationship.Target}"
+            });
+        }
+
+        return violations.ToArray();
     }
 }

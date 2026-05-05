@@ -1,11 +1,33 @@
+using Controllers;
 using Email;
 using Features.HealthCheck.Services;
+using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .ConfigureApiBehaviorOptions(options =>
+    {
+        // Funnel ModelState validation errors through BeaconResponse so the frontend sees one consistent shape
+        options.InvalidModelStateResponseFactory = context =>
+        {
+            var errors = context.ModelState.Values
+                .SelectMany(v => v.Errors)
+                .Select(e => new BeaconError { Message = e.ErrorMessage })
+                .ToArray();
+
+            var response = new BeaconResponse<object>
+            {
+                Success = false,
+                Payload = null!,
+                Errors = errors
+            };
+
+            return new BadRequestObjectResult(response);
+        };
+    });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
 

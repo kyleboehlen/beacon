@@ -2,6 +2,7 @@ using Controllers.Rules.Requests;
 using Controllers.Rules.Responses;
 using Features.Rules.Services;
 using Microsoft.AspNetCore.Mvc;
+using Features.Rules.Models;
 
 namespace Controllers.Rules;
 
@@ -25,12 +26,24 @@ public class RulesController(RulesService rulesService) : ControllerBase
     public async Task<BeaconResponse<CreateRulesConfigResponse>> CreateRulesConfig(
         [FromBody] SaveRulesConfigRequest request)
     {
-        var created = await rulesService.CreateRulesConfig(request.RulesConfig);
-        return new BeaconResponse<CreateRulesConfigResponse>()
+        try
         {
-            Success = true,
-            Payload = new CreateRulesConfigResponse { RulesConfig = created }
-        };
+            var created = await rulesService.CreateRulesConfig(request.RulesConfig);
+            return new BeaconResponse<CreateRulesConfigResponse>
+            {
+                Success = true,
+                Payload = new CreateRulesConfigResponse { RulesConfig = created }
+            };
+        }
+        catch (InvalidOperationException ex)
+        {
+            return new BeaconResponse<CreateRulesConfigResponse>
+            {
+                Success = false,
+                Payload = null!,
+                Errors = [new BeaconError { Message = ex.Message }]
+            };
+        }
     }
 
     // TODO: Auth
@@ -61,22 +74,33 @@ public class RulesController(RulesService rulesService) : ControllerBase
         string id,
         [FromBody] SaveRulesConfigRequest request)
     {
-        var updated = await rulesService.UpdateRulesConfig(id, request.RulesConfig);
-
-        if (!updated)
+        try
         {
-            return new BeaconResponse<UpdateRulesConfigResponse>()
+            var updated = await rulesService.UpdateRulesConfig(id, request.RulesConfig);
+
+            if (!updated)
+                return new BeaconResponse<UpdateRulesConfigResponse>
+                {
+                    Success = false,
+                    Payload = null!,
+                    Errors = [new BeaconError { Message = $"No rules config found with id {id}" }]
+                };
+
+            return new BeaconResponse<UpdateRulesConfigResponse>
             {
-                Success = false,
-                Payload = new UpdateRulesConfigResponse { RulesConfig = null! }
+                Success = true,
+                Payload = new UpdateRulesConfigResponse { RulesConfig = request.RulesConfig }
             };
         }
-
-        return new BeaconResponse<UpdateRulesConfigResponse>()
+        catch (InvalidOperationException ex)
         {
-            Success = true,
-            Payload = new UpdateRulesConfigResponse { RulesConfig = request.RulesConfig }
-        };
+            return new BeaconResponse<UpdateRulesConfigResponse>
+            {
+                Success = false,
+                Payload = null!,
+                Errors = [new BeaconError { Message = ex.Message }]
+            };
+        }
     }
 
     // TODO: Add authentication and authorization guards

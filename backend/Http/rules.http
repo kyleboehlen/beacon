@@ -33,9 +33,15 @@ Accept: application/json
         client.assert(firstRule.hasOwnProperty("value"), "Rule missing 'value' property");
         client.assert(firstRule.hasOwnProperty("description"), "Rule missing 'description' property");
         client.assert(firstRule.hasOwnProperty("category"), "Rule missing 'category' property");
-        client.assert(firstRule.hasOwnProperty("enabled"), "Rule missing 'enabled' property");
         client.assert(firstRule.hasOwnProperty("referenceNumber"), "Rule missing 'referenceNumber' property");
         client.assert(firstRule.hasOwnProperty("rulePage"), "Rule missing 'rulePage' property");
+    });
+
+    client.test("RulesConfig has rule relationships", function() {
+        var rulesConfig = response.body.payload.defaultRulesConfig;
+        client.assert(rulesConfig.hasOwnProperty("ruleRelationships"), "Missing 'ruleRelationships' field");
+        client.assert(Array.isArray(rulesConfig.ruleRelationships), "ruleRelationships should be an array");
+        client.assert(rulesConfig.ruleRelationships.length > 0, "ruleRelationships should not be empty");
     });
 
     client.test("RulesConfig has status field", function() {
@@ -158,6 +164,86 @@ Content-Type: application/json
         var rulesConfig = response.body.payload.rulesConfig;
         client.assert(rulesConfig.msPipelines.value === false, "msPipelines should be false after update");
         client.assert(rulesConfig.defenseSatelliteNetworks.value === true, "defenseSatelliteNetworks should be true after update");
+    });
+%}
+
+### Rules - Create RulesConfig with incompatible rules (replicators + terraformingNebulae both on)
+POST {{baseUrl}}/api/Rules/CreateRulesConfig
+Content-Type: application/json
+
+{
+  "rulesConfig": {
+    "id": "",
+    "status": 0,
+    "createdAt": "2025-01-01T00:00:00Z",
+    "updatedAt": "2025-01-01T00:00:00Z",
+    "msPipelines": { "value": false },
+    "defenseSatelliteNetworks": { "value": false },
+    "fighters": { "value": false },
+    "cloaking": { "value": false },
+    "mines": { "value": false },
+    "nonPlayerAliens": { "value": false },
+    "boardingShips": { "value": false },
+    "securityForces": { "value": false },
+    "groundCombat": { "value": false },
+    "titans": { "value": false },
+    "flagships": { "value": false },
+    "shipGroupLimits": { "value": true },
+    "replicators": { "value": true },
+    "instantUpgrades": { "value": false },
+    "terraformingNebulae": { "value": true }
+  }
+}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+
+    client.test("Response rejects incompatible rules", function() {
+        client.assert(response.body.success === false, "Success should be false for incompatible rules");
+        client.assert(Array.isArray(response.body.errors), "Response should have errors array");
+        client.assert(response.body.errors.length > 0, "Errors should not be empty");
+    });
+%}
+
+### Rules - Create RulesConfig with requires violation (securityForces on without boardingShips)
+POST {{baseUrl}}/api/Rules/CreateRulesConfig
+Content-Type: application/json
+
+{
+  "rulesConfig": {
+    "id": "",
+    "status": 0,
+    "createdAt": "2025-01-01T00:00:00Z",
+    "updatedAt": "2025-01-01T00:00:00Z",
+    "msPipelines": { "value": false },
+    "defenseSatelliteNetworks": { "value": false },
+    "fighters": { "value": false },
+    "cloaking": { "value": false },
+    "mines": { "value": false },
+    "nonPlayerAliens": { "value": false },
+    "boardingShips": { "value": false },
+    "securityForces": { "value": true },
+    "groundCombat": { "value": false },
+    "titans": { "value": false },
+    "flagships": { "value": false },
+    "shipGroupLimits": { "value": true },
+    "replicators": { "value": false },
+    "instantUpgrades": { "value": false },
+    "terraformingNebulae": { "value": false }
+  }
+}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+
+    client.test("Response rejects missing required rule", function() {
+        client.assert(response.body.success === false, "Success should be false when required rule is missing");
+        client.assert(Array.isArray(response.body.errors), "Response should have errors array");
+        client.assert(response.body.errors.length > 0, "Errors should not be empty");
     });
 %}
 

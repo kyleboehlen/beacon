@@ -3,8 +3,15 @@ using TypeGen.Core.TypeAnnotations;
 namespace Controllers;
 
 [ExportTsInterface]
+public class BeaconError
+{
+    public required string Message { get; set; }
+}
+
+[ExportTsInterface]
 public class BeaconResponse<T>
 {
     public required bool Success { get; set; }
     public required T Payload { get; set; }
+    public BeaconError[]? Errors { get; set; }
 }
