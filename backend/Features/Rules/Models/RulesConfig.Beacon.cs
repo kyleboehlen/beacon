@@ -20,7 +20,6 @@ public partial class RulesConfig
         Value = true,
         Description = "Enforce the ship group limitations imposed by the original game. When disabled you may have as many groups of the same ship type as you can afford to build.",
         Category = RuleCategory.Beacon,
-        Enabled = true,
         ReferenceNumber = "7.5.5",
         RulePage = 11
     };

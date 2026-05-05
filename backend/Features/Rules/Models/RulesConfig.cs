@@ -14,6 +14,13 @@ public partial class RulesConfig
 
     [BsonElement("status")]
     public RulesConfigStatus Status { get; set; } = RulesConfigStatus.Draft;
+    
+    [BsonIgnore]
+    public RuleRelationship[] RuleRelationships { get; init; } =
+    [
+        new() { Source = "replicators", Target = "terraformingNebulae", Type = RuleRelationType.Incompatible },
+        new() { Source = "securityForces", Target = "boardingShips", Type = RuleRelationType.Requires },
+    ];
 
     [BsonElement("createdAt")]
     [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]

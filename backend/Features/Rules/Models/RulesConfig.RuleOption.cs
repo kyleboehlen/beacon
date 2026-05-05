@@ -18,10 +18,6 @@ public partial class RulesConfig
         // Please separate RulesConfig classes as such, RulesConfig.{RuleCategory}.cs
         [BsonIgnore] public RuleCategory Category { get; init; }
 
-        // For defining whether using the rule is acceptable with the state of the config.
-        // I.E. there are a lot of rules that are not compatible when playing with the Replicators faction.
-        [BsonIgnore] public bool Enabled { get; init; }
-        
         // Rulebook reference number in xx.xx.xx format.
         [BsonIgnore] public string ReferenceNumber { get; init; } = string.Empty;
 
