@@ -3,6 +3,7 @@ import { mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
 import FullDashboardWidget from './FullDashboardWidget.vue'
 import { useGameStore } from '@/entities/_game'
+import type { RulesConfig } from '@/entities/rules'
 
 describe('FullDashboardWidget', () => {
   beforeEach(() => {
@@ -214,10 +215,10 @@ describe('FullDashboardWidget', () => {
   })
 
   describe('State with game and rules', () => {
-    beforeEach(async () => {
+    beforeEach(() => {
       const gameStore = useGameStore()
       gameStore.setGame()
-      await gameStore.createRules()
+      gameStore.embedRulesConfig({} as RulesConfig)
     })
 
     it('enables all tabs when game and rules exist', () => {
@@ -318,7 +319,7 @@ describe('FullDashboardWidget', () => {
     beforeEach(() => {
       const gameStore = useGameStore()
       gameStore.setGame()
-      gameStore.createRules()
+      gameStore.embedRulesConfig({} as RulesConfig)
     })
 
     it('has correct ARIA attributes for tab panels', () => {
