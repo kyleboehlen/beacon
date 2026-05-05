@@ -27,3 +27,8 @@ This includes the store within the entity the type belongs to.
 
 ## Backend-specific
 Backend architecture can be verified by reading the ProjectStructure.md file in the root of the backend directory.
+
+## Project specs
+@.claude/specs/testing-conventions.md
+@.claude/specs/in-person-play-notes.md
+@.claude/specs/review-checklist.md
