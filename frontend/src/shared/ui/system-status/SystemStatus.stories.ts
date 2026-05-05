@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
-import { ref } from 'vue'
 import SystemStatus from './SystemStatus.vue'
 
 const meta: Meta<typeof SystemStatus> = {
@@ -12,65 +11,88 @@ export default meta
 
 type Story = StoryObj<typeof SystemStatus>
 
+const quickSuccess = (): Promise<boolean> => {
+  return new Promise((resolve) => setTimeout(() => resolve(true), 3000))
+}
+
+const quickFailure = (): Promise<boolean> => {
+  return new Promise((resolve) => setTimeout(() => resolve(false), 2000))
+}
+
+const longLoading = (): Promise<boolean> => {
+  return new Promise((resolve) => setTimeout(() => resolve(true), 5000))
+}
+
 export const Default: Story = {
   render: () => ({
     components: { SystemStatus },
+    setup() {
+      return { quickSuccess }
+    },
     template: `
       <div class="bg-black p-8">
-        <SystemStatus />
+        <SystemStatus :fn="quickSuccess" v-slot="{ dots, status }">
+          System Status{{ dots }} {{ status === 'success' ? ' online' : '' }}
+        </SystemStatus>
       </div>
     `,
   }),
 }
 
-export const ManualStart: Story = {
+export const FailedState: Story = {
   render: () => ({
     components: { SystemStatus },
     setup() {
-      const statusRef = ref(null)
-      return { statusRef }
+      return { quickFailure }
     },
     template: `
-      <div class="bg-black p-8 space-y-4">
-        <SystemStatus :auto-start="false" ref="statusRef" />
-        <button
-          @click="statusRef.startSequence()"
-          class="px-4 py-2 bg-white/10 text-white rounded hover:bg-white/20"
-        >
-          Start Sequence
-        </button>
+      <div class="bg-black p-8">
+        <SystemStatus :fn="quickFailure" v-slot="{ dots, status }">
+          Scenario Loader{{ dots }}{{ status === 'failed' ? ' failed to load' : '' }}
+        </SystemStatus>
       </div>
     `,
   }),
 }
 
-export const InitializingState: Story = {
+export const LongLoading: Story = {
   render: () => ({
     components: { SystemStatus },
+    setup() {
+      return { longLoading }
+    },
     template: `
       <div class="bg-black p-8">
-        <SystemStatus :auto-start="false" />
+        <SystemStatus :fn="longLoading" v-slot="{ dots, status }">
+          Database Connection{{ dots }}{{ status === 'success' ? ' established' : '' }}
+        </SystemStatus>
       </div>
     `,
   }),
 }
 
-export const CustomText: Story = {
+export const MultipleStatuses: Story = {
   render: () => ({
     components: { SystemStatus },
+    setup() {
+      const beaconCheck = (): Promise<boolean> => {
+        return new Promise((resolve) => setTimeout(() => resolve(true), 2500))
+      }
+      const loadingCheck = (): Promise<boolean> => {
+        return new Promise((resolve) => setTimeout(() => resolve(false), 4000))
+      }
+      return { beaconCheck, loadingCheck }
+    },
     template: `
-      <div class="bg-black p-8 space-y-6">
-        <SystemStatus>
-          <template #initializing>Loading system modules</template>
-          <template #online>All systems operational</template>
-        </SystemStatus>
-
-        <SystemStatus>
-          <template #initializing>Connecting to server</template>
-          <template #online>
-            <span class="font-bold">CONNECTED</span> - Ready for input
-          </template>
-        </SystemStatus>
+      <div class="bg-black p-8">
+        <div class="flex flex-col gap-2 text-left">
+          <SystemStatus :fn="beaconCheck" v-slot="{ dots, status }">
+            B.E.A.C.O.N. status{{ dots }}{{ status === 'success' ? ' online' : '' }}
+          </SystemStatus>
+          <SystemStatus :fn="loadingCheck" v-slot="{ dots, status }">
+            Loading{{ dots }}{{ status === 'failed' ? ' no scenario found' : '' }}
+          </SystemStatus>
+        </div>
       </div>
     `,
   }),

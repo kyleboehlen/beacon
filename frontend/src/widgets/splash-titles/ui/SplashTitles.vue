@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import { InfoPanel } from '@/features/info-panel'
 import { StarryBackground } from '@/shared/ui/starry-background'
 import { Icon } from '@iconify/vue'
-import { onMounted, onUnmounted } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
+const showInfo = ref(false)
 
 const handleKeyPress = (event: KeyboardEvent) => {
   // Ignore modifier-only keys
@@ -16,11 +18,24 @@ const handleKeyPress = (event: KeyboardEvent) => {
   ) {
     return
   }
+
+  // Don't navigate if info panel is open and user presses Escape
+  if (showInfo.value && event.key === 'Escape') {
+    showInfo.value = false
+    return
+  }
+
+  // Don't navigate if info panel interaction
+  if (showInfo.value) {
+    return
+  }
+
   // Navigate to the dashboard view (DashboardPage)
   router.push({ name: 'dashboard' })
 }
 
 const handleClick = () => {
+  if (showInfo.value) return
   router.push({ name: 'dashboard' })
 }
 
@@ -49,6 +64,8 @@ onUnmounted(() => {
       >
         Press any key or click to continue...
       </button>
+
+      <InfoPanel v-model="showInfo" />
     </div>
   </div>
 </template>

@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import ColoredAvatar from '@/shared/ui/colored-avatar/ColoredAvatar.vue'
-import TabsNav from '@/shared/ui/tabs-nav/TabsNav.vue'
-import ContainerChrome from '@/shared/ui/container-chrome/ContainerChrome.vue'
-import SideDrawer from '@/shared/ui/side-drawer/SideDrawer.vue'
+import { ColoredAvatar } from '@/shared/ui/colored-avatar'
+import { TabsNav } from '@/shared/ui/tabs-nav'
+import { ContainerChrome } from '@/shared/ui/container-chrome'
+import { SideDrawer } from '@/shared/ui/side-drawer'
 import { Icon } from '@iconify/vue'
 import { DashboardPanel } from '@/features/dashboard-panel'
 import { EconPanel } from '@/features/econ-panel'

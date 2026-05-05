@@ -1,0 +1,30 @@
+# Backend Project Structure
+
+```
+Project/
+├── Controllers/
+│   └── {feature}/
+│       ├── Requests/
+│       └── Responses/
+├── Features/
+│   └── {feature}/
+│       ├── Models/
+│       ├── Services/
+│       ├── Events/
+│       └── Repositories/
+├── Logging/
+│   │── LoggingCodes.cs
+│   │── LoggingCodes.md
+│   └── LoggingService.cs
+├── Email/
+│   │── EmailService.cs
+│   └── Templates
+├── SignalR/
+│   ├── Hubs/
+│   ├── Clients/
+│   └── Groups/
+└── Reporting/
+    ├── Models/
+    ├── Services/
+    └── Generators/
+```

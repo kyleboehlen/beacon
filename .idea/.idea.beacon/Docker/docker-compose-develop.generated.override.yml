@@ -15,6 +15,6 @@ services:
     ports: []
     volumes:
     - "/Users/kyleboehlen/RiderProjects/beacon/backend:/app:rw"
-    - "/Users/kyleboehlen/RiderProjects/beacon:/src:rw"
+    - "/Users/kyleboehlen/RiderProjects/beacon:/src-1:rw"
     - "/Users/kyleboehlen/.nuget/packages:/root/.nuget/packages"
     working_dir: "/app"

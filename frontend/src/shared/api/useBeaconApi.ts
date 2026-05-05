@@ -1,13 +1,15 @@
 import { type BeaconResponse } from '@/shared/models'
+import { useToast } from '@/shared/lib/composables/useToast'
+
 export const useBeaconApi = () => {
   const baseUrl = import.meta.env.VITE_BEACON_API_URL
+  const toast = useToast()
 
-  // API call returns the payload of type R if successful, otherwise returns false
   const beaconApiCall = async <T, R>(
-    method: 'GET' | 'POST',
+    method: 'GET' | 'POST' | 'PUT' | 'DELETE',
     endpoint: string,
     body?: T,
-  ): Promise<R | boolean> => {
+  ): Promise<R | false> => {
     const response = await fetch(baseUrl + endpoint, {
       method,
       headers: {
@@ -17,11 +19,13 @@ export const useBeaconApi = () => {
     })
 
     if (!response.ok) {
+      toast.error('An unexpected error occurred. Please try again.')
       return false
     }
 
     const responseJson: BeaconResponse<R> = await response.json()
     if (!responseJson.success) {
+      responseJson.errors?.forEach(error => toast.error(error.message))
       return false
     }
 

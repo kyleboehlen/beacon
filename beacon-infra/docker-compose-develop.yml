@@ -93,7 +93,9 @@ services:
     ports:
       - "5002:8080"
     volumes:
-      - ../backend:/src/backend
+      - ../backend:/src
+      - /src/obj
+      - /src/bin
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     depends_on:

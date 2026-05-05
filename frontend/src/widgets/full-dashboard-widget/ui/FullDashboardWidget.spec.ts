@@ -1,8 +1,12 @@
-import { describe, it, expect, beforeEach } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
+import { mount, flushPromises } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
 import FullDashboardWidget from './FullDashboardWidget.vue'
 import { useGameStore } from '@/entities/_game'
+import type { RulesConfig } from '@/entities/rules'
+
+// Prevent RulesWizard's fetch-on-mount from hanging flushPromises in jsdom
+vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('fetch not available in tests')))
 
 describe('FullDashboardWidget', () => {
   beforeEach(() => {
@@ -90,11 +94,16 @@ describe('FullDashboardWidget', () => {
 
   describe('Creating a new game', () => {
     it('switches to settings tab when new scenario button is clicked', async () => {
+      vi.useFakeTimers()
+
       const wrapper = mount(FullDashboardWidget, {
         attachTo: document.body,
       })
 
-      // Click new scenario button
+      // Advance past both SystemStatus checks (longest is 4000ms)
+      await vi.advanceTimersByTimeAsync(4001)
+
+      // Click new scenario button (now enabled)
       const newScenarioButton = wrapper.get('#new-scenario-button')
       await newScenarioButton.trigger('click')
       await wrapper.vm.$nextTick()
@@ -103,6 +112,7 @@ describe('FullDashboardWidget', () => {
       const settingsPanel = wrapper.get('#button-game-settings-panel')
       expect(settingsPanel.attributes('aria-hidden')).toBe('false')
 
+      vi.useRealTimers()
       wrapper.unmount()
     })
   })
@@ -159,7 +169,7 @@ describe('FullDashboardWidget', () => {
       wrapper.unmount()
     })
 
-    it('shows create rules button in settings panel', async () => {
+    it('shows rules wizard in settings panel', async () => {
       const wrapper = mount(FullDashboardWidget, {
         attachTo: document.body,
       })
@@ -169,10 +179,9 @@ describe('FullDashboardWidget', () => {
       await settingsButton.trigger('click')
       await wrapper.vm.$nextTick()
 
-      // Create rules button should be visible
-      const createRulesButton = wrapper.find('#button-create-rules')
-      expect(createRulesButton.exists()).toBe(true)
-      expect(createRulesButton.text()).toBe('Create Rules')
+      // Rules wizard loading state should be visible
+      const settingsPanel = wrapper.get('#button-game-settings-panel')
+      expect(settingsPanel.text()).toContain('Loading rules')
 
       wrapper.unmount()
     })
@@ -184,7 +193,7 @@ describe('FullDashboardWidget', () => {
       gameStore.setGame()
     })
 
-    it('switches back to dashboard tab when create rules button is clicked', async () => {
+    it('switches back to dashboard tab when rules wizard completes', async () => {
       const wrapper = mount(FullDashboardWidget, {
         attachTo: document.body,
       })
@@ -198,9 +207,8 @@ describe('FullDashboardWidget', () => {
       let settingsPanel = wrapper.get('#button-game-settings-panel')
       expect(settingsPanel.attributes('aria-hidden')).toBe('false')
 
-      // Click create rules button
-      const createRulesButton = wrapper.get('#button-create-rules')
-      await createRulesButton.trigger('click')
+      // Simulate the wizard completing via rulesCreated emit from GameSettingsPanel
+      wrapper.findComponent({ name: 'GameSettingsPanel' }).vm.$emit('rulesCreated')
       await wrapper.vm.$nextTick()
 
       // Dashboard panel should now be visible
@@ -219,7 +227,7 @@ describe('FullDashboardWidget', () => {
     beforeEach(() => {
       const gameStore = useGameStore()
       gameStore.setGame()
-      gameStore.createRules()
+      gameStore.embedRulesConfig({} as RulesConfig)
     })
 
     it('enables all tabs when game and rules exist', () => {
@@ -228,23 +236,23 @@ describe('FullDashboardWidget', () => {
       })
 
       const dashboardTab = wrapper.get('#tab-dashboard')
-      expect(dashboardTab.attributes('disabled')).toBeUndefined()
+      expect(dashboardTab.attributes('disabled')).toBeFalsy()
       expect(dashboardTab.attributes('aria-disabled')).toBe('false')
 
       const econTab = wrapper.get('#tab-econ')
-      expect(econTab.attributes('disabled')).toBeUndefined()
+      expect(econTab.attributes('disabled')).toBeFalsy()
       expect(econTab.attributes('aria-disabled')).toBe('false')
 
       const fleetTab = wrapper.get('#tab-fleet')
-      expect(fleetTab.attributes('disabled')).toBeUndefined()
+      expect(fleetTab.attributes('disabled')).toBeFalsy()
       expect(fleetTab.attributes('aria-disabled')).toBe('false')
 
       const intelTab = wrapper.get('#tab-intel')
-      expect(intelTab.attributes('disabled')).toBeUndefined()
+      expect(intelTab.attributes('disabled')).toBeFalsy()
       expect(intelTab.attributes('aria-disabled')).toBe('false')
 
       const battleTab = wrapper.get('#tab-battle')
-      expect(battleTab.attributes('disabled')).toBeUndefined()
+      expect(battleTab.attributes('disabled')).toBeFalsy()
       expect(battleTab.attributes('aria-disabled')).toBe('false')
 
       wrapper.unmount()
@@ -267,10 +275,10 @@ describe('FullDashboardWidget', () => {
         attachTo: document.body,
       })
 
-      const settingsAttentionBadge = wrapper.find('[aria-label="Settings Icon"]')
+      const settingsAttentionBadge = wrapper.find('span[role="status"][aria-label="Settings Icon"]')
       expect(settingsAttentionBadge.exists()).toBe(false)
 
-      const dashboardAttentionBadge = wrapper.find('[aria-label="Dashboard Tab"]')
+      const dashboardAttentionBadge = wrapper.find('span[role="status"][aria-label="Dashboard Tab"]')
       expect(dashboardAttentionBadge.exists()).toBe(false)
 
       wrapper.unmount()
@@ -320,7 +328,7 @@ describe('FullDashboardWidget', () => {
     beforeEach(() => {
       const gameStore = useGameStore()
       gameStore.setGame()
-      gameStore.createRules()
+      gameStore.embedRulesConfig({} as RulesConfig)
     })
 
     it('has correct ARIA attributes for tab panels', () => {
