@@ -131,6 +131,35 @@ describe('useRulesConfigStore', () => {
     })
   })
 
+  describe('rulesForCategory', () => {
+    it('returns only rules matching the given category', () => {
+      const store = useRulesConfigStore()
+      store.setRulesConfig(makeConfig({
+        msPipelines: makeRule(false),
+        shipGroupLimits: { ...makeRule(true), category: RuleCategory.Beacon },
+      }))
+
+      const basic = store.rulesForCategory(RuleCategory.Basic)
+      const beacon = store.rulesForCategory(RuleCategory.Beacon)
+
+      expect(basic.value.every(r => r.category === RuleCategory.Basic)).toBe(true)
+      expect(beacon.value.every(r => r.category === RuleCategory.Beacon)).toBe(true)
+    })
+
+    it('returns empty array when no config is loaded', () => {
+      const store = useRulesConfigStore()
+      expect(store.rulesForCategory(RuleCategory.Basic).value).toEqual([])
+    })
+
+    it('returns rules with their store key attached', () => {
+      const store = useRulesConfigStore()
+      store.setRulesConfig(makeConfig({ msPipelines: makeRule(true) }))
+
+      const rules = store.rulesForCategory(RuleCategory.Basic)
+      expect(rules.value[0].key).toBe('msPipelines')
+    })
+  })
+
   describe('toggleRuleValue', () => {
     it('throws when no config is loaded', () => {
       const store = useRulesConfigStore()

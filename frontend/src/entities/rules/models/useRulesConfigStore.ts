@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import type { RulesConfig, RuleKey } from './types'
-import { RulesConfigStatus } from './types'
+import { RulesConfigStatus, RuleCategory } from './types'
 import type { RuleOption } from './types'
 import { useRulesApi } from '@/entities/rules/api/useRulesApi'
 
@@ -73,6 +73,17 @@ export const useRulesConfigStore = defineStore('rulesConfig', () => {
     rulesConfig.value.status = status
   }
 
+  const rulesForCategory = (category: RuleCategory) =>
+    computed(() => {
+      if (!rulesConfig.value) return []
+      return (Object.entries(rulesConfig.value) as [string, unknown][])
+        .filter((entry): entry is [string, RuleOption<boolean>] =>
+          entry[1] !== null && typeof entry[1] === 'object' && 'category' in (entry[1] as object)
+        )
+        .filter(([, rule]) => rule.category === category)
+        .map(([key, rule]) => ({ key: key as RuleKey, ...rule }))
+    })
+
   const toggleRuleValue = (key: RuleKey) => {
     if (!rulesConfig.value) throw new Error('Cannot toggle: no rules config loaded')
     if (isLocked.value) throw new Error('Cannot toggle: rules config is locked')
@@ -96,6 +107,7 @@ export const useRulesConfigStore = defineStore('rulesConfig', () => {
     deleteRulesConfig,
     setRulesConfig,
     setStatus,
+    rulesForCategory,
     toggleRuleValue,
     clearRulesConfig,
   }

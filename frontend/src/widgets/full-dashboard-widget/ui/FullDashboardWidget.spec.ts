@@ -159,7 +159,7 @@ describe('FullDashboardWidget', () => {
       wrapper.unmount()
     })
 
-    it('shows create rules button in settings panel', async () => {
+    it('shows rules wizard in settings panel', async () => {
       const wrapper = mount(FullDashboardWidget, {
         attachTo: document.body,
       })
@@ -169,10 +169,9 @@ describe('FullDashboardWidget', () => {
       await settingsButton.trigger('click')
       await wrapper.vm.$nextTick()
 
-      // Create rules button should be visible
-      const createRulesButton = wrapper.find('#button-create-rules')
-      expect(createRulesButton.exists()).toBe(true)
-      expect(createRulesButton.text()).toBe('Create Rules')
+      // Rules wizard loading state should be visible
+      const settingsPanel = wrapper.get('#button-game-settings-panel')
+      expect(settingsPanel.text()).toContain('Loading rules')
 
       wrapper.unmount()
     })
@@ -184,7 +183,7 @@ describe('FullDashboardWidget', () => {
       gameStore.setGame()
     })
 
-    it('switches back to dashboard tab when create rules button is clicked', async () => {
+    it('switches back to dashboard tab when rules wizard completes', async () => {
       const wrapper = mount(FullDashboardWidget, {
         attachTo: document.body,
       })
@@ -198,9 +197,8 @@ describe('FullDashboardWidget', () => {
       let settingsPanel = wrapper.get('#button-game-settings-panel')
       expect(settingsPanel.attributes('aria-hidden')).toBe('false')
 
-      // Click create rules button
-      const createRulesButton = wrapper.get('#button-create-rules')
-      await createRulesButton.trigger('click')
+      // Simulate the wizard completing via rulesCreated emit from GameSettingsPanel
+      wrapper.findComponent({ name: 'GameSettingsPanel' }).vm.$emit('rulesCreated')
       await wrapper.vm.$nextTick()
 
       // Dashboard panel should now be visible
