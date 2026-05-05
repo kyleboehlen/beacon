@@ -25,8 +25,13 @@ When adding or modifying generated TypeScript types (from `shared/models/generat
 Consumers should import from the entity barrel (`@/entities/<entity>`) rather than directly from `shared/models/generated/`.
 This includes the store within the entity the type belongs to.
 
-## Backend-specific
-Backend architecture can be verified by reading the ProjectStructure.md file in the root of the backend directory.
+## Frontend architecture
+@frontend/src/entities/README.md
+@frontend/src/entities/_game/README.md
+
+## Backend architecture
+@backend/ProjectStructure.md
+@backend/Http/README.md
 
 ## Project specs
 @.claude/specs/testing-conventions.md
