@@ -28,7 +28,7 @@ const handleKeydown = (event: KeyboardEvent) => {
   <span
     role="link"
     tabindex="0"
-    class="font-mono text-xs text-cyan-400/70 underline decoration-dotted cursor-pointer hover:text-cyan-300 focus:outline-none focus:ring-1 focus:ring-cyan-400/50 rounded-sm"
+    class="font-mono text-xs text-cyan-400/70 underline decoration-dotted cursor-pointer hover:text-cyan-300 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 rounded-sm"
     :aria-label="`Rule reference ${props.referenceNumber} - opens rulebook PDF`"
     @click="handleClick"
     @keydown="handleKeydown"

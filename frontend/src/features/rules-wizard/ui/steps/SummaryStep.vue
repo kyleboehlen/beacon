@@ -32,6 +32,7 @@ const categories = computed(() => [
             :key="rule.key"
             class="flex items-center gap-2"
             :class="!rule.enabled ? 'opacity-30' : ''"
+            :aria-disabled="!rule.enabled ? 'true' : undefined"
           >
             <Icon
               v-if="rule.value && rule.enabled"
@@ -45,6 +46,7 @@ const categories = computed(() => [
               class="shrink-0 text-white/30 size-4"
               aria-hidden="true"
             />
+            <span class="sr-only">{{ rule.value && rule.enabled ? 'On' : 'Off' }}:</span>
             <span
               class="text-sm"
               :class="rule.value && rule.enabled ? 'text-white' : 'text-white/40'"

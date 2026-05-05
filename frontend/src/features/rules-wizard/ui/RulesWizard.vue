@@ -58,7 +58,7 @@ const handleCompleted = async () => {
 
 <template>
   <div class="w-full h-full flex items-center justify-center">
-    <div v-if="isLoading" class="text-white">
+    <div v-if="isLoading" class="text-white" aria-busy="true">
       <SystemStatus :fn="fetchDefaultRulesConfig" v-slot="{ dots }">
         Loading rules configuration{{ dots }}
       </SystemStatus>

@@ -13,7 +13,7 @@ const rules = store.rulesForCategory(RuleCategory.Beacon)
       <p class="text-white/70 mt-1">Configure rules specific to the Beacon platform</p>
     </div>
 
-    <div class="flex-1 overflow-y-auto space-y-3">
+    <div role="group" aria-label="Beacon rules" class="flex-1 overflow-y-auto space-y-3">
       <BooleanRuleRow
         v-for="rule in rules"
         :key="rule.key"

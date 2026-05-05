@@ -13,7 +13,7 @@ const rules = store.rulesForCategory(RuleCategory.Factions)
       <p class="text-white/70 mt-1">Enable faction-specific rules and abilities</p>
     </div>
 
-    <div class="flex-1 overflow-y-auto space-y-3">
+    <div role="group" aria-label="Factions rules" class="flex-1 overflow-y-auto space-y-3">
       <BooleanRuleRow
         v-for="rule in rules"
         :key="rule.key"

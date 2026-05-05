@@ -13,7 +13,7 @@ const rules = store.rulesForCategory(RuleCategory.Optional)
       <p class="text-white/70 mt-1">Additional rules that change gameplay in unique ways</p>
     </div>
 
-    <div class="flex-1 overflow-y-auto space-y-3">
+    <div role="group" aria-label="Optional rules" class="flex-1 overflow-y-auto space-y-3">
       <BooleanRuleRow
         v-for="rule in rules"
         :key="rule.key"

@@ -41,7 +41,7 @@ const handleToggle = () => {
 
 <template>
   <div
-    class="p-4 rounded-md transition-all border-2"
+    class="p-4 rounded-md transition-all motion-reduce:transition-none border-2"
     :class="{
       'bg-white/10 hover:bg-white/15 border-green-500': props.value && !props.locked,
       'bg-white/10 hover:bg-white/15 border-transparent': !props.value && props.enabled,
@@ -60,22 +60,25 @@ const handleToggle = () => {
           </span>
         </div>
 
-        <p v-if="conflictInfo?.message" class="text-white/50 mt-1 italic">
-          {{ conflictInfo.message }}
-        </p>
-        <p v-else class="text-white/70 mt-1">
-          {{ props.description }}
-          <span v-if="willDisableNames.length" class="text-yellow-400/80">
-            Disables: {{ willDisableNames.join(', ') }}.
-          </span>
-        </p>
+        <div role="status" aria-live="polite" aria-atomic="true">
+          <p v-if="conflictInfo?.message" :id="`${props.ruleKey}-description`" class="text-white/50 mt-1 italic">
+            {{ conflictInfo.message }}
+          </p>
+          <p v-else :id="`${props.ruleKey}-description`" class="text-white/70 mt-1">
+            {{ props.description }}
+            <span v-if="willDisableNames.length" class="text-yellow-400/80">
+              Disables: {{ willDisableNames.join(', ') }}.
+            </span>
+          </p>
+        </div>
       </div>
 
       <button
         type="button"
         role="switch"
         :aria-checked="props.value"
-        :aria-label="`Toggle ${props.ruleKey}`"
+        :aria-label="`Toggle ${displayName}`"
+        :aria-describedby="`${props.ruleKey}-description`"
         :disabled="!props.enabled || props.locked"
         class="shrink-0 mt-1 relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-white/30 disabled:opacity-50 disabled:cursor-not-allowed"
         :class="props.value ? 'bg-green-600' : 'bg-white/20'"

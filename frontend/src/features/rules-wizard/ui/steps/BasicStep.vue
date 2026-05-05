@@ -13,7 +13,7 @@ const rules = store.rulesForCategory(RuleCategory.Basic)
       <p class="text-white/70 mt-1">Configure the fundamental rules for your game</p>
     </div>
 
-    <div class="flex-1 overflow-y-auto space-y-3">
+    <div role="group" aria-label="Basic rules" class="flex-1 overflow-y-auto space-y-3">
       <BooleanRuleRow
         v-for="rule in rules"
         :key="rule.key"
