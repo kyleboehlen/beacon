@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useRulesConfigStore } from '@/entities/rules'
+import { useRulesConfigStore, RulesConfigStatus } from '@/entities/rules'
 import { useGameStore } from '@/entities/_game'
 import { StepWizard } from '@/shared/ui/step-wizard'
 import { SystemStatus } from '@/shared/ui/system-status'
@@ -9,6 +9,7 @@ import BasicStep from './steps/BasicStep.vue'
 import BeaconStep from './steps/BeaconStep.vue'
 import FactionsStep from './steps/FactionsStep.vue'
 import OptionalStep from './steps/OptionalStep.vue'
+import SummaryStep from './steps/SummaryStep.vue'
 
 const emit = defineEmits<{ completed: [] }>()
 
@@ -23,10 +24,16 @@ const steps = [
   { id: 'beacon', label: 'Beacon' },
   { id: 'factions', label: 'Factions' },
   { id: 'optional', label: 'Optional' },
+  { id: 'summary', label: 'Summary' },
 ]
 
 const fetchDefaultRulesConfig = async (): Promise<boolean> => {
   try {
+    // Always pulls fresh defaults from the API — rulesConfigStore is not persisted.
+    // This is intentional: the wizard is only mounted when no rules exist on the game yet,
+    // so there is no existing config to restore. If this ever mounts with a game that already
+    // has rules (e.g. after a page refresh mid-wizard), the user's in-progress changes will
+    // be lost and they will start from defaults again.
     await rulesConfigStore.hydrateDefaults()
     return true
   } catch {
@@ -39,6 +46,7 @@ const fetchDefaultRulesConfig = async (): Promise<boolean> => {
 
 const handleCompleted = async () => {
   try {
+    rulesConfigStore.setStatus(RulesConfigStatus.Active)
     await rulesConfigStore.saveRulesConfig()
     gameStore.embedRulesConfig(rulesConfigStore.rulesConfig!)
     emit('completed')
@@ -66,6 +74,7 @@ const handleCompleted = async () => {
       <template #beacon><BeaconStep /></template>
       <template #factions><FactionsStep /></template>
       <template #optional><OptionalStep /></template>
+      <template #summary><SummaryStep /></template>
     </StepWizard>
   </div>
 </template>

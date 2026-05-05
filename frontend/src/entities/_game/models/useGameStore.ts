@@ -46,5 +46,5 @@ export const useGameStore = defineStore(
       clearGame,
     }
   },
-  // TODO: Persist store
+  { persist: true },
 )
