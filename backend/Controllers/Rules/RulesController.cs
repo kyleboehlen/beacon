@@ -87,10 +87,18 @@ public class RulesController(RulesService rulesService) : ControllerBase
                 };
 
             var rulesConfig = await rulesService.GetRulesConfigById(id);
+            if (rulesConfig == null)
+                return new BeaconResponse<UpdateRulesConfigResponse>
+                {
+                    Success = false,
+                    Payload = null!,
+                    Errors = [new BeaconError { Message = $"No rules config found with id {id} after update" }]
+                };
+
             return new BeaconResponse<UpdateRulesConfigResponse>
             {
                 Success = true,
-                Payload = new UpdateRulesConfigResponse { RulesConfig = rulesConfig! }
+                Payload = new UpdateRulesConfigResponse { RulesConfig = rulesConfig }
             };
         }
         catch (InvalidOperationException ex)

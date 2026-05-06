@@ -108,7 +108,7 @@ const isLastStep = computed(() => currentStep.value === props.steps.length - 1)
           @keydown.space.prevent="navigateToCompletedStep(step.id)"
           :tabindex="stepIsCompleted(step.id) ? 0 : -1"
           :aria-current="step.id === currentStepId ? 'step' : undefined"
-          :aria-label="`${step.label}${stepIsCompleted(step.id) ? ' - Completed, press Enter to return' : step.id === currentStepId ? ' - Current step' : ' - Not yet reached'}`"
+          :aria-label="`${step.label}${stepIsCompleted(step.id) ? ' - Completed, activate to return' : step.id === currentStepId ? ' - Current step' : ' - Not yet reached'}`"
         >
           <span class="min-w-7 min-h-7 group inline-flex items-center text-xs align-middle">
             <!-- Step Indicator Circle -->

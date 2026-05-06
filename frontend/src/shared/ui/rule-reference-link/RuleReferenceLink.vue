@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+
 const props = defineProps<{
   referenceNumber: string
   label?: string
@@ -8,9 +10,11 @@ const props = defineProps<{
 const pdfFile = '/SE_AllGoodTHings_MasterRulebook_v8.pdf'
 const viewerBase = '/pdfjs/web/viewer.html'
 
-const targetUrl = props.page
-  ? `${viewerBase}?file=${encodeURIComponent(pdfFile)}#page=${props.page}`
-  : `${viewerBase}?file=${encodeURIComponent(pdfFile)}`
+const targetUrl = computed(() =>
+  props.page
+    ? `${viewerBase}?file=${encodeURIComponent(pdfFile)}#page=${props.page}`
+    : `${viewerBase}?file=${encodeURIComponent(pdfFile)}`,
+)
 </script>
 
 <template>

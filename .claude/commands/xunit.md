@@ -94,12 +94,6 @@ For each uncovered method or behavior, ask the user (via AskUserQuestion) if you
 3. Write the test using the conventions above
 4. Read container logs to confirm the test passes
 
-## Existing Tests
-
-| File | What It Tests |
-|------|---------------|
-| `ReferenceNumberValidationTests.cs` | `ReferenceNumberParser` expansion logic; validates all `RulesConfig` default reference numbers against `ValidReferenceNumbers.txt` |
-
 ## Workflow
 
 1. Read container logs to get current test status

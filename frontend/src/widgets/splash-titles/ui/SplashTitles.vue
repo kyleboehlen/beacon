@@ -60,7 +60,7 @@ onUnmounted(() => {
       <h1 class="text-white/90 font-[BrunoAce] text-9xl">B.E.A.C.O.N.</h1>
       <button
         @click="handleClick"
-        class="text-white/80 mt-4 text-xl hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white/50 px-6 py-3 rounded hover:cursor-pointer"
+        class="text-white/80 mt-4 text-xl hover:text-white transition-colors focus:outline-hidden focus:ring-2 focus:ring-white/50 px-6 py-3 rounded hover:cursor-pointer"
       >
         Press any key or click to continue...
       </button>
