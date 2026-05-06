@@ -53,6 +53,10 @@ onUnmounted(() => document.removeEventListener('mousedown', handleClickOutside))
 <template>
   <div
     ref="containerRef"
+    data-testid="color-toggle"
+    :role="props.allowColorChange ? 'button' : undefined"
+    :aria-haspopup="props.allowColorChange ? 'true' : undefined"
+    :aria-label="props.allowColorChange ? `Color: ${getAccessibilityColor(color)}, click to change` : undefined"
     :class="[
       'inline-block rounded-full border-4 bg-transparent p-2 relative',
       { 'hover:cursor-pointer': props.allowColorChange },
@@ -72,11 +76,11 @@ onUnmounted(() => document.removeEventListener('mousedown', handleClickOutside))
     <div
       v-if="props.allowColorChange"
       v-show="isOpen"
+      aria-label="Color picker"
       class="absolute z-50 -top-4 left-full ml-2 bg-white border border-gray-100 rounded-xl shadow-md dark:bg-neutral-800 dark:border-neutral-700"
-      aria-hidden="true"
     >
       <div class="p-4">
-        <div class="flex gap-3">
+        <div role="group" class="flex gap-3">
           <button
             v-for="colorOption in PLAYER_COLORS.filter((c) => c !== 'white')"
             :key="colorOption"
@@ -84,7 +88,10 @@ onUnmounted(() => document.removeEventListener('mousedown', handleClickOutside))
             @click.stop="changeColor(colorOption)"
             :class="[buttonBaseClasses, `bg-${colorOption}`]"
             :aria-label="`Select ${getAccessibilityColor(colorOption)} color`"
-          />
+            :aria-pressed="String(colorOption === color)"
+          >
+            <span v-if="colorOption === color" class="sr-only">(current)</span>
+          </button>
         </div>
       </div>
     </div>

@@ -159,14 +159,14 @@ describe('BasicButton', () => {
     expect(wrapper.emitted('click')).toBeFalsy()
   })
 
-  it('has focus-visible ring styles', () => {
+  it('has focus-visible styles', () => {
     const wrapper = mount(BasicButton, {
       slots: {
         default: 'Button',
       },
     })
 
-    expect(wrapper.classes()).toContain('focus-visible:ring-2')
-    expect(wrapper.classes()).toContain('focus-visible:ring-white')
+    expect(wrapper.classes()).toContain('focus-visible:bg-white/20')
+    expect(wrapper.classes()).toContain('focus-visible:border-b-white')
   })
 })

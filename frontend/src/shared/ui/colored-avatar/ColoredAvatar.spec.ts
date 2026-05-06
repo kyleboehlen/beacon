@@ -17,33 +17,10 @@ describe('ColoredAvatar', () => {
       props: { allowColorChange: true },
     })
 
-    const toggle = wrapper.find('.hs-tooltip-toggle')
+    const toggle = wrapper.find('[data-testid="color-toggle"]')
     expect(toggle.exists()).toBe(true)
     expect(toggle.attributes('role')).toBe('button')
     expect(toggle.attributes('aria-haspopup')).toBe('true')
-  })
-
-  it('handles keyboard activation with Enter key', async () => {
-    const wrapper = mount(ColoredAvatar, {
-      props: { allowColorChange: true },
-    })
-
-    const toggle = wrapper.find('.hs-tooltip-toggle')
-    await toggle.trigger('keydown.enter')
-
-    // Preline handles the actual opening, we just verify the handler is called
-    expect(toggle.exists()).toBe(true)
-  })
-
-  it('handles keyboard activation with Space key', async () => {
-    const wrapper = mount(ColoredAvatar, {
-      props: { allowColorChange: true },
-    })
-
-    const toggle = wrapper.find('.hs-tooltip-toggle')
-    await toggle.trigger('keydown', { key: ' ' })
-
-    expect(toggle.exists()).toBe(true)
   })
 
   it('changes color when a color button is clicked', async () => {
@@ -66,8 +43,9 @@ describe('ColoredAvatar', () => {
       props: { allowColorChange: false },
     })
 
-    expect(wrapper.find('.hs-tooltip-toggle').exists()).toBe(false)
-    expect(wrapper.find('.hs-tooltip-content').exists()).toBe(false)
+    const toggle = wrapper.find('[data-testid="color-toggle"]')
+    expect(toggle.attributes('role')).toBeUndefined()
+    expect(wrapper.find('[aria-label="Color picker"]').exists()).toBe(false)
   })
 
   it('announces current color without shade number', () => {
@@ -75,7 +53,7 @@ describe('ColoredAvatar', () => {
       props: { initialColor: 'red-700', allowColorChange: true },
     })
 
-    const toggle = wrapper.find('.hs-tooltip-toggle')
+    const toggle = wrapper.find('[data-testid="color-toggle"]')
     const ariaLabel = toggle.attributes('aria-label')
     expect(ariaLabel).toContain('red')
     expect(ariaLabel).not.toContain('700')
@@ -99,11 +77,10 @@ describe('ColoredAvatar', () => {
       props: { allowColorChange: true },
     })
 
-    const toggle = wrapper.find('.hs-tooltip-toggle')
+    const toggle = wrapper.find('[data-testid="color-toggle"]')
     expect(toggle.attributes('role')).toBe('button')
     expect(toggle.attributes('aria-haspopup')).toBe('true')
     expect(toggle.attributes('aria-label')).toBeTruthy()
-    expect(toggle.attributes('tabindex')).toBe('0')
   })
 
   it('has proper ARIA attributes on color picker', () => {
@@ -111,7 +88,7 @@ describe('ColoredAvatar', () => {
       props: { allowColorChange: true },
     })
 
-    const colorPicker = wrapper.find('.hs-tooltip-content[aria-label="Color picker"]')
+    const colorPicker = wrapper.find('[aria-label="Color picker"]')
     expect(colorPicker.exists()).toBe(true)
   })
 

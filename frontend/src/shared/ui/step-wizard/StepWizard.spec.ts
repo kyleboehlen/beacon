@@ -135,7 +135,7 @@ describe('StepWizard', () => {
       await nextButton.trigger('click')
 
       // Check that step 2 still shows number (no checkmark)
-      const step2Indicator = wrapper.findAll('li')[1]
+      const step2Indicator = wrapper.findAll('li[aria-label]')[1]
       const checkIcon = step2Indicator.find('svg')
       expect(checkIcon.exists()).toBe(false)
 
@@ -189,20 +189,17 @@ describe('StepWizard', () => {
       await nextButton.trigger('click')
 
       // Verify steps 1 and 2 are marked complete
-      let step1Indicator = wrapper.findAll('li')[0]
-      let step2Indicator = wrapper.findAll('li')[1]
-      expect(step1Indicator.find('svg').exists()).toBe(true)
-      expect(step2Indicator.find('svg').exists()).toBe(true)
+      let stepItems = wrapper.findAll('li[aria-label]')
+      expect(stepItems[0].find('svg').exists()).toBe(true)
+      expect(stepItems[1].find('svg').exists()).toBe(true)
 
       // Click on step 1
-      const step1 = wrapper.findAll('li')[0]
-      await step1.trigger('click')
+      await stepItems[0].trigger('click')
 
       // Steps 1 and 2 should no longer be marked complete
-      step1Indicator = wrapper.findAll('li')[0]
-      step2Indicator = wrapper.findAll('li')[1]
-      expect(step1Indicator.find('svg').exists()).toBe(false)
-      expect(step2Indicator.find('svg').exists()).toBe(false)
+      stepItems = wrapper.findAll('li[aria-label]')
+      expect(stepItems[0].find('svg').exists()).toBe(false)
+      expect(stepItems[1].find('svg').exists()).toBe(false)
     })
 
     it('does not allow clicking on future steps', async () => {
@@ -247,7 +244,7 @@ describe('StepWizard', () => {
     })
 
     it('renders list items for all steps', () => {
-      const stepItems = wrapper.findAll('ol li')
+      const stepItems = wrapper.findAll('li[aria-label]')
       expect(stepItems).toHaveLength(3)
     })
 
@@ -260,11 +257,9 @@ describe('StepWizard', () => {
       const nextButton = wrapper.findAllComponents({ name: 'BasicButton' })[1]
       await nextButton.trigger('click')
 
-      const step1 = wrapper.findAll('li')[0]
-      const step2 = wrapper.findAll('li')[1]
-
-      expect(step1.attributes('aria-current')).toBeUndefined()
-      expect(step2.attributes('aria-current')).toBe('step')
+      const stepItems = wrapper.findAll('li[aria-label]')
+      expect(stepItems[0].attributes('aria-current')).toBeUndefined()
+      expect(stepItems[1].attributes('aria-current')).toBe('step')
     })
 
     it('has proper aria-label on steps', () => {
@@ -290,11 +285,9 @@ describe('StepWizard', () => {
     })
 
     it('has tabindex=-1 for future steps (not clickable)', () => {
-      const step2 = wrapper.findAll('li')[1]
-      const step3 = wrapper.findAll('li')[2]
-
-      expect(step2.attributes('tabindex')).toBe('-1')
-      expect(step3.attributes('tabindex')).toBe('-1')
+      const stepItems = wrapper.findAll('li[aria-label]')
+      expect(stepItems[1].attributes('tabindex')).toBe('-1')
+      expect(stepItems[2].attributes('tabindex')).toBe('-1')
     })
 
     it('has role="region" for each step content area', () => {
