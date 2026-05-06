@@ -86,10 +86,11 @@ public class RulesController(RulesService rulesService) : ControllerBase
                     Errors = [new BeaconError { Message = $"No rules config found with id {id}" }]
                 };
 
+            var rulesConfig = await rulesService.GetRulesConfigById(id);
             return new BeaconResponse<UpdateRulesConfigResponse>
             {
                 Success = true,
-                Payload = new UpdateRulesConfigResponse { RulesConfig = request.RulesConfig }
+                Payload = new UpdateRulesConfigResponse { RulesConfig = rulesConfig! }
             };
         }
         catch (InvalidOperationException ex)

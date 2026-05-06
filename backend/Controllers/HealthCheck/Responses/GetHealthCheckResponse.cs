@@ -3,7 +3,7 @@ using TypeGen.Core.TypeAnnotations;
 namespace Controllers.HealthCheck.Responses;
 
 [ExportTsInterface]
-public class HealthCheckResponse
+public class GetHealthCheckResponse
 {
     public bool Database { get; set; } = false;
     public bool EmailService { get; set; } = false;
