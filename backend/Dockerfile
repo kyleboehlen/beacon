@@ -18,7 +18,7 @@ RUN dotnet publish "backend.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:U
 
 FROM build AS development
 WORKDIR /src
-ENTRYPOINT ["dotnet", "watch", "run", "--urls", "http://0.0.0.0:80"]
+ENTRYPOINT ["dotnet", "watch", "run", "--urls", "http://0.0.0.0:8080"]
 
 FROM base AS final
 WORKDIR /app
