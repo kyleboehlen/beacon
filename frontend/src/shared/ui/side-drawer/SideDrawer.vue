@@ -153,4 +153,14 @@ defineExpose({ open, close })
 .drawer-leave-from .relative {
   transform: translateX(0);
 }
+
+@media (prefers-reduced-motion: reduce) {
+  /* noinspection CssUnusedSymbol */
+  .drawer-enter-active,
+  .drawer-leave-active,
+  .drawer-enter-active .relative,
+  .drawer-leave-active .relative {
+    transition: none;
+  }
+}
 </style>

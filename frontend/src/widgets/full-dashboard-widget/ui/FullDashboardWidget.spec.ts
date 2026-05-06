@@ -354,7 +354,7 @@ describe('FullDashboardWidget', () => {
 
       const settingsPanel = wrapper.get('#button-game-settings-panel')
       expect(settingsPanel.attributes('role')).toBe('region')
-      expect(settingsPanel.attributes('aria-labelledby')).toBe('settings-button')
+      expect(settingsPanel.attributes('aria-labelledby')).toBe('button-game-settings')
 
       wrapper.unmount()
     })

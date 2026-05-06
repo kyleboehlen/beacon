@@ -10,7 +10,7 @@ import { EconPanel } from '@/features/econ-panel'
 import { FleetPanel } from '@/features/fleet-panel'
 import { IntelPanel } from '@/features/intel-panel'
 import { BattlePanel } from '@/features/battle-panel'
-import { GameSettingsPanel } from '@/features/game-settings-panel'
+import { GameSettingsPanel } from '@/widgets/game-settings-panel'
 import { DashboardSideDrawerContent } from '@/features/dashboard-side-drawer-content'
 import { useGameStore } from '@/entities/_game'
 import { AttentionBadge } from '@/shared/ui/attention-badge'
@@ -72,7 +72,7 @@ const handleDrawerClosed = () => {
       <!-- Settings Icon -->
       <button
         id="button-game-settings"
-        class="flex-shrink-0 h-full w-12 mx-2 flex items-center justify-center transition-colors relative"
+        class="flex-shrink-0 h-full w-12 mx-2 flex items-center justify-center transition-colors relative focus:outline-hidden focus-visible:[filter:drop-shadow(0_0_8px_white)]"
         :class="[
           activePanel === 'settings' ? 'text-white' : '',
           !gameStore.isGameInstantiated
@@ -84,7 +84,7 @@ const handleDrawerClosed = () => {
         :aria-pressed="activePanel === 'settings'"
         :aria-disabled="!gameStore.isGameInstantiated"
         :disabled="!gameStore.isGameInstantiated"
-        aria-controls="settings-panel"
+        aria-controls="button-game-settings-panel"
         @click="activePanel = 'settings'"
       >
         <Icon
@@ -102,7 +102,7 @@ const handleDrawerClosed = () => {
 
       <!-- Hamburger Menu -->
       <button
-        class="flex-shrink-0 h-full w-12 mx-2 mr-6 flex items-center justify-center text-gray-400 hover:text-white transition-colors"
+        class="flex-shrink-0 h-full w-12 mx-2 mr-6 flex items-center justify-center text-gray-400 hover:text-white transition-colors focus:outline-hidden focus-visible:[filter:drop-shadow(0_0_8px_white)]"
         type="button"
         aria-label="Menu"
         :aria-expanded="isDrawerOpen"
@@ -176,7 +176,7 @@ const handleDrawerClosed = () => {
           v-show="activePanel === 'settings'"
           id="button-game-settings-panel"
           role="region"
-          aria-labelledby="settings-button"
+          aria-labelledby="button-game-settings"
           :aria-hidden="activePanel !== 'settings'"
           class="w-full h-full"
           @rulesCreated="activePanel = 'dashboard'"

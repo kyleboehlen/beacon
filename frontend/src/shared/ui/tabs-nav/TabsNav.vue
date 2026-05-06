@@ -106,7 +106,7 @@ const handleKeyDown = (event: KeyboardEvent, currentIndex: number) => {
       :tabindex="modelValue === tab.key ? 0 : -1"
       :class="[
         'relative flex-1 py-4 px-6 text-lg font-medium text-center transition-all duration-200',
-        'focus:z-10 focus:outline-none',
+        'focus:z-10 focus:outline-hidden focus-visible:text-white focus-visible:underline',
         isTabDisabled(tab)
           ? 'cursor-not-allowed text-red-400/60 opacity-60'
           : modelValue === tab.key

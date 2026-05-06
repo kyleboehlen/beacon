@@ -10,16 +10,16 @@ namespace Controllers.HealthCheck;
 public class HealthCheckController(HealthCheckService healthCheckService) : ControllerBase
 {
     [HttpGet("HealthCheck")]
-    public async Task<BeaconResponse<HealthCheckResponse>> Get([FromQuery] GetHealthCheckRequest request)
+    public async Task<BeaconResponse<GetHealthCheckResponse>> Get([FromQuery] GetHealthCheckRequest request)
     {
-        var payload = new HealthCheckResponse()
+        var payload = new GetHealthCheckResponse()
         {
             Database = await healthCheckService.DatabaseConnected(request.Database),
             EmailService = await healthCheckService.EmailServiceConnected(request.EmailService),
             Environment = healthCheckService.GetEnvironment(),
         };
 
-        return new BeaconResponse<HealthCheckResponse>()
+        return new BeaconResponse<GetHealthCheckResponse>()
         {
             Success = true,
             Payload = payload

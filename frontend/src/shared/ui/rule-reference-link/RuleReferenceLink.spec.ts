@@ -1,14 +1,8 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import RuleReferenceLink from './RuleReferenceLink.vue'
 
 describe('RuleReferenceLink', () => {
-  let windowOpenSpy: ReturnType<typeof vi.spyOn>
-
-  beforeEach(() => {
-    windowOpenSpy = vi.spyOn(window, 'open').mockImplementation(() => null)
-  })
-
   describe('Rendering', () => {
     it('displays the reference number by default', () => {
       const wrapper = mount(RuleReferenceLink, {
@@ -33,76 +27,40 @@ describe('RuleReferenceLink', () => {
     })
   })
 
-  describe('Click behavior', () => {
-    it('opens PDF in new tab on click', async () => {
+  describe('Link behavior', () => {
+    it('has href pointing to PDF viewer', () => {
       const wrapper = mount(RuleReferenceLink, {
         props: { referenceNumber: '5.0' },
       })
 
-      await wrapper.trigger('click')
-      expect(windowOpenSpy).toHaveBeenCalledWith(
-        '/pdfjs/web/viewer.html?file=%2FSE_AllGoodTHings_MasterRulebook_v8.pdf',
-        '_blank',
-        'noopener',
-      )
+      expect(wrapper.attributes('href')).toContain('/pdfjs/web/viewer.html')
+      expect(wrapper.attributes('href')).toContain('%2FSE_AllGoodTHings_MasterRulebook_v8.pdf')
     })
 
-    it('opens PDF at specific page when page prop is provided', async () => {
+    it('includes page fragment when page prop is provided', () => {
       const wrapper = mount(RuleReferenceLink, {
         props: { referenceNumber: '5.0', page: 42 },
       })
 
-      await wrapper.trigger('click')
-      expect(windowOpenSpy).toHaveBeenCalledWith(
-        '/pdfjs/web/viewer.html?file=%2FSE_AllGoodTHings_MasterRulebook_v8.pdf#page=42',
-        '_blank',
-        'noopener',
-      )
+      expect(wrapper.attributes('href')).toContain('#page=42')
     })
-  })
 
-  describe('Keyboard navigation', () => {
-    it('opens PDF on Enter key', async () => {
+    it('opens in new tab', () => {
       const wrapper = mount(RuleReferenceLink, {
         props: { referenceNumber: '5.0' },
       })
 
-      await wrapper.trigger('keydown', { key: 'Enter' })
-      expect(windowOpenSpy).toHaveBeenCalled()
-    })
-
-    it('opens PDF on Space key', async () => {
-      const wrapper = mount(RuleReferenceLink, {
-        props: { referenceNumber: '5.0' },
-      })
-
-      await wrapper.trigger('keydown', { key: ' ' })
-      expect(windowOpenSpy).toHaveBeenCalled()
-    })
-
-    it('does not open PDF on other keys', async () => {
-      const wrapper = mount(RuleReferenceLink, {
-        props: { referenceNumber: '5.0' },
-      })
-
-      await wrapper.trigger('keydown', { key: 'Tab' })
-      expect(windowOpenSpy).not.toHaveBeenCalled()
+      expect(wrapper.attributes('target')).toBe('_blank')
+      expect(wrapper.attributes('rel')).toContain('noopener')
     })
   })
 
   describe('Accessibility', () => {
-    it('has role="link"', () => {
+    it('is a native anchor element', () => {
       const wrapper = mount(RuleReferenceLink, {
         props: { referenceNumber: '5.0' },
       })
-      expect(wrapper.attributes('role')).toBe('link')
-    })
-
-    it('has tabindex="0"', () => {
-      const wrapper = mount(RuleReferenceLink, {
-        props: { referenceNumber: '5.0' },
-      })
-      expect(wrapper.attributes('tabindex')).toBe('0')
+      expect(wrapper.element.tagName.toLowerCase()).toBe('a')
     })
 
     it('has aria-label with reference number', () => {

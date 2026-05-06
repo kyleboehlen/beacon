@@ -120,26 +120,28 @@ describe('SystemStatus', () => {
   })
 
   describe('Accessibility', () => {
-    it('has role="status" on container', () => {
+    it('has role="status" on sr-only live region', () => {
       const fn = () => new Promise<boolean>((resolve) => setTimeout(() => resolve(true), 10000))
 
       const wrapper = mount(SystemStatus, {
         props: { fn },
       })
 
-      expect(wrapper.attributes('role')).toBe('status')
+      const liveRegion = wrapper.find('.sr-only[role="status"]')
+      expect(liveRegion.exists()).toBe(true)
 
       wrapper.unmount()
     })
 
-    it('has aria-live="polite"', () => {
+    it('has aria-live="polite" on sr-only live region', () => {
       const fn = () => new Promise<boolean>((resolve) => setTimeout(() => resolve(true), 10000))
 
       const wrapper = mount(SystemStatus, {
         props: { fn },
       })
 
-      expect(wrapper.attributes('aria-live')).toBe('polite')
+      const liveRegion = wrapper.find('[role="status"]')
+      expect(liveRegion.attributes('aria-live')).toBe('polite')
 
       wrapper.unmount()
     })

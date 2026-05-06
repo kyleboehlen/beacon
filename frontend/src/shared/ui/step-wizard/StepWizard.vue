@@ -93,45 +93,39 @@ const isLastStep = computed(() => currentStep.value === props.steps.length - 1)
 <template>
   <div class="w-full h-full flex flex-col">
     <!-- Wizard Step Navigation -->
-    <div role="tablist" aria-label="Wizard steps">
-      <ul class="relative flex flex-row gap-x-2">
-        <!-- Cursor pointer styles on this li are for letting the user know they can click back to completed steps -->
-        <li
-          v-for="(step, index) in steps"
-          :key="step.id"
-          class="flex items-center gap-x-2 shrink basis-0 flex-1 group"
-          :class="{
-            'cursor-pointer': stepIsCompleted(step.id),
-          }"
-          @click="navigateToCompletedStep(step.id)"
-          @keydown.enter="navigateToCompletedStep(step.id)"
-          @keydown.space.prevent="navigateToCompletedStep(step.id)"
-          :tabindex="stepIsCompleted(step.id) ? 0 : -1"
-          role="tab"
-          :aria-label="`${step.label}${stepIsCompleted(step.id) ? ' - Completed' : step.id === currentStepId ? ' - Current' : ''}`"
-          :aria-selected="step.id === currentStepId"
-          :aria-controls="`tabpanel-${step.id}`"
-        >
-          <span class="min-w-7 min-h-7 group inline-flex items-center text-xs align-middle">
+    <nav aria-label="Wizard steps" class="w-full">
+      <ol class="relative flex flex-row w-full items-center">
+        <!-- Interleaved step items and connectors so every gap is exactly one flex-1 connector wide -->
+        <template v-for="(step, index) in steps" :key="step.id">
+          <!-- Connector line between steps (hidden from screen readers) -->
+          <li
+            v-if="index > 0"
+            role="none"
+            aria-hidden="true"
+            class="flex-1 h-px transition-colors duration-200"
+            :class="getProgressLineClasses(steps[index - 1].id)"
+          />
+
+          <!-- Step item -->
+          <li
+            class="inline-flex items-center shrink-0 group focus:outline-hidden focus-visible:[filter:drop-shadow(0_0_6px_rgba(255,255,255,0.8))]"
+            :class="{
+              'cursor-pointer': stepIsCompleted(step.id),
+            }"
+            @click="navigateToCompletedStep(step.id)"
+            @keydown.enter="navigateToCompletedStep(step.id)"
+            @keydown.space.prevent="navigateToCompletedStep(step.id)"
+            :tabindex="stepIsCompleted(step.id) ? 0 : -1"
+            :aria-current="step.id === currentStepId ? 'step' : undefined"
+            :aria-label="`${step.label}${stepIsCompleted(step.id) ? ' - Completed, activate to return' : step.id === currentStepId ? ' - Current step' : ' - Not yet reached'}`"
+          >
             <!-- Step Indicator Circle -->
             <span
               class="size-7 flex justify-center items-center shrink-0 font-medium rounded-full transition-colors duration-200"
               :class="getStepIndicatorClasses(step.id)"
             >
-              <!-- Step Number (hidden when complete) -->
-              <span
-                v-if="!stepIsCompleted(step.id)"
-                class="text-sm"
-              >
-                {{ index + 1 }}
-              </span>
-              <!-- Checkmark Icon (shown when complete) -->
-              <Icon
-                v-else
-                icon="mdi:check"
-                class="size-4"
-                aria-hidden="true"
-              />
+              <span v-if="!stepIsCompleted(step.id)" class="text-sm">{{ index + 1 }}</span>
+              <Icon v-else icon="mdi:check" class="size-4" aria-hidden="true" />
             </span>
             <!-- Step Label -->
             <span
@@ -141,16 +135,10 @@ const isLastStep = computed(() => currentStep.value === props.steps.length - 1)
             >
               {{ step.label }}
             </span>
-          </span>
-          <!-- Progress Line (hidden for last item) -->
-          <div
-            v-if="index < steps.length - 1"
-            class="w-full h-px flex-1 transition-colors duration-200"
-            :class="getProgressLineClasses(step.id)"
-          />
-        </li>
-      </ul>
-    </div>
+          </li>
+        </template>
+      </ol>
+    </nav>
 
     <!-- Stepper Content -->
     <div class="flex-1 mt-5 sm:mt-8 min-h-0">
@@ -158,10 +146,9 @@ const isLastStep = computed(() => currentStep.value === props.steps.length - 1)
         v-for="step in steps"
         :key="step.id"
         v-show="step.id === currentStepId"
-        :id="`tabpanel-${step.id}`"
-        role="tabpanel"
+        :id="`step-panel-${step.id}`"
+        role="region"
         :aria-labelledby="`step-${step.id}-label`"
-        :tabindex="0"
         class="w-full h-full"
       >
         <slot :name="step.id" />

@@ -54,7 +54,7 @@ Request and response DTOs in `Controllers/{Feature}/Requests/` and `Controllers/
 
 - **Naming**: `{Action}{Resource}Request` for requests, `{Action}{Resource}Response` for responses
   - Examples: `CreateRulesConfigRequest`, `GetRulesConfigResponse`, `UpdateRulesConfigRequest`
-  - Actions: `Create`, `Get`, `Update`, `Delete`, `Hydrate`, `List`, etc.
+  - Actions: `Create`, `Get`, `Update`, `Delete`, `Hydrate`, `List`, `Save` (for shared create/update DTOs), etc.
 - **TypeGen decorators**: All DTOs must be decorated with `[ExportTsInterface]` or `[ExportTsEnum]` for TypeGen code generation
   ```csharp
   // Correct:
@@ -95,6 +95,8 @@ Violations:
 - A service returning a DTO type from `Controllers/` instead of a domain model
 - A model importing from `Controllers/`
 - Cross-feature service dependencies without going through proper interfaces
+
+**Exception — Game as orchestrator**: `Features/Game/Models/Game.cs` may import and embed models from other features (e.g., `RulesConfig` from `Features.Rules.Models`). The Game model is the central domain aggregate — the backend equivalent of the `_game` orchestrator store in the frontend. It is permitted to own a snapshot of its rules configuration because rules are fixed at game session start. No other feature model may import from another feature.
 
 ### 7. Cross-Cutting Concerns Placement (Minor)
 Infrastructure services that are shared across features live at the root level:

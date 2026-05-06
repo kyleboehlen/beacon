@@ -81,7 +81,12 @@ onMounted(() => {
 
 <template>
   <BasicCard title="Colony Growth & Maintenance">
-    <div ref="chartContainer"></div>
+    <div
+      role="img"
+      aria-label="Colony growth and maintenance area chart showing population growth from 2,300 to 5,590 and maintenance cost from 450 to 1,120 over 12 months"
+    >
+      <div ref="chartContainer"></div>
+    </div>
   </BasicCard>
 </template>
 
