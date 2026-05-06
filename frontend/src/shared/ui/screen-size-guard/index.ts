@@ -1,0 +1,1 @@
+export { default as ScreenSizeGuard } from './ScreenSizeGuard.vue'
