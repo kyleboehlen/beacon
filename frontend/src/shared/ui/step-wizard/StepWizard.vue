@@ -99,7 +99,7 @@ const isLastStep = computed(() => currentStep.value === props.steps.length - 1)
         <li
           v-for="(step, index) in steps"
           :key="step.id"
-          class="flex items-center gap-x-2 shrink basis-0 flex-1 group"
+          class="flex items-center flex-1 group focus:outline-hidden focus-visible:[filter:drop-shadow(0_0_6px_rgba(255,255,255,0.8))]"
           :class="{
             'cursor-pointer': stepIsCompleted(step.id),
           }"
@@ -110,7 +110,15 @@ const isLastStep = computed(() => currentStep.value === props.steps.length - 1)
           :aria-current="step.id === currentStepId ? 'step' : undefined"
           :aria-label="`${step.label}${stepIsCompleted(step.id) ? ' - Completed, activate to return' : step.id === currentStepId ? ' - Current step' : ' - Not yet reached'}`"
         >
-          <span class="min-w-7 min-h-7 group inline-flex items-center text-xs align-middle">
+          <!-- Left connector line (all steps except first) -->
+          <div
+            v-if="index > 0"
+            class="flex-1 h-px transition-colors duration-200"
+            :class="getProgressLineClasses(steps[index - 1].id)"
+          />
+
+          <!-- Step indicator + label -->
+          <span class="inline-flex items-center text-xs shrink-0">
             <!-- Step Indicator Circle -->
             <span
               class="size-7 flex justify-center items-center shrink-0 font-medium rounded-full transition-colors duration-200"
@@ -140,10 +148,11 @@ const isLastStep = computed(() => currentStep.value === props.steps.length - 1)
               {{ step.label }}
             </span>
           </span>
-          <!-- Progress Line (hidden for last item) -->
+
+          <!-- Right connector line (all steps except last) -->
           <div
             v-if="index < steps.length - 1"
-            class="w-full h-px flex-1 transition-colors duration-200"
+            class="flex-1 h-px transition-colors duration-200"
             :class="getProgressLineClasses(step.id)"
           />
         </li>
