@@ -20,7 +20,7 @@ describe('ColoredAvatar', () => {
     const toggle = wrapper.find('.hs-tooltip-toggle')
     expect(toggle.exists()).toBe(true)
     expect(toggle.attributes('role')).toBe('button')
-    expect(toggle.attributes('aria-haspopup')).toBe('dialog')
+    expect(toggle.attributes('aria-haspopup')).toBe('true')
   })
 
   it('handles keyboard activation with Enter key', async () => {
@@ -67,7 +67,7 @@ describe('ColoredAvatar', () => {
     })
 
     expect(wrapper.find('.hs-tooltip-toggle').exists()).toBe(false)
-    expect(wrapper.find('[role="dialog"]').exists()).toBe(false) // Dialog doesn't exist when allowColorChange is false
+    expect(wrapper.find('.hs-tooltip-content').exists()).toBe(false)
   })
 
   it('announces current color without shade number', () => {
@@ -101,7 +101,7 @@ describe('ColoredAvatar', () => {
 
     const toggle = wrapper.find('.hs-tooltip-toggle')
     expect(toggle.attributes('role')).toBe('button')
-    expect(toggle.attributes('aria-haspopup')).toBe('dialog')
+    expect(toggle.attributes('aria-haspopup')).toBe('true')
     expect(toggle.attributes('aria-label')).toBeTruthy()
     expect(toggle.attributes('tabindex')).toBe('0')
   })
@@ -111,9 +111,8 @@ describe('ColoredAvatar', () => {
       props: { allowColorChange: true },
     })
 
-    const dialog = wrapper.find('[role="dialog"]')
-    expect(dialog.exists()).toBe(true)
-    expect(dialog.attributes('aria-label')).toBe('Color picker')
+    const colorPicker = wrapper.find('.hs-tooltip-content[aria-label="Color picker"]')
+    expect(colorPicker.exists()).toBe(true)
   })
 
   it('has screen reader text for selected color', async () => {

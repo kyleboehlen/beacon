@@ -175,7 +175,7 @@ describe('StepWizard', () => {
       await nextButton.trigger('click')
 
       // Click on step 1
-      const step1 = wrapper.findAll('li[role="tab"]')[0]
+      const step1 = wrapper.findAll('li')[0]
       await step1.trigger('click')
 
       expect(wrapper.find('[data-testid="content-1"]').isVisible()).toBe(true)
@@ -195,7 +195,7 @@ describe('StepWizard', () => {
       expect(step2Indicator.find('svg').exists()).toBe(true)
 
       // Click on step 1
-      const step1 = wrapper.findAll('li[role="tab"]')[0]
+      const step1 = wrapper.findAll('li')[0]
       await step1.trigger('click')
 
       // Steps 1 and 2 should no longer be marked complete
@@ -206,7 +206,7 @@ describe('StepWizard', () => {
     })
 
     it('does not allow clicking on future steps', async () => {
-      const step3 = wrapper.findAll('li[role="tab"]')[2]
+      const step3 = wrapper.findAll('li')[2]
       await step3.trigger('click')
 
       // Should still be on step 1
@@ -220,7 +220,7 @@ describe('StepWizard', () => {
       await nextButton.trigger('click')
 
       // Press Enter on step 1
-      const step1 = wrapper.findAll('li[role="tab"]')[0]
+      const step1 = wrapper.findAll('li')[0]
       await step1.trigger('keydown.enter')
 
       expect(wrapper.find('[data-testid="content-1"]').isVisible()).toBe(true)
@@ -233,7 +233,7 @@ describe('StepWizard', () => {
       await nextButton.trigger('click')
 
       // Press Space on step 1
-      const step1 = wrapper.findAll('li[role="tab"]')[0]
+      const step1 = wrapper.findAll('li')[0]
       await step1.trigger('keydown.space')
 
       expect(wrapper.find('[data-testid="content-1"]').isVisible()).toBe(true)
@@ -241,35 +241,34 @@ describe('StepWizard', () => {
   })
 
   describe('Accessibility', () => {
-    it('has role="tablist" on wizard steps container', () => {
-      const tablist = wrapper.find('[role="tablist"]')
-      expect(tablist.exists()).toBe(true)
-      expect(tablist.attributes('aria-label')).toBe('Wizard steps')
+    it('has nav with aria-label on wizard steps container', () => {
+      const nav = wrapper.find('nav[aria-label="Wizard steps"]')
+      expect(nav.exists()).toBe(true)
     })
 
-    it('has role="tab" on step items', () => {
-      const stepItems = wrapper.findAll('li[role="tab"]')
+    it('renders list items for all steps', () => {
+      const stepItems = wrapper.findAll('ol li')
       expect(stepItems).toHaveLength(3)
     })
 
-    it('sets aria-selected="true" on current step', () => {
-      const step1 = wrapper.findAll('li[role="tab"]')[0]
-      expect(step1.attributes('aria-selected')).toBe('true')
+    it('sets aria-current="step" on current step', () => {
+      const step1 = wrapper.findAll('li')[0]
+      expect(step1.attributes('aria-current')).toBe('step')
     })
 
-    it('updates aria-selected when navigating', async () => {
+    it('updates aria-current when navigating', async () => {
       const nextButton = wrapper.findAllComponents({ name: 'BasicButton' })[1]
       await nextButton.trigger('click')
 
-      const step1 = wrapper.findAll('li[role="tab"]')[0]
-      const step2 = wrapper.findAll('li[role="tab"]')[1]
+      const step1 = wrapper.findAll('li')[0]
+      const step2 = wrapper.findAll('li')[1]
 
-      expect(step1.attributes('aria-selected')).toBe('false')
-      expect(step2.attributes('aria-selected')).toBe('true')
+      expect(step1.attributes('aria-current')).toBeUndefined()
+      expect(step2.attributes('aria-current')).toBe('step')
     })
 
     it('has proper aria-label on steps', () => {
-      const step1 = wrapper.findAll('li[role="tab"]')[0]
+      const step1 = wrapper.findAll('li')[0]
       expect(step1.attributes('aria-label')).toContain('Step 1')
       expect(step1.attributes('aria-label')).toContain('Current')
     })
@@ -278,7 +277,7 @@ describe('StepWizard', () => {
       const nextButton = wrapper.findAllComponents({ name: 'BasicButton' })[1]
       await nextButton.trigger('click')
 
-      const step1 = wrapper.findAll('li[role="tab"]')[0]
+      const step1 = wrapper.findAll('li')[0]
       expect(step1.attributes('aria-label')).toContain('Completed')
     })
 
@@ -286,26 +285,26 @@ describe('StepWizard', () => {
       const nextButton = wrapper.findAllComponents({ name: 'BasicButton' })[1]
       await nextButton.trigger('click')
 
-      const step1 = wrapper.findAll('li[role="tab"]')[0]
+      const step1 = wrapper.findAll('li')[0]
       expect(step1.attributes('tabindex')).toBe('0')
     })
 
     it('has tabindex=-1 for future steps (not clickable)', () => {
-      const step2 = wrapper.findAll('li[role="tab"]')[1]
-      const step3 = wrapper.findAll('li[role="tab"]')[2]
+      const step2 = wrapper.findAll('li')[1]
+      const step3 = wrapper.findAll('li')[2]
 
       expect(step2.attributes('tabindex')).toBe('-1')
       expect(step3.attributes('tabindex')).toBe('-1')
     })
 
-    it('has role="tabpanel" for each step content area', () => {
-      const tabpanels = wrapper.findAll('div[role="tabpanel"]')
-      expect(tabpanels).toHaveLength(3)
+    it('has role="region" for each step content area', () => {
+      const regions = wrapper.findAll('div[role="region"]')
+      expect(regions).toHaveLength(3)
     })
 
-    it('has proper aria-controls on tabs', () => {
-      const step1 = wrapper.findAll('li[role="tab"]')[0]
-      expect(step1.attributes('aria-controls')).toBe('tabpanel-step1')
+    it('has aria-labelledby on content panels referencing step label', () => {
+      const regions = wrapper.findAll('[role="region"]')
+      expect(regions[0].attributes('aria-labelledby')).toBe('step-step1-label')
     })
 
     it('has screen reader announcement area', () => {
