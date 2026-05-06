@@ -80,7 +80,12 @@ onMounted(() => {
 
 <template>
   <BasicCard title="Technology Progress">
-    <div ref="chartContainer"></div>
+    <div
+      role="img"
+      aria-label="Technology progress radar chart comparing current versus required levels across Weapons, Shields, Propulsion, Mining, Research, and Construction"
+    >
+      <div ref="chartContainer"></div>
+    </div>
   </BasicCard>
 </template>
 

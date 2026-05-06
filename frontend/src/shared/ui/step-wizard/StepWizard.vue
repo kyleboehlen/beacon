@@ -93,8 +93,8 @@ const isLastStep = computed(() => currentStep.value === props.steps.length - 1)
 <template>
   <div class="w-full h-full flex flex-col">
     <!-- Wizard Step Navigation -->
-    <div role="tablist" aria-label="Wizard steps">
-      <ul class="relative flex flex-row gap-x-2">
+    <nav aria-label="Wizard steps">
+      <ol class="relative flex flex-row gap-x-2">
         <!-- Cursor pointer styles on this li are for letting the user know they can click back to completed steps -->
         <li
           v-for="(step, index) in steps"
@@ -107,10 +107,8 @@ const isLastStep = computed(() => currentStep.value === props.steps.length - 1)
           @keydown.enter="navigateToCompletedStep(step.id)"
           @keydown.space.prevent="navigateToCompletedStep(step.id)"
           :tabindex="stepIsCompleted(step.id) ? 0 : -1"
-          role="tab"
-          :aria-label="`${step.label}${stepIsCompleted(step.id) ? ' - Completed' : step.id === currentStepId ? ' - Current' : ''}`"
-          :aria-selected="step.id === currentStepId"
-          :aria-controls="`tabpanel-${step.id}`"
+          :aria-current="step.id === currentStepId ? 'step' : undefined"
+          :aria-label="`${step.label}${stepIsCompleted(step.id) ? ' - Completed, press Enter to return' : step.id === currentStepId ? ' - Current step' : ' - Not yet reached'}`"
         >
           <span class="min-w-7 min-h-7 group inline-flex items-center text-xs align-middle">
             <!-- Step Indicator Circle -->
@@ -149,8 +147,8 @@ const isLastStep = computed(() => currentStep.value === props.steps.length - 1)
             :class="getProgressLineClasses(step.id)"
           />
         </li>
-      </ul>
-    </div>
+      </ol>
+    </nav>
 
     <!-- Stepper Content -->
     <div class="flex-1 mt-5 sm:mt-8 min-h-0">
@@ -158,10 +156,9 @@ const isLastStep = computed(() => currentStep.value === props.steps.length - 1)
         v-for="step in steps"
         :key="step.id"
         v-show="step.id === currentStepId"
-        :id="`tabpanel-${step.id}`"
-        role="tabpanel"
+        :id="`step-panel-${step.id}`"
+        role="region"
         :aria-labelledby="`step-${step.id}-label`"
-        :tabindex="0"
         class="w-full h-full"
       >
         <slot :name="step.id" />

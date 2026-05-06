@@ -84,7 +84,7 @@ const handleDrawerClosed = () => {
         :aria-pressed="activePanel === 'settings'"
         :aria-disabled="!gameStore.isGameInstantiated"
         :disabled="!gameStore.isGameInstantiated"
-        aria-controls="settings-panel"
+        aria-controls="button-game-settings-panel"
         @click="activePanel = 'settings'"
       >
         <Icon
@@ -113,7 +113,7 @@ const handleDrawerClosed = () => {
     </header>
 
     <!-- Panel Area -->
-    <div class="flex-1 relative">
+    <main class="flex-1 relative">
       <ContainerChrome :showSideDecorations="true">
         <!-- Dashboard Panel -->
         <DashboardPanel
@@ -176,13 +176,13 @@ const handleDrawerClosed = () => {
           v-show="activePanel === 'settings'"
           id="button-game-settings-panel"
           role="region"
-          aria-labelledby="settings-button"
+          aria-labelledby="button-game-settings"
           :aria-hidden="activePanel !== 'settings'"
           class="w-full h-full"
           @rulesCreated="activePanel = 'dashboard'"
         />
       </ContainerChrome>
-    </div>
+    </main>
 
     <!-- Side Drawer -->
     <SideDrawer

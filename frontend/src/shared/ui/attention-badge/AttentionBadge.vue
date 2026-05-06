@@ -24,7 +24,7 @@ const ariaLabel = props.label || `${props.variant} attention indicator`
     class="flex absolute size-3 items-center justify-center w-4 h-4"
     :role="ariaRole"
     :aria-label="ariaLabel"
-    aria-live="polite"
+    :aria-live="ariaRole === 'alert' ? 'assertive' : 'polite'"
     aria-atomic="true"
   >
     <span

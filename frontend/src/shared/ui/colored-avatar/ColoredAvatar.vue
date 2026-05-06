@@ -27,7 +27,7 @@ const borderColor = computed(() => getPlayerColorBorder(color.value))
 const avatarColor = computed(() => getPlayerColorText(color.value))
 
 const buttonBaseClasses =
-  'w-10 h-10 rounded-full transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white'
+  'w-10 h-10 rounded-full transition-all hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-white'
 
 const changeColor = (newColor: PlayerColor) => {
   color.value = newColor
@@ -43,7 +43,7 @@ const handleKeyboardActivation = (event: KeyboardEvent) => {
 <template>
   <div
     :class="[
-      'inline-block rounded-full border-4 bg-transparent p-2',
+      'inline-block rounded-full border-4 bg-transparent p-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black',
       {
         'hs-tooltip [--trigger:click] sm:[--placement:right] hover:cursor-pointer': props.allowColorChange,
         'hs-tooltip-toggle': props.allowColorChange,
@@ -57,7 +57,7 @@ const handleKeyboardActivation = (event: KeyboardEvent) => {
         ? `Change color. Current color: ${getAccessibilityColor(color)}`
         : undefined
     "
-    :aria-haspopup="props.allowColorChange ? 'dialog' : undefined"
+    :aria-haspopup="props.allowColorChange ? 'true' : undefined"
     @keydown.enter="handleKeyboardActivation"
     @keydown.space.prevent="handleKeyboardActivation"
   >
@@ -77,7 +77,6 @@ const handleKeyboardActivation = (event: KeyboardEvent) => {
     <div
       v-if="props.allowColorChange"
       class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 invisible transition-opacity absolute z-50 max-w-xs bg-white border border-gray-100 text-start rounded-xl shadow-md after:absolute after:top-0 after:-start-4 after:w-4 after:h-full dark:bg-neutral-800 dark:border-neutral-700"
-      role="dialog"
       aria-label="Color picker"
     >
       <div class="p-4">

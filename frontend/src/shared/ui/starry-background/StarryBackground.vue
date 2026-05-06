@@ -521,4 +521,15 @@
   0% { opacity: 0.02; }
   100% { opacity: 0.28; }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .stars1::before, .stars2::before, .stars3::before,
+  .stars4::before, .stars5::before, .stars6::before,
+  .stars7::before, .stars8::before, .stars9::before,
+  .stars10::before, .stars11::before, .stars12::before,
+  .stars13::before, .stars14::before, .stars15::before {
+    animation: none;
+    opacity: 0.3;
+  }
+}
 </style>

@@ -64,7 +64,12 @@ onMounted(() => {
 
 <template>
   <BasicCard title="Fleet Composition">
-    <div ref="chartContainer"></div>
+    <div
+      role="img"
+      aria-label="Fleet composition donut chart: 35% Corvettes, 25% Frigates, 20% Destroyers, 15% Cruisers, 5% Battleships"
+    >
+      <div ref="chartContainer"></div>
+    </div>
   </BasicCard>
 </template>
 
