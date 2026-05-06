@@ -21,10 +21,11 @@ function getGuard() {
 }
 
 describe('ScreenSizeGuard', () => {
-  let wrapper: VueWrapper
+  let wrapper: VueWrapper | null = null
 
   afterEach(() => {
-    wrapper.unmount()
+    wrapper?.unmount()
+    wrapper = null
   })
 
   describe('supported screen sizes', () => {
@@ -100,8 +101,8 @@ describe('ScreenSizeGuard', () => {
     it('removes the resize listener on unmount', () => {
       setWindowSize(1440, 900)
       const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener')
-      wrapper = mount(ScreenSizeGuard, { attachTo: document.body })
-      wrapper.unmount()
+      const localWrapper = mount(ScreenSizeGuard, { attachTo: document.body })
+      localWrapper.unmount()
       expect(removeEventListenerSpy).toHaveBeenCalledWith('resize', expect.any(Function))
       removeEventListenerSpy.mockRestore()
     })
