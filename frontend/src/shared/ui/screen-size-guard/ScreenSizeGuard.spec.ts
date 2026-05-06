@@ -34,8 +34,8 @@ describe('ScreenSizeGuard', () => {
       expect(guardExists()).toBe(false)
     })
 
-    it('is hidden at exactly the minimum width in landscape', () => {
-      setWindowSize(1024, 768)
+    it('is hidden at exactly the minimum dimensions in landscape', () => {
+      setWindowSize(1024, 600)
       wrapper = mount(ScreenSizeGuard, { attachTo: document.body })
       expect(guardExists()).toBe(false)
     })
@@ -44,6 +44,13 @@ describe('ScreenSizeGuard', () => {
   describe('unsupported screen sizes', () => {
     it('is visible when width is below minimum', async () => {
       setWindowSize(800, 600)
+      wrapper = mount(ScreenSizeGuard, { attachTo: document.body })
+      await nextTick()
+      expect(guardExists()).toBe(true)
+    })
+
+    it('is visible when height is below minimum', async () => {
+      setWindowSize(1280, 400)
       wrapper = mount(ScreenSizeGuard, { attachTo: document.body })
       await nextTick()
       expect(guardExists()).toBe(true)

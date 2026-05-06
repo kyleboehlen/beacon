@@ -4,11 +4,15 @@ import { StarryBackground } from '@/shared/ui/starry-background'
 import { Icon } from '@iconify/vue'
 
 const MIN_WIDTH = 1024
+const MIN_HEIGHT = 600
 
 const isUnsupported = ref(false)
 
 function checkScreenSize() {
-  isUnsupported.value = window.innerWidth < MIN_WIDTH || window.innerHeight > window.innerWidth
+  isUnsupported.value =
+    window.innerWidth < MIN_WIDTH ||
+    window.innerHeight < MIN_HEIGHT ||
+    window.innerHeight > window.innerWidth
 }
 
 onMounted(() => {
@@ -48,7 +52,7 @@ onUnmounted(() => {
           id="screen-size-guard-description"
           class="text-white/60 text-lg max-w-md"
         >
-          B.E.A.C.O.N. requires a landscape display at least 1024px wide.
+          B.E.A.C.O.N. requires a landscape display at least 1024×600px.
           Please rotate your device or use a larger screen.
         </p>
       </StarryBackground>
