@@ -72,7 +72,7 @@ const handleDrawerClosed = () => {
       <!-- Settings Icon -->
       <button
         id="button-game-settings"
-        class="flex-shrink-0 h-full w-12 mx-2 flex items-center justify-center transition-colors relative"
+        class="flex-shrink-0 h-full w-12 mx-2 flex items-center justify-center transition-colors relative focus:outline-hidden focus-visible:[filter:drop-shadow(0_0_8px_white)]"
         :class="[
           activePanel === 'settings' ? 'text-white' : '',
           !gameStore.isGameInstantiated
@@ -102,7 +102,7 @@ const handleDrawerClosed = () => {
 
       <!-- Hamburger Menu -->
       <button
-        class="flex-shrink-0 h-full w-12 mx-2 mr-6 flex items-center justify-center text-gray-400 hover:text-white transition-colors"
+        class="flex-shrink-0 h-full w-12 mx-2 mr-6 flex items-center justify-center text-gray-400 hover:text-white transition-colors focus:outline-hidden focus-visible:[filter:drop-shadow(0_0_8px_white)]"
         type="button"
         aria-label="Menu"
         :aria-expanded="isDrawerOpen"

@@ -22,7 +22,7 @@ const targetUrl = computed(() =>
     :href="targetUrl"
     target="_blank"
     rel="noopener noreferrer"
-    class="font-mono text-xs text-cyan-400/70 underline decoration-dotted cursor-pointer hover:text-cyan-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 rounded-sm"
+    class="font-mono text-xs text-cyan-400/70 underline decoration-dotted cursor-pointer hover:text-cyan-300 focus:outline-hidden focus-visible:text-cyan-300 focus-visible:[filter:drop-shadow(0_0_6px_rgb(34,211,238))]"
     :aria-label="`Rule reference ${props.referenceNumber} - opens rulebook PDF in new tab`"
   >
     <slot>

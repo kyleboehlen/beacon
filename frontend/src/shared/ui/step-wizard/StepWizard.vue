@@ -93,8 +93,8 @@ const isLastStep = computed(() => currentStep.value === props.steps.length - 1)
 <template>
   <div class="w-full h-full flex flex-col">
     <!-- Wizard Step Navigation -->
-    <nav aria-label="Wizard steps">
-      <ol class="relative flex flex-row gap-x-2">
+    <nav aria-label="Wizard steps" class="w-full">
+      <ol class="relative flex flex-row w-full">
         <!-- Cursor pointer styles on this li are for letting the user know they can click back to completed steps -->
         <li
           v-for="(step, index) in steps"

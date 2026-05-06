@@ -41,7 +41,7 @@ const handleKeyDown = (event: KeyboardEvent) => {
     :aria-label="props.ariaLabel"
     :class="[
       'px-6 py-4 text-lg font-medium text-center transition-all duration-200',
-      'focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black',
+      'focus:outline-hidden focus-visible:bg-white/20 focus-visible:border-b-white',
       'border-b-[1px]',
       props.disabled
         ? 'cursor-not-allowed text-white/40 bg-white/5 border-b-transparent'
