@@ -80,7 +80,7 @@ const handleToggle = () => {
         :aria-label="`Toggle ${displayName}`"
         :aria-describedby="`${props.ruleKey}-description`"
         :disabled="!props.enabled || props.locked"
-        class="shrink-0 mt-1 relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-white/30 disabled:opacity-50 disabled:cursor-not-allowed"
+        class="shrink-0 mt-1 relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-white disabled:opacity-50 disabled:cursor-not-allowed"
         :class="props.value ? 'bg-green-600' : 'bg-white/20'"
         @click.stop="handleToggle"
       >
