@@ -94,50 +94,38 @@ const isLastStep = computed(() => currentStep.value === props.steps.length - 1)
   <div class="w-full h-full flex flex-col">
     <!-- Wizard Step Navigation -->
     <nav aria-label="Wizard steps" class="w-full">
-      <ol class="relative flex flex-row w-full">
-        <!-- Cursor pointer styles on this li are for letting the user know they can click back to completed steps -->
-        <li
-          v-for="(step, index) in steps"
-          :key="step.id"
-          class="flex items-center flex-1 group focus:outline-hidden focus-visible:[filter:drop-shadow(0_0_6px_rgba(255,255,255,0.8))]"
-          :class="{
-            'cursor-pointer': stepIsCompleted(step.id),
-          }"
-          @click="navigateToCompletedStep(step.id)"
-          @keydown.enter="navigateToCompletedStep(step.id)"
-          @keydown.space.prevent="navigateToCompletedStep(step.id)"
-          :tabindex="stepIsCompleted(step.id) ? 0 : -1"
-          :aria-current="step.id === currentStepId ? 'step' : undefined"
-          :aria-label="`${step.label}${stepIsCompleted(step.id) ? ' - Completed, activate to return' : step.id === currentStepId ? ' - Current step' : ' - Not yet reached'}`"
-        >
-          <!-- Left connector line (all steps except first) -->
-          <div
+      <ol class="relative flex flex-row w-full items-center">
+        <!-- Interleaved step items and connectors so every gap is exactly one flex-1 connector wide -->
+        <template v-for="(step, index) in steps" :key="step.id">
+          <!-- Connector line between steps (hidden from screen readers) -->
+          <li
             v-if="index > 0"
+            role="none"
+            aria-hidden="true"
             class="flex-1 h-px transition-colors duration-200"
             :class="getProgressLineClasses(steps[index - 1].id)"
           />
 
-          <!-- Step indicator + label -->
-          <span class="inline-flex items-center text-xs shrink-0">
+          <!-- Step item -->
+          <li
+            class="inline-flex items-center shrink-0 group focus:outline-hidden focus-visible:[filter:drop-shadow(0_0_6px_rgba(255,255,255,0.8))]"
+            :class="{
+              'cursor-pointer': stepIsCompleted(step.id),
+            }"
+            @click="navigateToCompletedStep(step.id)"
+            @keydown.enter="navigateToCompletedStep(step.id)"
+            @keydown.space.prevent="navigateToCompletedStep(step.id)"
+            :tabindex="stepIsCompleted(step.id) ? 0 : -1"
+            :aria-current="step.id === currentStepId ? 'step' : undefined"
+            :aria-label="`${step.label}${stepIsCompleted(step.id) ? ' - Completed, activate to return' : step.id === currentStepId ? ' - Current step' : ' - Not yet reached'}`"
+          >
             <!-- Step Indicator Circle -->
             <span
               class="size-7 flex justify-center items-center shrink-0 font-medium rounded-full transition-colors duration-200"
               :class="getStepIndicatorClasses(step.id)"
             >
-              <!-- Step Number (hidden when complete) -->
-              <span
-                v-if="!stepIsCompleted(step.id)"
-                class="text-sm"
-              >
-                {{ index + 1 }}
-              </span>
-              <!-- Checkmark Icon (shown when complete) -->
-              <Icon
-                v-else
-                icon="mdi:check"
-                class="size-4"
-                aria-hidden="true"
-              />
+              <span v-if="!stepIsCompleted(step.id)" class="text-sm">{{ index + 1 }}</span>
+              <Icon v-else icon="mdi:check" class="size-4" aria-hidden="true" />
             </span>
             <!-- Step Label -->
             <span
@@ -147,15 +135,8 @@ const isLastStep = computed(() => currentStep.value === props.steps.length - 1)
             >
               {{ step.label }}
             </span>
-          </span>
-
-          <!-- Right connector line (all steps except last) -->
-          <div
-            v-if="index < steps.length - 1"
-            class="flex-1 h-px transition-colors duration-200"
-            :class="getProgressLineClasses(step.id)"
-          />
-        </li>
+          </li>
+        </template>
       </ol>
     </nav>
 
