@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { useGameStore } from '@/entities/_game'
-import NewScenarioButton from '@/features/dashboard-panel/ui/NewScenarioButton.vue'
-import FleetCompositionChart from '@/features/dashboard-panel/ui/FleetCompositionChart.vue'
-import ColonyGrowthChart from '@/features/dashboard-panel/ui/ColonyGrowthChart.vue'
-import TechnologyRadarChart from '@/features/dashboard-panel/ui/TechnologyRadarChart.vue'
-import GameStatusCard from '@/features/dashboard-panel/ui/GameStatusCard.vue'
-import MissionDataTable from '@/features/dashboard-panel/ui/MissionDataTable.vue'
+import NewScenarioButton from './NewScenarioButton.vue'
+import FleetCompositionChart from './FleetCompositionChart.vue'
+import ColonyGrowthChart from './ColonyGrowthChart.vue'
+import TechnologyRadarChart from './TechnologyRadarChart.vue'
+import GameStatusCard from './GameStatusCard.vue'
+import MissionDataTable from './MissionDataTable.vue'
 
 const gameStore = useGameStore()
 

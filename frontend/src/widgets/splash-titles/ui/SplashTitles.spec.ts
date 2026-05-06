@@ -2,8 +2,8 @@ import { describe, it, expect, beforeEach } from 'vitest'
 import { mount, flushPromises } from '@vue/test-utils'
 import { createRouter, createMemoryHistory, type Router } from 'vue-router'
 import SplashTitles from './SplashTitles.vue'
-import { DashboardPage } from '@/pages/dashboard-page'
-import { TitlePage } from '@/pages/title-page'
+
+const stub = { template: '<div />' }
 
 describe('SplashTitles', () => {
   let router: Router
@@ -12,8 +12,8 @@ describe('SplashTitles', () => {
     router = createRouter({
       history: createMemoryHistory(),
       routes: [
-        { path: '/', name: 'root', component: TitlePage },
-        { path: '/dashboard', name: 'dashboard', component: DashboardPage },
+        { path: '/', name: 'root', component: stub },
+        { path: '/dashboard', name: 'dashboard', component: stub },
       ],
     })
     await router.push('/')
