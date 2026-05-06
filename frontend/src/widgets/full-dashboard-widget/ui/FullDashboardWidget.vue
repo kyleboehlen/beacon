@@ -113,7 +113,7 @@ const handleDrawerClosed = () => {
     </header>
 
     <!-- Panel Area -->
-    <main class="flex-1 relative">
+    <div class="flex-1 relative">
       <ContainerChrome :showSideDecorations="true">
         <!-- Dashboard Panel -->
         <DashboardPanel
@@ -182,7 +182,7 @@ const handleDrawerClosed = () => {
           @rulesCreated="activePanel = 'dashboard'"
         />
       </ContainerChrome>
-    </main>
+    </div>
 
     <!-- Side Drawer -->
     <SideDrawer
