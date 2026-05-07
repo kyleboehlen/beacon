@@ -28,5 +28,8 @@ public static partial class UnitCatalog
         BoardingShip,
         Raider,
         Carrier,
+        BattleCarrier,
+        Fighter,
+        Mines,
     ];
 }

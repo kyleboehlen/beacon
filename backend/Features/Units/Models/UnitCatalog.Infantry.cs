@@ -10,7 +10,7 @@ public static partial class UnitCatalog
         AttackStrength = 5,
         DefenseStrength = 1,
         HullSize = 1,
-        GroupCounterCount = 9,
+        GroupCounterCount = 10,
         ConstructionPoints = 2,
         MaintenanceCost = 0,
         RequiredShipSizeTechnology = 0,
