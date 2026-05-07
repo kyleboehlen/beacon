@@ -2,6 +2,7 @@ namespace Features.Units.Models;
 
 public static partial class UnitCatalog
 {
+    // TODO: Scout can perform point defense — needs IPointDefenseUnit interface (A6/A7/A8 at PD tech 1/2/3)
     public static readonly Unit Scout = new()
     {
         TypeName = "Scout",

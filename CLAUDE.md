@@ -36,4 +36,3 @@ This includes the store within the entity the type belongs to.
 ## Project specs
 @.claude/specs/testing-conventions.md
 @.claude/specs/in-person-play-notes.md
-@.claude/specs/review-checklist.md

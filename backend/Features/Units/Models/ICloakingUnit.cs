@@ -1,6 +1,6 @@
 namespace Features.Units.Models;
 
-// Units capable of cloaking (improved stats based on scanners during combat, doesn't always trigger comabat)
+// Units capable of cloaking (improved stats based on scanners during combat, doesn't always trigger combat)
 // WeaponClass and AttackStrength on IUnit represent the uncloaked (visible) stats
 public interface ICloakingUnit : IUnit
 {

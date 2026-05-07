@@ -30,7 +30,7 @@ Offline-first Progressive Web App (PWA) built with modern web technologies and F
 
 - **.NET Core API** with C# controllers (see ProjectStructure.md)
 - **Scalar UI** - OpenAPI documentation and testing interface
-- **Unit testing framework** (TBD)
+- **xUnit** - Unit testing framework
 
 ### Infrastructure
 
@@ -92,7 +92,7 @@ When contributing to the frontend:
    ```bash
    pnpm i
    ``` 
-3. Start the development environment:
+4. Start the development environment:
    ```bash
    docker compose -f beacon-infra/docker-compose-develop.yml up --build
    ```
