@@ -2,6 +2,7 @@ namespace Features.Units.Models;
 
 public static partial class UnitCatalog
 {
+    // TODO: Battleship can mount Tractor Beams with AC1
     public static readonly Unit Battleship = new()
     {
         TypeName = "Battleship",

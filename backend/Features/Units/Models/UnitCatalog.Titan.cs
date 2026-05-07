@@ -2,7 +2,7 @@ namespace Features.Units.Models;
 
 public static partial class UnitCatalog
 {
-    public static readonly Unit Titan = new()
+    public static readonly FighterCarrierUnit Titan = new()
     {
         TypeName = "Titan",
         TypeAbbreviation = "TN",
@@ -14,5 +14,8 @@ public static partial class UnitCatalog
         ConstructionPoints = 32,
         MaintenanceCost = 5,
         RequiredShipSizeTechnology = 7,
+        DamagePerHit = 2,
+        FighterCapacity = 3,
+        RequiredFighterTechnology = 1,
     };
 }

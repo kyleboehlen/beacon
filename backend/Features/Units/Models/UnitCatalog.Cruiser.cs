@@ -2,6 +2,7 @@ namespace Features.Units.Models;
 
 public static partial class UnitCatalog
 {
+    // TODO: Cruiser can mount Exploration and Jammer
     public static readonly Unit Cruiser = new()
     {
         TypeName = "Cruiser",

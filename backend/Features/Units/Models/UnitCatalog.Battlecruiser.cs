@@ -2,6 +2,7 @@ namespace Features.Units.Models;
 
 public static partial class UnitCatalog
 {
+    // TODO: Battlecruiser can mount Fast 1
     public static readonly Unit Battlecruiser = new()
     {
         TypeName = "Battlecruiser",

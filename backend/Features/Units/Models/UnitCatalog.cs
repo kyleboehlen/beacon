@@ -21,5 +21,12 @@ public static partial class UnitCatalog
         Transport,
         Militia,
         Infantry,
+        SpaceMarines,
+        HeavyInfantry,
+        GravArmor,
+        CyberArmor,
+        BoardingShip,
+        Raider,
+        Carrier,
     ];
 }

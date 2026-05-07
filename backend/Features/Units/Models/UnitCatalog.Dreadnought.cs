@@ -2,6 +2,7 @@ namespace Features.Units.Models;
 
 public static partial class UnitCatalog
 {
+    // TODO: Dreadnought can mount Shield Projectors with AC1
     public static readonly Unit Dreadnought = new()
     {
         TypeName = "Dreadnought",

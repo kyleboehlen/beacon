@@ -2,6 +2,7 @@ namespace Features.Units.Models;
 
 public static partial class UnitCatalog
 {
+    // TODO: Destroyer can mount Scanners
     public static readonly Unit Destroyer = new()
     {
         TypeName = "Destroyer",

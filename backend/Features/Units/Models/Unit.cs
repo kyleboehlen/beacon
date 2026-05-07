@@ -19,4 +19,5 @@ public class Unit : IUnit
     public bool IsGroundUnit { get; init; } = false;
     public bool IsCombatCapable { get; init; } = true;
     public bool CanMove { get; init; } = true;
+    public int DamagePerHit { get; init; } = 1;
 }
