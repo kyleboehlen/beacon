@@ -13,6 +13,7 @@ public class Game
     [BsonRepresentation(BsonType.ObjectId)]
     public string Id { get; set; } = string.Empty;
 
+    // Snapshot of the rules config at session start — rules are fixed for the duration of play
     [TsNull] [BsonElement("rules")] public RulesConfig Rules { get; set; } = new();
 
     [BsonElement("createdAt")]
