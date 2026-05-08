@@ -2,6 +2,8 @@
 
 ```
 Project/
+├── Common/
+│   └── Models/              ← shared enums/types imported by multiple features
 ├── Controllers/
 │   └── {feature}/
 │       ├── Requests/

@@ -40,4 +40,7 @@ public interface IUnit
 
     // Number of hits dealt per successful attack roll — 1 for all units except Titans (2)
     int DamagePerHit { get; }
+
+    // Hull damage taken per mine trigger — null means the unit is destroyed outright; Titans take 1 damage instead
+    int? MineDamageReceived { get; }
 }

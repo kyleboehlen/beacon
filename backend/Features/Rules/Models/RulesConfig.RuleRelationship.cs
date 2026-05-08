@@ -1,3 +1,4 @@
+using Common.Models;
 using TypeGen.Core.TypeAnnotations;
 
 namespace Features.Rules.Models;
@@ -14,8 +15,8 @@ public partial class RulesConfig
     [ExportTsInterface]
     public class RuleRelationship
     {
-        public required string Source { get; init; }
-        public required string Target { get; init; }
+        public required RuleKey Source { get; init; }
+        public required RuleKey Target { get; init; }
         public required RuleRelationType Type { get; init; }
     }
 }

@@ -16,7 +16,6 @@ public static partial class UnitCatalog
         MaintenanceCost = 0,
         RequiredShipSizeTechnology = 1,
         IsCombatCapable = false,
-        DamagePerTrigger = 1,
         MaxMovementTechLevel = 1,
     };
 }
