@@ -25,8 +25,8 @@ public class RulesServiceTests
         var violations = RulesService.ValidateRuleRelationships(config);
 
         Assert.Single(violations);
-        Assert.Contains("replicators", violations[0]);
-        Assert.Contains("terraformingNebulae", violations[0]);
+        Assert.Contains("Replicators", violations[0]);
+        Assert.Contains("TerraformingNebulae", violations[0]);
     }
 
     [Fact]
@@ -38,8 +38,8 @@ public class RulesServiceTests
         var violations = RulesService.ValidateRuleRelationships(config);
 
         Assert.Single(violations);
-        Assert.Contains("securityForces", violations[0]);
-        Assert.Contains("boardingShips", violations[0]);
+        Assert.Contains("SecurityForces", violations[0]);
+        Assert.Contains("BoardingShips", violations[0]);
     }
 
     [Fact]
@@ -51,6 +51,6 @@ public class RulesServiceTests
         var violations = RulesService.ValidateRuleRelationships(config);
 
         Assert.Single(violations);
-        Assert.Contains("instantUpgrades", violations[0]);
+        Assert.Contains("InstantUpgrades", violations[0]);
     }
 }
