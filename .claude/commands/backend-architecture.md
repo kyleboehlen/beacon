@@ -28,7 +28,10 @@ Every feature must have matching directories in both `Controllers/` and `Feature
 
 To check, list directories under `Controllers/` and `Features/` and verify they mirror each other.
 
-**Exception**: Cross-cutting concerns (`Logging/`, `Email/`, `SignalR/`, `Reporting/`) live at the root level and do not need a matching `Controllers/` directory.
+**Exceptions**:
+- Cross-cutting concerns (`Logging/`, `Email/`, `SignalR/`, `Reporting/`) live at the root level and do not need a matching `Controllers/` directory.
+- **Catalog-only features** (static data models with no service or API surface, e.g. `Features/Units/`) do not require a `Controllers/` directory. Flag only if a service exists but no controller does.
+- **In-progress features** (service or models exist but controller scaffolding is deferred) should be noted as Minor, not Critical.
 
 ### 2. Controller Conventions (Critical)
 Controller files must follow these patterns:
@@ -87,8 +90,8 @@ Domain models in `Features/{Feature}/Models/` must follow:
 The API layer (`Controllers/`) and business layer (`Features/`) must be properly separated:
 
 - **Controllers** may reference: their own DTOs, feature services, `BeaconResponse<T>`
-- **Services** may reference: their own models, other services, MongoDB driver, cross-cutting services
-- **Models** may reference: MongoDB attributes, other domain models within the same feature
+- **Services** may reference: their own models, other services, MongoDB driver, cross-cutting services, `Common/Models/`
+- **Models** may reference: MongoDB attributes, other domain models within the same feature, `Common/Models/`
 
 Violations:
 - A controller directly using `IMongoCollection<T>` instead of going through a service
@@ -97,6 +100,8 @@ Violations:
 - Cross-feature service dependencies without going through proper interfaces
 
 **Exception — Game as orchestrator**: `Features/Game/Models/Game.cs` may import and embed models from other features (e.g., `RulesConfig` from `Features.Rules.Models`). The Game model is the central domain aggregate — the backend equivalent of the `_game` orchestrator store in the frontend. It is permitted to own a snapshot of its rules configuration because rules are fixed at game session start. No other feature model may import from another feature.
+
+**Exception — Common shared layer**: Any feature model, service, or controller may import from `Common/Models/` (e.g. `RuleKey`). This namespace exists specifically for enums and types needed by multiple features without creating cross-feature dependencies. Imports from `Common/` are never a separation-of-concerns violation.
 
 ### 7. Cross-Cutting Concerns Placement (Minor)
 Infrastructure services that are shared across features live at the root level:
