@@ -13,7 +13,7 @@ public partial class RulesConfig
         [BsonElement("value")] public required T Value { get; set; }
 
         // Typed identifier matching the RuleKey enum — embedded so consumers never need a lookup.
-        [BsonIgnore] public RuleKey Key { get; init; }
+        [BsonIgnore] public required RuleKey Key { get; init; }
 
         // Immutable description to be declared in the codebase
         [BsonIgnore] public string Description { get; init; } = string.Empty;
