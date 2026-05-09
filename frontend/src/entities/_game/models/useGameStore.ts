@@ -52,6 +52,7 @@ export const useGameStore = defineStore(
         if (!def) return sum
         const count = committedCountByTech.get(upgrade.tech) ?? 0
         committedCountByTech.set(upgrade.tech, count + 1)
+        if (upgrade.spaceWreck) return sum
         return sum + (def.upgradeCosts[count] ?? 0)
       }, 0)
 
@@ -66,6 +67,7 @@ export const useGameStore = defineStore(
           const committed = committedCountByTech.get(upgrade.tech) ?? 0
           const staged = stagedCountByTech.get(upgrade.tech) ?? 0
           stagedCountByTech.set(upgrade.tech, staged + 1)
+          if (upgrade.spaceWreck) return sum
           return sum + (def.upgradeCosts[committed + staged] ?? 0)
         },
         0,
