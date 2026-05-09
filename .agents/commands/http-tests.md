@@ -6,7 +6,7 @@ You also check test coverage against controller endpoints, and write missing tes
 
 ## Scope Selection (for coverage analysis and writing tests; you always run all tests for failures)
 
-Before doing any coverage analysis, ask the user what scope to check using AskUserQuestion with these options:
+Before doing any coverage analysis, ask the user what scope to check with these options:
 
 1. **Specific controller** — Check a single controller's endpoints. If selected, ask a follow-up question for the controller name (list discovered controllers as options).
 2. **Modified git files** — Check only controllers modified on the current branch (use `git diff --name-only master...HEAD` to find them, then filter for `*Controller.cs` files).
@@ -73,7 +73,7 @@ Mark each endpoint as covered or missing. Summarize: "X of Y endpoints have HTTP
 
 ### Step 4: Offer to write missing tests
 
-For each uncovered endpoint, ask the user (via AskUserQuestion) if you should write a test for it. If yes:
+For each uncovered endpoint, ask the user if you should write a test for it. If yes:
 
 1. Read the controller action method and its request/response DTOs to understand the expected behavior
 2. Read existing `.http` test files in the same controller's test file for style reference

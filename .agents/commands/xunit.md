@@ -6,7 +6,7 @@ You also check test coverage against service methods and pure logic, and write m
 
 ## Scope Selection (for writing tests, you always check all tests for failures)
 
-Before doing any analysis, ask the user what scope to check using AskUserQuestion with these options:
+Before doing any analysis, ask the user what scope to check with these options:
 
 1. **Specific feature** — Check a single feature's services/models. If selected, ask a follow-up question for the feature name.
 2. **Modified git files** — Check only files modified on the current branch (use `git diff --name-only master...HEAD` to find them, then filter to backend files).
@@ -87,7 +87,7 @@ Summarize: "X of Y testable behaviors have xUnit tests."
 
 ### Step 4: Offer to write missing tests
 
-For each uncovered method or behavior, ask the user (via AskUserQuestion) if you should write a test for it. If yes:
+For each uncovered method or behavior, ask the user if you should write a test for it. If yes:
 
 1. Read the source class to understand the logic
 2. Read the existing test file(s) for style reference (especially `ReferenceNumberValidationTests.cs`)

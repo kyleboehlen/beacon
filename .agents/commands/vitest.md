@@ -6,7 +6,7 @@ You also check test coverage, and write missing tests after asking if you should
 
 ## Scope Selection (for writing tests, you always check all tests for failures)
 
-Before doing any analysis, ask the user what scope to check using AskUserQuestion with these options:
+Before doing any analysis, ask the user what scope to check with these options:
 
 1. **Specific feature** — Check a single feature. If selected, ask a follow-up question for the feature name.
 2. **Modified git files** — Check only files modified on the current branch (use `git diff --name-only master...HEAD` to find them, then filter files).

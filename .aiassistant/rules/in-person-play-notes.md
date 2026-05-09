@@ -1,3 +1,7 @@
+---
+apply: always
+---
+
 # In-Person Play Design Notes
 
 ## Physical Components (app must NOT replace)

@@ -4,7 +4,7 @@ You build and validate Storybook using the `beacon-storybook` Docker container. 
 
 ## Scope Selection (for coverage analysis and writing stories; you always check build status)
 
-Before doing any coverage analysis, ask the user what scope to check using AskUserQuestion with these options:
+Before doing any coverage analysis, ask the user what scope to check with these options:
 
 1. **Specific component** — Check a single shared component. If selected, ask a follow-up question for the component name (list discovered shared components as options).
 2. **Modified git files** — Check only components modified on the current branch (use `git diff --name-only master...HEAD` to find them, then filter for `shared/ui/**/*.vue` files).
@@ -56,7 +56,7 @@ Note: Shared UI components require both a story file and a vitest file. If a vit
 
 ### Step 4: Offer to write missing stories
 
-For each shared component missing a story, ask the user (via AskUserQuestion) if you should write one. If yes:
+For each shared component missing a story, ask the user if you should write one. If yes:
 
 1. Read the component to understand its props, slots, and behavior
 2. Read existing stories in `frontend/src/shared/ui/` for style reference

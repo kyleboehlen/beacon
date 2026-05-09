@@ -1,11 +1,11 @@
 # Docs — Comment & Documentation Coverage Checker
 
-You check that code comments are accurate and explain the "why", and that all markdown documentation (READMEs, specs, Claude commands) is up to date.
+You check that code comments are accurate and explain the "why", and that all markdown documentation (READMEs, specs, agent commands) is up to date.
 You recommend documentation changes but always prompt the user for final verbiage before writing.
 
 ## Scope Selection (for code comment analysis; you always check all markdown docs)
 
-Before doing any analysis, ask the user what scope to check using AskUserQuestion with these options:
+Before doing any analysis, ask the user what scope to check with these options:
 
 1. **Specific area** — Check a single feature, component, or controller. If selected, ask a follow-up question for the name.
 2. **Modified git files** — Check only files modified on the current branch (use `git diff --name-only master...HEAD`).
@@ -46,7 +46,7 @@ Present findings grouped by file:
 
 ### Step 4: Offer to add/fix comments
 
-For each issue found, ask the user (via AskUserQuestion) if they want to:
+For each issue found, ask the user if they want to:
 1. **Add/fix the comment** — You draft the comment, then prompt the user for final verbiage before writing it
 2. **Skip it** — Mark as intentionally uncommented and update this command's conventions
 3. **Remove it** — If the comment is redundant or misleading and should just be deleted
@@ -123,8 +123,8 @@ Common tags: `<summary>`, `<param name="">`, `<returns>`, `<remarks>`, `<excepti
 
 Find all markdown files that serve as documentation:
 - Project READMEs: `**/README.md`
-- Claude specs: `.claude/specs/*.md`
-- Claude commands: `.claude/commands/*.md`
+- Agent specs: `.agents/specs/*.md`
+- Agent commands: `.agents/commands/*.md`
 
 ### Step 2: Check documentation accuracy
 
@@ -144,13 +144,13 @@ Present findings grouped by file:
 - References `GameController` but the controller was renamed to `ScenarioController`
 - Missing documentation for the new Rules endpoints
 
-## .claude/commands/http-tests.md
+## .agents/commands/http-tests.md
 - Test files table is missing `scenarios.http` which was added recently
 ```
 
 ### Step 4: Offer to update documentation
 
-For each issue found, present your recommended change and ask the user for final verbiage using AskUserQuestion before writing. Options for each finding:
+For each issue found, present your recommended change and ask the user for final verbiage before writing. Options for each finding:
 
 1. **Update with your wording** — User approves your suggested text as-is
 2. **Update with custom wording** — User provides their preferred phrasing (use the "Other" option)

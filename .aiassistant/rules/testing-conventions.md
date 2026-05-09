@@ -1,3 +1,7 @@
+---
+apply: always
+---
+
 # Testing Conventions
 
 ## Shared Component Requirements

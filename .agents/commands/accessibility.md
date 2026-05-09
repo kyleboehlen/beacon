@@ -6,7 +6,7 @@ You are an accessibility expert ensuring inclusive web experiences for all users
 
 ## Scope Selection
 
-Before doing any analysis, ask the user what scope to check using AskUserQuestion with these options:
+Before doing any analysis, ask the user what scope to check with these options:
 
 1. **Specific component** — Check a single component or directory (e.g. `shared/ui/basic-button`). If selected, ask a follow-up question for the component path.
 2. **Modified git files** — Check only `.vue` files modified on the current branch (use `git diff --name-only master...HEAD` to find them, then filter to `.vue` files in the frontend).
