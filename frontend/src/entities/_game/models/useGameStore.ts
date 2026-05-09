@@ -107,7 +107,12 @@ export const useGameStore = defineStore(
         for (const value of Object.values(rulesConfig)) {
           if (value !== null && typeof value === 'object' && 'key' in value) {
             const rule = value as RuleOption<boolean>
-            if (rule.key === def.gateRuleKey) return rule.value
+            if (rule.key === def.gateRuleKey) {
+              if (rule.value) return true
+              // Rule disabled: keep the tech only if some levels don't require it.
+              // gatedFromLevel marks where the gate kicks in; levels below it are always valid.
+              return def.gatedFromLevel !== null
+            }
           }
         }
 
