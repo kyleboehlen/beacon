@@ -227,7 +227,7 @@ public static class TechCatalog
             StartingLevel = 0,
             MaxLevel = 2,
             UpgradeCosts = [20, 15],
-            GateRuleKey = RuleKey.MissileBoats,
+            GateRuleKey = RuleKey.AlternateEmpires,
             Notes = "Requires Missile Boats faction (not yet implemented). Level 0 provides no capability. TODO: add per-level notes when faction is implemented."
         },
         new()
@@ -237,7 +237,7 @@ public static class TechCatalog
             StartingLevel = 0,
             MaxLevel = 2,
             UpgradeCosts = [15, 15],
-            GateRuleKey = RuleKey.MissileBoats,
+            GateRuleKey = RuleKey.AlternateEmpires,
             Notes = "Requires Missile Boats faction (not yet implemented). Allows Cruisers (CA) to counter Missile attacks. Level 0 provides no capability.",
             LevelNotes =
             [

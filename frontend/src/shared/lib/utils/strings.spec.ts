@@ -1,18 +1,18 @@
 import { describe, expect, it } from 'vitest'
-import { camelCaseToProperCase } from './strings.ts'
+import { camelCaseToProperCaseWithSpaces } from './strings.ts'
 
 describe('strings', () => {
   describe('camelCaseToProperCase', () => {
     it('formats msPipelines properly', () => {
-      expect(camelCaseToProperCase(('msPipelines'))).toBe('Ms Pipelines')
+      expect(camelCaseToProperCaseWithSpaces(('msPipelines'))).toBe('Ms Pipelines')
     })
 
     it('formats defenseSatelliteNetworks properly', () => {
-      expect(camelCaseToProperCase(('defenseSatelliteNetworks'))).toBe('Defense Satellite Networks')
+      expect(camelCaseToProperCaseWithSpaces(('defenseSatelliteNetworks'))).toBe('Defense Satellite Networks')
     })
 
     it('formats boardingShips properly', () => {
-      expect(camelCaseToProperCase(('boardingShips'))).toBe('Boarding Ships')
+      expect(camelCaseToProperCaseWithSpaces(('boardingShips'))).toBe('Boarding Ships')
     })
   })
 })

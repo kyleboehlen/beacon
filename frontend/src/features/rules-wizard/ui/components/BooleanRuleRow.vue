@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { RuleReferenceLink } from '@/shared/ui/rule-reference-link'
-import { camelCaseToProperCase } from '@/shared/lib/utils/strings'
-import type { RuleKey } from '@/entities/rules'
-import { useRulesConfigStore } from '@/entities/rules'
+import { camelCaseToProperCaseWithSpaces } from '@/shared/lib/utils/strings'
+import { RuleKey, useRulesConfigStore } from '@/entities/rules'
 
 const props = defineProps<{
   ruleKey: RuleKey
@@ -21,10 +20,10 @@ const emit = defineEmits<{
 
 const store = useRulesConfigStore()
 
-const displayName = computed(() => camelCaseToProperCase(props.ruleKey))
+const displayName = computed(() => camelCaseToProperCaseWithSpaces(RuleKey[props.ruleKey]))
 const conflictInfo = computed(() => store.conflictDetails.get(props.ruleKey) ?? null)
 const willDisableNames = computed(() =>
-  conflictInfo.value?.willDisable.map(k => camelCaseToProperCase(k)) ?? []
+  conflictInfo.value?.willDisable.map(k => camelCaseToProperCaseWithSpaces(RuleKey[k])) ?? []
 )
 
 const handleToggle = () => {

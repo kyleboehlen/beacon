@@ -1,3 +1,4 @@
+using Common.Models;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace Features.Rules.Models;
@@ -8,6 +9,7 @@ public partial class RulesConfig
     public RuleOption<bool> InstantUpgrades { get; init; } = new()
     {
         Value = false,
+        Key = RuleKey.InstantUpgrades,
         Description = "No.",
         Category = RuleCategory.Optional,
         ReferenceNumber = "30.0",
@@ -18,6 +20,7 @@ public partial class RulesConfig
     public RuleOption<bool> TerraformingNebulae { get; init; } = new()
     {
         Value = false,
+        Key = RuleKey.TerraformingNebulae,
         Description = "Allows miners to generate CP in nebulae systems if it is connected to a colony via an active MS pipeline chain.",
         Category = RuleCategory.Optional,
         ReferenceNumber = "34.0",
@@ -28,6 +31,7 @@ public partial class RulesConfig
     public RuleOption<bool> ReactionMovement { get; init; } = new()
     {
         Value = false,
+        Key = RuleKey.ReactionMovement,
         Description = "Ships equipped with Exploration technology may respond to battles in adjacent hexes.",
         Category = RuleCategory.Optional,
         ReferenceNumber = "35.0",
@@ -38,6 +42,7 @@ public partial class RulesConfig
     public RuleOption<bool> Facilities { get; init; } = new()
     {
         Value = false,
+        Key = RuleKey.Facilities,
         Description = "Enables Logistics Centers (36.5). Ships must be within Supply Range of a friendly colony to remain in supply.",
         Category = RuleCategory.Optional,
         ReferenceNumber = "36.0",
@@ -48,6 +53,7 @@ public partial class RulesConfig
     public RuleOption<bool> AdvancedConstruction { get; init; } = new()
     {
         Value = false,
+        Key = RuleKey.AdvancedConstruction,
         Description = "Unlocks advanced ship variants including Destroyer X (DDX), Battle Carriers (BV), Starbases, and Raider X (RX), plus extended technologies for Battleships (BB), Dreadnoughts (DN), and Titans (TN).",
         Category = RuleCategory.Optional,
         ReferenceNumber = "38.0",

@@ -1,13 +1,21 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
-import type { RulesConfig, RuleKey } from './types'
-import { RulesConfigStatus, RuleCategory, RuleRelationType } from './types'
-import type { RuleOption } from './types'
+import type { RulesConfig, RuleOption } from './types'
+import { RuleKey, RulesConfigStatus, RuleCategory, RuleRelationType } from './types'
 import { useRulesApi } from '@/entities/rules/api/useRulesApi'
-import { camelCaseToProperCase } from '@/shared/lib/utils/strings'
+import { camelCaseToProperCaseWithSpaces } from '@/shared/lib/utils/strings'
 
-// Rules that exist in the rulebook but are intentionally unsupported
-const UNSUPPORTED_RULES = new Set<RuleKey>(['instantUpgrades'])
+const UNSUPPORTED_RULES = new Set<RuleKey>([RuleKey.InstantUpgrades])
+
+// Extracts all RuleOption<boolean> entries from a RulesConfig, keyed by RuleKey.
+const buildRuleMap = (config: RulesConfig): Map<RuleKey, RuleOption<boolean>> => {
+  const map = new Map<RuleKey, RuleOption<boolean>>()
+  for (const value of Object.values(config)) {
+    if (value !== null && typeof value === 'object' && 'key' in value)
+      map.set((value as RuleOption<boolean>).key, value as RuleOption<boolean>)
+  }
+  return map
+}
 
 export const useRulesConfigStore = defineStore('rulesConfig', () => {
   const api = useRulesApi()
@@ -19,6 +27,10 @@ export const useRulesConfigStore = defineStore('rulesConfig', () => {
   const hasRulesConfig = computed(() => rulesConfig.value !== null)
   const rulesConfigId = computed(() => rulesConfig.value?.id ?? null)
   const isLocked = computed(() => rulesConfig.value?.status === RulesConfigStatus.Active)
+
+  const ruleMap = computed(() =>
+    rulesConfig.value ? buildRuleMap(rulesConfig.value) : new Map<RuleKey, RuleOption<boolean>>()
+  )
 
   // Actions
   const hydrateDefaults = async () => {
@@ -77,81 +89,75 @@ export const useRulesConfigStore = defineStore('rulesConfig', () => {
     rulesConfig.value.status = status
   }
 
-  // Maps each conflicted rule key to the source rule key causing the conflict
+  // Maps each conflicted RuleKey to the RuleKey that caused the conflict
   const conflicts = computed(() => {
     const conflicted = new Map<RuleKey, RuleKey>()
     if (!rulesConfig.value) return conflicted
 
     for (const { source, target, type } of rulesConfig.value.ruleRelationships) {
-      const sourceRule = rulesConfig.value[source as RuleKey] as RuleOption<boolean> | undefined
+      const sourceRule = ruleMap.value.get(source)
       if (!sourceRule) continue
 
       if (type === RuleRelationType.Incompatible && sourceRule.value)
-        conflicted.set(target as RuleKey, source as RuleKey)
+        conflicted.set(target, source)
 
       if (type === RuleRelationType.Requires) {
-        const targetRule = rulesConfig.value[target as RuleKey] as RuleOption<boolean> | undefined
+        const targetRule = ruleMap.value.get(target)
         if (targetRule && !targetRule.value)
-          conflicted.set(source as RuleKey, target as RuleKey)
+          conflicted.set(source, target)
       }
     }
 
     return conflicted
   })
 
-  // Pre-computed conflict details per rule key — used by rulesForCategory for cheap lookup
+  // Pre-computed conflict details per RuleKey — used by rulesForCategory for cheap lookup
   const conflictDetails = computed(() => {
     const details = new Map<RuleKey, { message: string; willDisable: RuleKey[] }>()
     if (!rulesConfig.value) return details
 
     for (const r of rulesConfig.value.ruleRelationships) {
-      const sourceKey = r.source as RuleKey
-      const targetKey = r.target as RuleKey
-
       if (r.type === RuleRelationType.Incompatible) {
-        // Only include in willDisable if target is currently ON (so there's actually something to turn off)
-        const targetRule = rulesConfig.value[targetKey] as RuleOption<boolean> | undefined
+        // Only include in willDisable if target is currently ON
+        const targetRule = ruleMap.value.get(r.target)
         if (targetRule?.value) {
-          const existing = details.get(sourceKey) ?? { message: '', willDisable: [] }
-          existing.willDisable.push(targetKey)
-          details.set(sourceKey, existing)
+          const existing = details.get(r.source) ?? { message: '', willDisable: [] }
+          existing.willDisable.push(r.target)
+          details.set(r.source, existing)
         }
 
-        if (conflicts.value.has(targetKey))
-          details.set(targetKey, { message: `Incompatible with ${camelCaseToProperCase(r.source)}`, willDisable: [] })
+        if (conflicts.value.has(r.target))
+          details.set(r.target, {
+            message: `Incompatible with ${camelCaseToProperCaseWithSpaces(RuleKey[r.source])}`,
+            willDisable: [],
+          })
       }
 
-      if (r.type === RuleRelationType.Requires && conflicts.value.has(sourceKey)) {
-        details.set(sourceKey, { message: `Requires ${camelCaseToProperCase(r.target)}`, willDisable: [] })
-      }
+      if (r.type === RuleRelationType.Requires && conflicts.value.has(r.source))
+        details.set(r.source, {
+          message: `Requires ${camelCaseToProperCaseWithSpaces(RuleKey[r.target])}`,
+          willDisable: [],
+        })
     }
 
     return details
   })
 
   const rulesForCategory = (category: RuleCategory) =>
-    computed(() => {
-      if (!rulesConfig.value) return []
-      return (Object.entries(rulesConfig.value) as [string, unknown][])
-        .filter((entry): entry is [string, RuleOption<boolean>] =>
-          entry[1] !== null && typeof entry[1] === 'object' && 'category' in (entry[1] as object)
-        )
-        .filter(([, rule]) => rule.category === category)
-        .map(([key, rule]) => {
-          const ruleKey = key as RuleKey
-          return {
-            key: ruleKey,
-            ...rule,
-            enabled: !UNSUPPORTED_RULES.has(ruleKey) && !conflicts.value.has(ruleKey),
-          }
-        })
-    })
+    computed(() =>
+      [...ruleMap.value.values()]
+        .filter(rule => rule.category === category)
+        .map(rule => ({
+          ...rule,
+          enabled: !UNSUPPORTED_RULES.has(rule.key) && !conflicts.value.has(rule.key),
+        }))
+    )
 
   const toggleRuleValue = (key: RuleKey) => {
     if (!rulesConfig.value) throw new Error('Cannot toggle: no rules config loaded')
     if (isLocked.value) throw new Error('Cannot toggle: rules config is locked')
-    const rule = rulesConfig.value[key] as RuleOption<boolean>
-    rule.value = !rule.value
+    const rule = ruleMap.value.get(key)
+    if (rule) rule.value = !rule.value
   }
 
   const clearRulesConfig = () => {

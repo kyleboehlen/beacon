@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Icon } from '@iconify/vue'
-import { useRulesConfigStore, RuleCategory } from '@/entities/rules'
-import { camelCaseToProperCase } from '@/shared/lib/utils/strings'
+import { useRulesConfigStore, RuleCategory, RuleKey } from '@/entities/rules'
+import { camelCaseToProperCaseWithSpaces } from '@/shared/lib/utils/strings'
 
 const store = useRulesConfigStore()
 
@@ -51,7 +51,7 @@ const categories = computed(() => [
               class="text-sm"
               :class="rule.value && rule.enabled ? 'text-white' : 'text-white/40'"
             >
-              {{ camelCaseToProperCase(rule.key) }}
+              {{ camelCaseToProperCaseWithSpaces(RuleKey[rule.key]) }}
             </span>
           </div>
         </div>

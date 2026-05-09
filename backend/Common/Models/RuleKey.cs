@@ -26,5 +26,5 @@ public enum RuleKey
     Facilities,
     AdvancedConstruction,
     ReactionMovement,
-    MissileBoats,
+    AlternateEmpires,
 }
