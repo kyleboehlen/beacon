@@ -7,12 +7,21 @@ import { camelCaseToProperCaseWithSpaces } from '@/shared/lib/utils/strings'
 
 const UNSUPPORTED_RULES = new Set<RuleKey>([RuleKey.InstantUpgrades])
 
+function isRuleOption(v: unknown): v is RuleOption<boolean> {
+  return (
+    typeof v === 'object' &&
+    v !== null &&
+    typeof (v as Record<string, unknown>).key === 'number' &&
+    typeof (v as Record<string, unknown>).value === 'boolean'
+  )
+}
+
 // Extracts all RuleOption<boolean> entries from a RulesConfig, keyed by RuleKey.
 const buildRuleMap = (config: RulesConfig): Map<RuleKey, RuleOption<boolean>> => {
   const map = new Map<RuleKey, RuleOption<boolean>>()
   for (const value of Object.values(config)) {
-    if (value !== null && typeof value === 'object' && 'key' in value)
-      map.set((value as RuleOption<boolean>).key, value as RuleOption<boolean>)
+    if (isRuleOption(value))
+      map.set(value.key, value)
   }
   return map
 }

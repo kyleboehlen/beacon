@@ -23,7 +23,10 @@ const uid = useId()
 const descriptionTooltipId = `${uid}-description`
 const tooltipId = (index: number) => `${uid}-tooltip-${index}`
 
-const color = computed(() => techColorPalette[props.colorIndex % techColorPalette.length])
+const color = computed(() => {
+  const len = techColorPalette.length
+  return techColorPalette[((props.colorIndex % len) + len) % len]
+})
 
 const nodeClasses = (state: NodeState) => {
   switch (state) {

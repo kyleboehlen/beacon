@@ -42,7 +42,8 @@ export const useGameStore = defineStore(
       if (!game.value) return 0
 
       const historicalIncome = game.value.econRounds.reduce(
-        (sum, round) => sum + round.mineralIncome, 0,
+        // TEMPORARY: colonyIncome is manually entered until colony transactions are tracked.
+        (sum, round) => sum + round.mineralIncome + round.colonyIncome, 0,
       )
 
       // Track how many times each tech has been upgraded so we index into upgradeCosts correctly.
@@ -129,6 +130,9 @@ export const useGameStore = defineStore(
       game.value.econRounds.push({
         round,
         mineralIncome: econRoundStore.mineralIncome,
+        // TEMPORARY: manually entered colony income until colony state is fully transactional
+        // (tracked via build/attack transactions). Remove and derive from colony history then.
+        colonyIncome: econRoundStore.colonyIncome,
         bid: econRoundStore.bid,
       })
 

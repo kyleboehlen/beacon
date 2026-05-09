@@ -12,6 +12,11 @@ public class EconTransaction
     [BsonElement("mineralIncome")]
     public int MineralIncome { get; set; }
 
+    // TEMPORARY: manually entered colony income until colony state is fully transactional
+    // (tracked via build/attack transactions). Remove and derive from colony history then.
+    [BsonElement("colonyIncome")]
+    public int ColonyIncome { get; set; }
+
     [BsonElement("bid")]
     public int Bid { get; set; }
 }
