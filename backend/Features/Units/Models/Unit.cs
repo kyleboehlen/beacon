@@ -20,4 +20,5 @@ public class Unit : IUnit
     public bool IsCombatCapable { get; init; } = true;
     public bool CanMove { get; init; } = true;
     public int DamagePerHit { get; init; } = 1;
+    public int? MineDamageReceived { get; init; } = null;
 }

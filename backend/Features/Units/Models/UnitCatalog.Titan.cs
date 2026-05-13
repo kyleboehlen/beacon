@@ -15,6 +15,7 @@ public static partial class UnitCatalog
         MaintenanceCost = 5,
         RequiredShipSizeTechnology = 7,
         DamagePerHit = 2,
+        MineDamageReceived = 1,
         FighterCapacity = 3,
         RequiredFighterTechnology = 1,
     };

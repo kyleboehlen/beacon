@@ -4,3 +4,6 @@ run ./health-check.http
 
 ###
 run ./rules.http
+
+###
+run ./econ.http

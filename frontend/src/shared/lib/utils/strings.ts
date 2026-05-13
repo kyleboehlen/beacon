@@ -5,7 +5,7 @@
  * - "defenseSatelliteNetworks" -> "Defense Satellite Networks"
  * - "boardingShips" -> "Boarding Ships"
  */
-export function camelCaseToProperCase(str: string): string {
+export function camelCaseToProperCaseWithSpaces(str: string): string {
   // Insert space before uppercase letters
   const withSpaces = str.replace(/([A-Z])/g, ' $1')
 

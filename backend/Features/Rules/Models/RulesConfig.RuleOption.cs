@@ -1,5 +1,6 @@
 namespace Features.Rules.Models;
 
+using Common.Models;
 using MongoDB.Bson.Serialization.Attributes;
 using TypeGen.Core.TypeAnnotations;
 
@@ -10,6 +11,9 @@ public partial class RulesConfig
     {
         // For holding the actual value of the rule as configured, most rules will be a boolean.
         [BsonElement("value")] public required T Value { get; set; }
+
+        // Typed identifier matching the RuleKey enum — embedded so consumers never need a lookup.
+        [BsonIgnore] public required RuleKey Key { get; init; }
 
         // Immutable description to be declared in the codebase
         [BsonIgnore] public string Description { get; init; } = string.Empty;

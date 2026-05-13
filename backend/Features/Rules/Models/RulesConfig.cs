@@ -1,3 +1,4 @@
+using Common.Models;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using TypeGen.Core.TypeAnnotations;
@@ -19,18 +20,18 @@ public partial class RulesConfig
     public RuleRelationship[] RuleRelationships { get; init; } =
     [
         // Replicators (40.0) disables the following rules
-        new() { Source = "replicators", Target = "terraformingNebulae", Type = RuleRelationType.Incompatible },
-        // TODO: new() { Source = "replicators", Target = "facilities", Type = RuleRelationType.Incompatible },
-        // TODO: new() { Source = "replicators", Target = "uniqueShips", Type = RuleRelationType.Incompatible },
-        // TODO: new() { Source = "replicators", Target = "shipExperience", Type = RuleRelationType.Incompatible },
-        // TODO: new() { Source = "replicators", Target = "reactionMovement", Type = RuleRelationType.Incompatible },
-        // TODO: new() { Source = "replicators", Target = "spaceAmoebas", Type = RuleRelationType.Incompatible },
-        // TODO: new() { Source = "replicators", Target = "bloodBrotherAlliances", Type = RuleRelationType.Incompatible },
-        // TODO: new() { Source = "replicators", Target = "galacticCapitol", Type = RuleRelationType.Incompatible },
-        // TODO: new() { Source = "replicators", Target = "missionCards", Type = RuleRelationType.Incompatible },
+        new() { Source = RuleKey.Replicators, Target = RuleKey.TerraformingNebulae, Type = RuleRelationType.Incompatible },
+        // TODO: new() { Source = RuleKey.Replicators, Target = RuleKey.Facilities, Type = RuleRelationType.Incompatible },
+        // TODO: new() { Source = RuleKey.Replicators, Target = RuleKey.ReactionMovement, Type = RuleRelationType.Incompatible },
+        // TODO: new() { Source = RuleKey.Replicators, Target = ???uniqueShips, Type = RuleRelationType.Incompatible },
+        // TODO: new() { Source = RuleKey.Replicators, Target = ???shipExperience, Type = RuleRelationType.Incompatible },
+        // TODO: new() { Source = RuleKey.Replicators, Target = ???spaceAmoebas, Type = RuleRelationType.Incompatible },
+        // TODO: new() { Source = RuleKey.Replicators, Target = ???bloodBrotherAlliances, Type = RuleRelationType.Incompatible },
+        // TODO: new() { Source = RuleKey.Replicators, Target = ???galacticCapitol, Type = RuleRelationType.Incompatible },
+        // TODO: new() { Source = RuleKey.Replicators, Target = ???missionCards, Type = RuleRelationType.Incompatible },
 
         // Security Forces requires Boarding Ships
-        new() { Source = "securityForces", Target = "boardingShips", Type = RuleRelationType.Requires },
+        new() { Source = RuleKey.SecurityForces, Target = RuleKey.BoardingShips, Type = RuleRelationType.Requires },
     ];
 
     [BsonElement("createdAt")]

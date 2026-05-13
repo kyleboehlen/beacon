@@ -1,0 +1,46 @@
+### Econ - Get tech definitions
+GET {{baseUrl}}/api/Econ/GetTechDefinitions
+Accept: application/json
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+
+    client.test("Response has success field", function() {
+        client.assert(response.body.hasOwnProperty("success"), "Response missing 'success' field");
+        client.assert(response.body.success === true, "Success should be true");
+    });
+
+    client.test("Response has tech definitions array", function() {
+        client.assert(response.body.hasOwnProperty("payload"), "Response missing 'payload' field");
+        client.assert(response.body.payload.hasOwnProperty("techDefinitions"), "Payload missing 'techDefinitions' field");
+        client.assert(Array.isArray(response.body.payload.techDefinitions), "techDefinitions should be an array");
+        client.assert(response.body.payload.techDefinitions.length > 0, "techDefinitions should not be empty");
+    });
+
+    client.test("Tech definitions have required fields", function() {
+        var tech = response.body.payload.techDefinitions[0];
+        client.assert(tech.hasOwnProperty("key"), "Tech missing 'key' field");
+        client.assert(tech.hasOwnProperty("displayName"), "Tech missing 'displayName' field");
+        client.assert(tech.hasOwnProperty("startingLevel"), "Tech missing 'startingLevel' field");
+        client.assert(tech.hasOwnProperty("maxLevel"), "Tech missing 'maxLevel' field");
+        client.assert(tech.hasOwnProperty("upgradeCosts"), "Tech missing 'upgradeCosts' field");
+        client.assert(Array.isArray(tech.upgradeCosts), "upgradeCosts should be an array");
+    });
+
+    client.test("All 26 tech definitions are returned", function() {
+        client.assert(response.body.payload.techDefinitions.length === 26, "Expected 26 tech definitions");
+    });
+
+    client.test("upgradeCosts length matches maxLevel minus startingLevel", function() {
+        var techs = response.body.payload.techDefinitions;
+        techs.forEach(function(tech) {
+            var expectedLength = tech.maxLevel - tech.startingLevel;
+            client.assert(
+                tech.upgradeCosts.length === expectedLength,
+                "Tech " + tech.key + ": upgradeCosts.length=" + tech.upgradeCosts.length + ", expected " + expectedLength
+            );
+        });
+    });
+%}

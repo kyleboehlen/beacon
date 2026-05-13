@@ -1,11 +1,12 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { useRulesConfigStore } from './useRulesConfigStore'
-import { RulesConfigStatus, RuleCategory } from './types'
+import { RulesConfigStatus, RuleCategory, RuleKey } from './types'
 import type { RulesConfig, RuleOption } from './types'
 
-const makeRule = (value: boolean): RuleOption<boolean> => ({
+const makeRule = (value: boolean, key: RuleKey = RuleKey.MsPipelines): RuleOption<boolean> => ({
   value,
+  key,
   description: '',
   category: RuleCategory.Basic,
   referenceNumber: '',
@@ -135,8 +136,8 @@ describe('useRulesConfigStore', () => {
     it('returns only rules matching the given category', () => {
       const store = useRulesConfigStore()
       store.setRulesConfig(makeConfig({
-        msPipelines: makeRule(false),
-        shipGroupLimits: { ...makeRule(true), category: RuleCategory.Beacon },
+        msPipelines: makeRule(false, RuleKey.MsPipelines),
+        shipGroupLimits: { ...makeRule(true, RuleKey.ShipGroupLimits), category: RuleCategory.Beacon },
       }))
 
       const basic = store.rulesForCategory(RuleCategory.Basic)
@@ -151,32 +152,32 @@ describe('useRulesConfigStore', () => {
       expect(store.rulesForCategory(RuleCategory.Basic).value).toEqual([])
     })
 
-    it('returns rules with their store key attached', () => {
+    it('returns rules with their key attached', () => {
       const store = useRulesConfigStore()
-      store.setRulesConfig(makeConfig({ msPipelines: makeRule(true) }))
+      store.setRulesConfig(makeConfig({ msPipelines: makeRule(true, RuleKey.MsPipelines) }))
 
       const rules = store.rulesForCategory(RuleCategory.Basic)
-      expect(rules.value[0].key).toBe('msPipelines')
+      expect(rules.value[0].key).toBe(RuleKey.MsPipelines)
     })
   })
 
   describe('toggleRuleValue', () => {
     it('throws when no config is loaded', () => {
       const store = useRulesConfigStore()
-      expect(() => store.toggleRuleValue('msPipelines')).toThrow()
+      expect(() => store.toggleRuleValue(RuleKey.MsPipelines)).toThrow()
     })
 
     it('throws when config is locked', () => {
       const store = useRulesConfigStore()
       store.setRulesConfig(makeConfig({ status: RulesConfigStatus.Active }))
-      expect(() => store.toggleRuleValue('msPipelines')).toThrow()
+      expect(() => store.toggleRuleValue(RuleKey.MsPipelines)).toThrow()
     })
 
     it('toggles a rule value', () => {
       const store = useRulesConfigStore()
-      store.setRulesConfig(makeConfig({ msPipelines: makeRule(false) }))
+      store.setRulesConfig(makeConfig({ msPipelines: makeRule(false, RuleKey.MsPipelines) }))
 
-      store.toggleRuleValue('msPipelines')
+      store.toggleRuleValue(RuleKey.MsPipelines)
       expect(store.rulesConfig?.msPipelines.value).toBe(true)
     })
   })

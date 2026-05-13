@@ -1,6 +1,7 @@
 namespace Features.Rules.Services;
 
 using System.Reflection;
+using Common.Models;
 using Features.Rules.Models;
 using MongoDB.Driver;
 
@@ -47,52 +48,44 @@ public class RulesService(IMongoDatabase database)
         return result.DeletedCount > 0;
     }
 
-    // Only Value is persisted per rule (all other RuleOption fields are BsonIgnore and defined in code).
-    // This restores the static fields by merging saved values into a fresh default instance.
+    // Only Value is persisted per rule — Description, Category, ReferenceNumber, etc. are [BsonIgnore]
+    // and come back null from the DB. We start from a fresh default (which has all static fields populated)
+    // and copy the persisted Value from the DB version into each matching property.
+    // Reflection means new rules added to RulesConfig are picked up automatically with no changes here.
     private RulesConfig MergeWithDefaults(RulesConfig fromDb)
     {
         var config = GetDefaultRulesConfig();
 
+        // Copy the persisted identity and timestamps from the DB record
         config.Id = fromDb.Id;
         config.Status = fromDb.Status;
         config.CreatedAt = fromDb.CreatedAt;
         config.UpdatedAt = fromDb.UpdatedAt;
 
-        // Basic
-        config.MsPipelines.Value = fromDb.MsPipelines.Value;
-        config.DefenseSatelliteNetworks.Value = fromDb.DefenseSatelliteNetworks.Value;
-        config.Fighters.Value = fromDb.Fighters.Value;
-        config.Cloaking.Value = fromDb.Cloaking.Value;
-        config.Mines.Value = fromDb.Mines.Value;
-        config.NonPlayerAliens.Value = fromDb.NonPlayerAliens.Value;
-        config.BoardingShips.Value = fromDb.BoardingShips.Value;
-        config.SecurityForces.Value = fromDb.SecurityForces.Value;
-        config.GroundCombat.Value = fromDb.GroundCombat.Value;
-        config.Titans.Value = fromDb.Titans.Value;
-        config.Flagships.Value = fromDb.Flagships.Value;
+        // Find every RuleOption<bool> property on RulesConfig and copy its Value from the DB record
+        var properties = typeof(RulesConfig)
+            .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+            .Where(p => p.PropertyType == typeof(RulesConfig.RuleOption<bool>));
 
-        // Optional
-        config.InstantUpgrades.Value = fromDb.InstantUpgrades.Value;
-        config.TerraformingNebulae.Value = fromDb.TerraformingNebulae.Value;
-
-        // Beacon
-        config.ShipGroupLimits.Value = fromDb.ShipGroupLimits.Value;
-
-        // Factions
-        config.Replicators.Value = fromDb.Replicators.Value;
+        foreach (var property in properties)
+            ((RulesConfig.RuleOption<bool>)property.GetValue(config)!).Value =
+                ((RulesConfig.RuleOption<bool>)property.GetValue(fromDb)!).Value;
 
         return config;
     }
 
-    private static readonly string[] UnsupportedRules = ["instantUpgrades"];
+    private static readonly RuleKey[] UnsupportedRules = [RuleKey.InstantUpgrades];
 
     public static string[] ValidateRuleRelationships(RulesConfig config)
     {
+        // Build a lookup from RuleKey → enabled/disabled by parsing each property name as a RuleKey enum value.
+        // Properties that don't map to a RuleKey (e.g. Id, Status) are skipped via TryParse.
         var ruleValues = typeof(RulesConfig)
             .GetProperties(BindingFlags.Public | BindingFlags.Instance)
             .Where(p => p.PropertyType == typeof(RulesConfig.RuleOption<bool>))
+            .Where(p => Enum.TryParse<RuleKey>(p.Name, out _))
             .ToDictionary(
-                p => char.ToLower(p.Name[0]) + p.Name[1..],
+                p => Enum.Parse<RuleKey>(p.Name),
                 p => ((RulesConfig.RuleOption<bool>)p.GetValue(config)!).Value
             );
 

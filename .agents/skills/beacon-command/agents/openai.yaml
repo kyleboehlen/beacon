@@ -1,0 +1,4 @@
+interface:
+  display_name: "Beacon Command"
+  short_description: "Map Beacon command names to .agents/commands files."
+  default_prompt: "command"

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useRulesConfigStore, RulesConfigStatus } from '@/entities/rules'
+import { useRulesConfigStore } from '@/entities/rules'
 import { useGameStore } from '@/entities/_game'
 import { StepWizard } from '@/shared/ui/step-wizard'
 import { SystemStatus } from '@/shared/ui/system-status'
@@ -46,12 +46,10 @@ const fetchDefaultRulesConfig = async (): Promise<boolean> => {
 
 const handleCompleted = async () => {
   try {
-    rulesConfigStore.setStatus(RulesConfigStatus.Active)
-    await rulesConfigStore.saveRulesConfig()
-    gameStore.embedRulesConfig(rulesConfigStore.rulesConfig!)
+    await gameStore.lockRulesConfig()
     emit('completed')
   } catch {
-    toast.error('Failed to save rules configuration. Please try again.')
+    toast.error('Failed to finalize rules configuration. Please try again.')
   }
 }
 </script>
