@@ -8,6 +8,11 @@ Raw API calls only. Returns the response payload or `false` on failure. No state
 ## `useEntityStore` — State layer
 Pinia store (composition API). Owns state and actions that operate **only on that entity's own state**. Does not call other stores. See `_game/README.md` for the exception.
 
+Entity stores should prefer transaction-driven updates and derived state:
+- write domain events/transactions via actions
+- derive computed state from those transactions
+- avoid mutating redundant state snapshots when a computed derivation is possible
+
 Stores are the public entity interface for features, widgets, pages, and other consumers. Do not add a separate
 `useEntity` wrapper unless it adds real behavior beyond forwarding store/API calls.
 

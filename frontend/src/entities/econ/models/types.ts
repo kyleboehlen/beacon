@@ -3,3 +3,11 @@ export { TechKey } from '@/shared/models/generated/tech-key'
 export type { EconTransaction } from '@/shared/models/generated/econ-transaction'
 export type { TechUpgradeTransaction } from '@/shared/models/generated/tech-upgrade-transaction'
 export type { GetTechDefinitionsResponse } from '@/shared/models/generated/get-tech-definitions-response'
+
+import type { TechDefinition } from '@/shared/models/generated/tech-definition'
+
+export interface TechStateEntry {
+  definition: TechDefinition
+  currentLevel: number
+  stagedLevel: number
+}

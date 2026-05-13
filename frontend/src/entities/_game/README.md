@@ -10,6 +10,7 @@ The `_game` entity is the **orchestrator** for the entire game. The `_` prefix i
 - Use multiple other stores.
 - Coordinate actions across multiple domains
 - Call actions on other entity stores
+- Expose orchestration facades (for example `gameStore.econ.*`) so UI calls route through `_game`
 
 ### ❌ Other Stores CANNOT:
 - Use multiple stores
@@ -18,6 +19,11 @@ The `_game` entity is the **orchestrator** for the entire game. The `_` prefix i
 
 ### Key Rule:
 **If an action affects multiple stores, it MUST go through the game store.**
+
+### Transactions and Derivation
+- UI should write transactions through orchestrator actions (round commits, staged upgrades, rule locking).
+- Derived state should be computed from transaction history and staged transactions, not manually mutated snapshots.
+- `_game` coordinates transaction flows, while domain-specific derived state (for example econ tech state) stays in the owning entity store.
 
 ---
 

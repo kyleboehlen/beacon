@@ -23,4 +23,4 @@ ENTRYPOINT ["dotnet", "watch", "run", "--urls", "http://0.0.0.0:8080"]
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "backend.dll"]
+ENTRYPOINT ["dotnet", "backend.dll", "--urls", "http://0.0.0.0:8080"]

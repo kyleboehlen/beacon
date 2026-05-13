@@ -1,2 +1,2 @@
 export * from './models/types.ts'
-export { useEconRoundStore } from './models/useEconRoundStore'
+export { useEconStore } from './models/useEconStore'
